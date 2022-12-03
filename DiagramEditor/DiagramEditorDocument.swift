@@ -25,7 +25,7 @@ struct DiagramEditorDocument: FileDocument {
 
     init(configuration: ReadConfiguration) throws {
         guard let data = configuration.file.regularFileContents,
-              let string = String(data: data, encoding: .utf8)
+              let string = String(data: data, encoding: .shiftJIS) //utf8だったが、本家oudiaで作ったファイルが読み込めない
         else {
             throw CocoaError(.fileReadCorruptFile)
         }
@@ -33,7 +33,7 @@ struct DiagramEditorDocument: FileDocument {
     }
     
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        let data = text.data(using: .utf8)!
+        let data = text.data(using: .shiftJIS)! //utf8だったが、本家oudiaで作ったファイルが読み込めない
         return .init(regularFileWithContents: data)
     }
 }
