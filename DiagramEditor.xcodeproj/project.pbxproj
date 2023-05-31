@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		EBA5403E2A278D73004AC49A /* OudData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403D2A278D73004AC49A /* OudData.swift */; };
 		EBA540402A278E4D004AC49A /* OudParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403F2A278E4D004AC49A /* OudParser.swift */; };
+		EBA540422A278EFE004AC49A /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540412A278EFE004AC49A /* TableView.swift */; };
+		EBA540442A278F56004AC49A /* VTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540432A278F56004AC49A /* VTextView.swift */; };
+		EBA540462A278FBE004AC49A /* JikokuhyouRowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540452A278FBE004AC49A /* JikokuhyouRowsView.swift */; };
+		EBA540482A278FEF004AC49A /* JikokuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540472A278FEF004AC49A /* JikokuView.swift */; };
 		EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */; };
 		EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */; };
 		EBD863DA293B6E97002D835D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D9293B6E97002D835D /* ContentView.swift */; };
@@ -19,6 +23,10 @@
 /* Begin PBXFileReference section */
 		EBA5403D2A278D73004AC49A /* OudData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudData.swift; sourceTree = "<group>"; };
 		EBA5403F2A278E4D004AC49A /* OudParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudParser.swift; sourceTree = "<group>"; };
+		EBA540412A278EFE004AC49A /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
+		EBA540432A278F56004AC49A /* VTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VTextView.swift; sourceTree = "<group>"; };
+		EBA540452A278FBE004AC49A /* JikokuhyouRowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JikokuhyouRowsView.swift; sourceTree = "<group>"; };
+		EBA540472A278FEF004AC49A /* JikokuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JikokuView.swift; sourceTree = "<group>"; };
 		EBD863D2293B6E97002D835D /* DiagramEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiagramEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorApp.swift; sourceTree = "<group>"; };
 		EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorDocument.swift; sourceTree = "<group>"; };
@@ -63,6 +71,10 @@
 				EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */,
 				EBA5403D2A278D73004AC49A /* OudData.swift */,
 				EBA5403F2A278E4D004AC49A /* OudParser.swift */,
+				EBA540412A278EFE004AC49A /* TableView.swift */,
+				EBA540432A278F56004AC49A /* VTextView.swift */,
+				EBA540452A278FBE004AC49A /* JikokuhyouRowsView.swift */,
+				EBA540472A278FEF004AC49A /* JikokuView.swift */,
 				EBD863D9293B6E97002D835D /* ContentView.swift */,
 				EBD863DB293B6E9B002D835D /* Assets.xcassets */,
 				EBD863DD293B6E9B002D835D /* Info.plist */,
@@ -151,10 +163,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBA540402A278E4D004AC49A /* OudParser.swift in Sources */,
+				EBA540422A278EFE004AC49A /* TableView.swift in Sources */,
 				EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */,
+				EBA540462A278FBE004AC49A /* JikokuhyouRowsView.swift in Sources */,
 				EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */,
+				EBA540482A278FEF004AC49A /* JikokuView.swift in Sources */,
 				EBA5403E2A278D73004AC49A /* OudData.swift in Sources */,
 				EBD863DA293B6E97002D835D /* ContentView.swift in Sources */,
+				EBA540442A278F56004AC49A /* VTextView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
