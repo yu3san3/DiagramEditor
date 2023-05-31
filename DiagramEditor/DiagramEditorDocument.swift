@@ -21,19 +21,24 @@ struct DiagramEditorDocument: FileDocument {
         self.text = text
     }
 
-    static var readableContentTypes: [UTType] { [.oudiaEditDocument] } //開くことができるドキュメントのタイプを設定
+    //開くことができるドキュメントのタイプを設定
+    static var readableContentTypes: [UTType] { [.oudiaEditDocument] }
 
-    init(configuration: ReadConfiguration) throws { //ファイルの読み込みを担当
+    //ファイルの読み込みを担当
+    init(configuration: ReadConfiguration) throws {
+        //読み込んだファイル(Shift-JIS Data)をShift-JISでエンコーディング
         guard let data = configuration.file.regularFileContents,
-              let string = String(data: data, encoding: .shiftJIS) //Shift-JIS Stringに変換
+              let string = String(data: data, encoding: .shiftJIS) //stringはUTF-8 String
         else {
-            throw CocoaError(.fileReadCorruptFile) //utf-8など、Shift-JIS以外の形式で保存されているファイルは開けない
+            //UTF-8など、Shift-JIS以外の形式で保存されているファイルではエラーとなり開けない
+            throw CocoaError(.fileReadCorruptFile)
         }
         text = string
     }
     
-    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper { //ファイルの保存を担当
-        let data = text.data(using: .shiftJIS)!
-        return .init(regularFileWithContents: data) //Shift-JIS Dataで保存
+    //ファイルの保存を担当
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        let data = text.data(using: .shiftJIS)! //UTF-8 StringをShift-JIS Dataに変換
+        return .init(regularFileWithContents: data)
     }
 }
