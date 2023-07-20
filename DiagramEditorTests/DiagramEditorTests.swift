@@ -9,19 +9,10 @@ import XCTest
 @testable import DiagramEditor
 
 final class DiagramEditorTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+    let testOudText = OudData.mockOudText
+    let testOudData = OudData.mockOudData
 
     func testOudParser() throws {
-        let testOudText = OudData.mockOudText
-        let testOudData = OudData.mockOudData
-
         let parsedData = OuDia.parse(testOudText)
         XCTAssertEqual(parsedData, testOudData)
 
@@ -29,11 +20,15 @@ final class DiagramEditorTests: XCTestCase {
         XCTAssertEqual(testOudText, stringifiedData)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
+    func testPerformanceOudParse() throws {
         measure {
-            // Put the code you want to measure the time of here.
+            let _ = OuDia.parse(testOudText)
         }
     }
 
+    func testPerformanceOudStringify() throws {
+        measure {
+            let _ = OuDia.stringify(testOudData)
+        }
+    }
 }
