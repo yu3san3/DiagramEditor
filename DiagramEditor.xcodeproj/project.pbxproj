@@ -69,13 +69,9 @@
 			children = (
 				EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */,
 				EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */,
-				EBA5403D2A278D73004AC49A /* OudData.swift */,
-				EBA5403F2A278E4D004AC49A /* OudParser.swift */,
-				EBA540412A278EFE004AC49A /* TableView.swift */,
-				EBA540432A278F56004AC49A /* VTextView.swift */,
-				EBA540452A278FBE004AC49A /* JikokuhyouRowsView.swift */,
-				EBA540472A278FEF004AC49A /* JikokuView.swift */,
-				EBD863D9293B6E97002D835D /* ContentView.swift */,
+				EBF334992A690A460099EE4E /* View */,
+				EBF334982A690A350099EE4E /* Model */,
+				EBF3349A2A690A8F0099EE4E /* Other */,
 				EBD863DB293B6E9B002D835D /* Assets.xcassets */,
 				EBD863DD293B6E9B002D835D /* Info.plist */,
 				EBD863DE293B6E9B002D835D /* DiagramEditor.entitlements */,
@@ -90,6 +86,34 @@
 				EBD863E0293B6E9B002D835D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		EBF334982A690A350099EE4E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EBA5403D2A278D73004AC49A /* OudData.swift */,
+			);
+			path = "\U0010Model";
+			sourceTree = "<group>";
+		};
+		EBF334992A690A460099EE4E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EBD863D9293B6E97002D835D /* ContentView.swift */,
+				EBA540412A278EFE004AC49A /* TableView.swift */,
+				EBA540432A278F56004AC49A /* VTextView.swift */,
+				EBA540452A278FBE004AC49A /* JikokuhyouRowsView.swift */,
+				EBA540472A278FEF004AC49A /* JikokuView.swift */,
+			);
+			path = "\U0010View";
+			sourceTree = "<group>";
+		};
+		EBF3349A2A690A8F0099EE4E /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				EBA5403F2A278E4D004AC49A /* OudParser.swift */,
+			);
+			path = "\U0010Other";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
