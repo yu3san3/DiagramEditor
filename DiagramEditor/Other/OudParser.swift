@@ -12,8 +12,8 @@ let oudData = OuDia.parse(OudData.mockOudText)
 class OuDia {
     static func parse(_ text: String) -> OudData {
         
-        var kudariRessya: [[Ressya]] = [[Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: "")]]
-        var noboriRessya: [[Ressya]] = [[Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: "")]]
+        var kudariRessya: [[Ressya]] = []
+        var noboriRessya: [[Ressya]] = []
         
         var isKudari: Bool = false //どの構成要素を処理しているか示すBool
         var isNobori: Bool = false
@@ -21,12 +21,9 @@ class OuDia {
         
         var diaCount: Int = 0 //Dia.の数を数える
         
-        var kudariTarget: Int = 0 //配列内の編集すべきインデックスを示す
-        var noboriTarget: Int = 0
-        
         for lineRow in text.components(separatedBy: .newlines) { //textを1行づつ処理
             let line: String = lineRow.trimmingCharacters(in: .whitespaces) //行の端にある空白を削除
-            if line == "" {
+            if line.isEmpty {
                 continue
             } else if line == "." { //行がピリオドの場合
                 if isRessya {
@@ -40,25 +37,26 @@ class OuDia {
                     }
                 }
             } else if line.hasSuffix(".") { //行がピリオドで終わっている場合
-                let type: String = String(line.dropLast())
+                let type = String(line.dropLast())
                 switch type {
                 case "Dia":
                     diaCount += 1 //typeがDia.である場合を数える
-                    kudariRessya.append([Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: "")]) //空の要素をひとつ追加
-                    noboriRessya.append([Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: "")])
-                    kudariTarget = (kudariRessya.endIndex-1)-1
-                    noboriTarget = (noboriRessya.endIndex-1)-1
+                    kudariRessya.append([])
+                    noboriRessya.append([])
                 case "Kudari":
                     isKudari = true //Kudari.の処理中であることを示すBool
                 case "Nobori":
                     isNobori = true
                 case "Ressya":
                     isRessya = true
-                    if isKudari {
-                        kudariRessya[kudariTarget].append(Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: "")) //空の要素をひとつ追加
+                    if isKudari, var kudariTarget = kudariRessya.lastElement {
+                        //空の要素をひとつ追加
+                        kudariTarget.append(Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: ""))
+                        kudariRessya.lastElement = kudariTarget
                     }
-                    if isNobori {
-                        noboriRessya[noboriTarget].append(Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: ""))
+                    if isNobori, var noboriTarget = noboriRessya.lastElement {
+                        noboriTarget.append(Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: ""))
+                        noboriRessya.lastElement = noboriTarget
                     }
                 default:
                     break
@@ -67,74 +65,52 @@ class OuDia {
                 var keyAndValue: [String] = line.components(separatedBy: "=")
                 let key: String = keyAndValue.removeFirst() //イコールの左側
                 let value: String = keyAndValue.joined(separator: "=") //イコールの右側
-                let kudariRessyaCount: Int = (kudariRessya[kudariTarget].endIndex-1)-1 //配列内の編集すべきインデックスを示す
-                let noboriRessyaCount: Int = (noboriRessya[noboriTarget].endIndex-1)-1
-                switch key {
-                case "Houkou":
-                    if isKudari {
-                        kudariRessya[kudariTarget][kudariRessyaCount].houkou = value
-                    }
-                    if isNobori {
-                        noboriRessya[noboriTarget][noboriRessyaCount].houkou = value
-                    }
-                case "Syubetsu":
-                    if isKudari {
+                if isKudari, var kudariRessyaTarget = kudariRessya.lastElement?.lastElement {
+                    switch key {
+                    case "Houkou":
+                        kudariRessyaTarget.houkou = value
+                    case "Syubetsu":
                         if let valueInt = Int(value) {
-                            kudariRessya[kudariTarget][kudariRessyaCount].syubetsu = valueInt
+                            kudariRessyaTarget.syubetsu = valueInt
                         }
+                    case "Ressyabangou":
+                        kudariRessyaTarget.ressyabangou = value
+                    case "Ressyamei":
+                        kudariRessyaTarget.ressyamei = value
+                    case "Gousuu":
+                        kudariRessyaTarget.gousuu = value
+                    case "EkiJikoku":
+                        kudariRessyaTarget.ekiJikoku = EkiJikoku.parse(value) //String -> [String]に変換して代入
+                    case "Bikou":
+                        kudariRessyaTarget.bikou = value
+                    default:
+                        break
                     }
-                    if isNobori {
+                    kudariRessya.lastElement?.lastElement = kudariRessyaTarget
+                } else if isNobori, var noboriRessyaTarget = noboriRessya.lastElement?.lastElement {
+                    switch key {
+                    case "Houkou":
+                        noboriRessyaTarget.houkou = value
+                    case "Syubetsu":
                         if let valueInt = Int(value) {
-                            noboriRessya[noboriTarget][noboriRessyaCount].syubetsu = valueInt
+                            noboriRessyaTarget.syubetsu = valueInt
                         }
+                    case "Ressyabangou":
+                        noboriRessyaTarget.ressyabangou = value
+                    case "Ressyamei":
+                        noboriRessyaTarget.ressyamei = value
+                    case "Gousuu":
+                        noboriRessyaTarget.gousuu = value
+                    case "EkiJikoku":
+                        noboriRessyaTarget.ekiJikoku = EkiJikoku.parse(value)
+                    case "Bikou":
+                        noboriRessyaTarget.bikou = value
+                    default:
+                        break
                     }
-                case "Ressyabangou":
-                    if isKudari {
-                        kudariRessya[kudariTarget][kudariRessyaCount].ressyabangou = value
-                    }
-                    if isNobori {
-                        noboriRessya[noboriTarget][noboriRessyaCount].ressyabangou = value
-                    }
-                case "Ressyamei":
-                    if isKudari {
-                        kudariRessya[kudariTarget][kudariRessyaCount].ressyamei = value
-                    }
-                    if isNobori {
-                        noboriRessya[noboriTarget][noboriRessyaCount].ressyamei = value
-                    }
-                case "Gousuu":
-                    if isKudari {
-                        kudariRessya[kudariTarget][kudariRessyaCount].gousuu = value
-                    }
-                    if isNobori {
-                        noboriRessya[noboriTarget][noboriRessyaCount].gousuu = value
-                    }
-                case "EkiJikoku":
-                    if isKudari {
-                        kudariRessya[kudariTarget][kudariRessyaCount].ekiJikoku = EkiJikoku.parse(value) //String -> [String]に変換して代入
-                    }
-                    if isNobori {
-                        noboriRessya[noboriTarget][noboriRessyaCount].ekiJikoku = EkiJikoku.parse(value)
-                    }
-                case "Bikou":
-                    if isKudari {
-                        kudariRessya[kudariTarget][kudariRessyaCount].bikou = value
-                    }
-                    if isNobori {
-                        noboriRessya[noboriTarget][noboriRessyaCount].bikou = value
-                    }
-                default:
-                    break
+                    noboriRessya.lastElement?.lastElement = noboriRessyaTarget
                 }
             }
-        }
-        kudariRessya.removeLast() //余分な空の要素を削除
-        noboriRessya.removeLast()
-        for i in 0..<kudariRessya.count {
-            kudariRessya[i].removeLast() //余分な空の要素を削除
-        }
-        for i in 0..<noboriRessya.count {
-            noboriRessya[i].removeLast()
         }
         
         var kudari: [Kudari] = []

@@ -19,6 +19,7 @@
 		EBD863DC293B6E9B002D835D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBD863DB293B6E9B002D835D /* Assets.xcassets */; };
 		EBD863E1293B6E9B002D835D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBD863E0293B6E9B002D835D /* Preview Assets.xcassets */; };
 		EBF334A72A6913A20099EE4E /* DiagramEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */; };
+		EBF334AE2A699D3C0099EE4E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF334AD2A699D3C0099EE4E /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		EBD863E0293B6E9B002D835D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EBF334A42A6913A10099EE4E /* DiagramEditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiagramEditorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorTests.swift; sourceTree = "<group>"; };
+		EBF334AD2A699D3C0099EE4E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				EBA5403F2A278E4D004AC49A /* OudParser.swift */,
+				EBF334AD2A699D3C0099EE4E /* Extensions.swift */,
 			);
 			path = "\U0010Other";
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 				EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */,
 				EBA540462A278FBE004AC49A /* JikokuhyouRowsView.swift in Sources */,
 				EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */,
+				EBF334AE2A699D3C0099EE4E /* Extensions.swift in Sources */,
 				EBA540482A278FEF004AC49A /* JikokuView.swift in Sources */,
 				EBA5403E2A278D73004AC49A /* OudData.swift in Sources */,
 				EBD863DA293B6E97002D835D /* ContentView.swift in Sources */,
