@@ -11,123 +11,8 @@ let oudData = OuDia.parse(OudData.mockOudText)
 
 class OuDia {
     static func parse(_ text: String) -> OudData {
-        
-        var kudariRessya: [[Ressya]] = []
-        var noboriRessya: [[Ressya]] = []
-        
-        var isKudari: Bool = false //どの構成要素を処理しているか示すBool
-        var isNobori: Bool = false
-        var isRessya: Bool = false
-        
-        var diaCount: Int = 0 //Dia.の数を数える
-        
-        for lineRow in text.components(separatedBy: .newlines) { //textを1行づつ処理
-            let line: String = lineRow.trimmingCharacters(in: .whitespaces) //行の端にある空白を削除
-            if line.isEmpty {
-                continue
-            } else if line == "." { //行がピリオドの場合
-                if isRessya {
-                    isRessya = false
-                } else {
-                    if isKudari {
-                        isKudari = false
-                    }
-                    if isNobori {
-                        isNobori = false
-                    }
-                }
-            } else if line.hasSuffix(".") { //行がピリオドで終わっている場合
-                let type = String(line.dropLast())
-                switch type {
-                case "Dia":
-                    diaCount += 1 //typeがDia.である場合を数える
-                    kudariRessya.append([])
-                    noboriRessya.append([])
-                case "Kudari":
-                    isKudari = true //Kudari.の処理中であることを示すBool
-                case "Nobori":
-                    isNobori = true
-                case "Ressya":
-                    isRessya = true
-                    if isKudari, var kudariTarget = kudariRessya.lastElement {
-                        //空の要素をひとつ追加
-                        kudariTarget.append(Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: ""))
-                        kudariRessya.lastElement = kudariTarget
-                    }
-                    if isNobori, var noboriTarget = noboriRessya.lastElement {
-                        noboriTarget.append(Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: ""))
-                        noboriRessya.lastElement = noboriTarget
-                    }
-                default:
-                    break
-                }
-            } else if line.contains("=") { // 行にイコールが含まれている場合
-                var keyAndValue: [String] = line.components(separatedBy: "=")
-                let key: String = keyAndValue.removeFirst() //イコールの左側
-                let value: String = keyAndValue.joined(separator: "=") //イコールの右側
-                if isKudari, var kudariRessyaTarget = kudariRessya.lastElement?.lastElement {
-                    switch key {
-                    case "Houkou":
-                        kudariRessyaTarget.houkou = value
-                    case "Syubetsu":
-                        if let valueInt = Int(value) {
-                            kudariRessyaTarget.syubetsu = valueInt
-                        }
-                    case "Ressyabangou":
-                        kudariRessyaTarget.ressyabangou = value
-                    case "Ressyamei":
-                        kudariRessyaTarget.ressyamei = value
-                    case "Gousuu":
-                        kudariRessyaTarget.gousuu = value
-                    case "EkiJikoku":
-                        kudariRessyaTarget.ekiJikoku = EkiJikoku.parse(value) //String -> [String]に変換して代入
-                    case "Bikou":
-                        kudariRessyaTarget.bikou = value
-                    default:
-                        break
-                    }
-                    kudariRessya.lastElement?.lastElement = kudariRessyaTarget
-                } else if isNobori, var noboriRessyaTarget = noboriRessya.lastElement?.lastElement {
-                    switch key {
-                    case "Houkou":
-                        noboriRessyaTarget.houkou = value
-                    case "Syubetsu":
-                        if let valueInt = Int(value) {
-                            noboriRessyaTarget.syubetsu = valueInt
-                        }
-                    case "Ressyabangou":
-                        noboriRessyaTarget.ressyabangou = value
-                    case "Ressyamei":
-                        noboriRessyaTarget.ressyamei = value
-                    case "Gousuu":
-                        noboriRessyaTarget.gousuu = value
-                    case "EkiJikoku":
-                        noboriRessyaTarget.ekiJikoku = EkiJikoku.parse(value)
-                    case "Bikou":
-                        noboriRessyaTarget.bikou = value
-                    default:
-                        break
-                    }
-                    noboriRessya.lastElement?.lastElement = noboriRessyaTarget
-                }
-            }
-        }
-        
-        var kudari: [Kudari] = []
-        var nobori: [Nobori] = []
-        
-        for i in 0..<diaCount { //Dia.の数だけ配列の要素が増える
-            kudari.append(Kudari(ressya: kudariRessya[i]))
-        }
-        for i in 0..<diaCount {
-            nobori.append(Nobori(ressya: noboriRessya[i]))
-        }
-        
-        var dia: [Dia] = []
-        
-        for i in 0..<diaCount {
-            dia.append(Dia(diaName: "", kudari: kudari[i], nobori: nobori[i]))
-        }
+
+        var dia = parseDia(text: text)
         
         var ressyasyubetsu: [Ressyasyubetsu] = [Ressyasyubetsu(syubetsumei: "", ryakusyou: "", jikokuhyouMojiColor: "", jikokuhyouFontIndex: "", diagramSenColor: "", diagramSenStyle: "", diagramSenIsBold: "", stopMarkDrawType: "")]
         var eki: [Eki] = [Eki(ekimei: "", ekijikokukeisiki: .hatsu, ekikibo: "", kyoukaisen: "", diagramRessyajouhouHyoujiKudari: "", diagramRessyajouhouHyoujiNobori: "")]
@@ -406,6 +291,119 @@ class OuDia {
         result.append("FileTypeAppComment=" + "Diagram Editor Ver. Alpha 1.0.0") //ここは各Appが名付ける要素
         
         return result
+    }
+}
+
+private extension OuDia {
+    static func parseDia(text: String) -> [Dia] {
+        let ressya = parseRessya()
+        let kudariRessya = ressya.kudari
+        let noboriRessya = ressya.nobori
+        let kudari: [Kudari] = kudariRessya.map { Kudari(ressya: $0) }
+        let nobori: [Nobori] = noboriRessya.map { Nobori(ressya: $0) }
+        let dia: [Dia] = zip(kudari, nobori).map { Dia(diaName: "", kudari: $0.0, nobori: $0.1) }
+        return dia
+
+        func parseRessya() -> (kudari: [[Ressya]], nobori: [[Ressya]]) {
+            var kudariRessya: [[Ressya]] = []
+            var noboriRessya: [[Ressya]] = []
+
+            var isKudari: Bool = false //どの構成要素を処理しているか示すBool
+            var isNobori: Bool = false
+            var isRessya: Bool = false
+
+            for lineRow in text.components(separatedBy: .newlines) { //textを1行づつ処理
+                let line: String = lineRow.trimmingCharacters(in: .whitespaces) //行の端にある空白を削除
+                if line.isEmpty {
+                    continue
+                } else if line == "." { //行がピリオドの場合
+                    if isRessya {
+                        isRessya = false
+                    } else {
+                        if isKudari {
+                            isKudari = false
+                        }
+                        if isNobori {
+                            isNobori = false
+                        }
+                    }
+                } else if line.hasSuffix(".") { //行がピリオドで終わっている場合
+                    let type = String(line.dropLast())
+                    switch type {
+                    case "Dia":
+                        kudariRessya.append([])
+                        noboriRessya.append([])
+                    case "Kudari":
+                        isKudari = true //Kudari.の処理中であることを示すBool
+                    case "Nobori":
+                        isNobori = true
+                    case "Ressya":
+                        isRessya = true
+                        if isKudari, var kudariTarget = kudariRessya.lastElement {
+                            //空の要素をひとつ追加
+                            kudariTarget.append(Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: ""))
+                            kudariRessya.lastElement = kudariTarget
+                        }
+                        if isNobori, var noboriTarget = noboriRessya.lastElement {
+                            noboriTarget.append(Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: ""))
+                            noboriRessya.lastElement = noboriTarget
+                        }
+                    default:
+                        break
+                    }
+                } else if line.contains("=") { // 行にイコールが含まれている場合
+                    var keyAndValue: [String] = line.components(separatedBy: "=")
+                    let key: String = keyAndValue.removeFirst() //イコールの左側
+                    let value: String = keyAndValue.joined(separator: "=") //イコールの右側
+                    if isKudari, var kudariRessyaTarget = kudariRessya.lastElement?.lastElement {
+                        switch key {
+                        case "Houkou":
+                            kudariRessyaTarget.houkou = value
+                        case "Syubetsu":
+                            if let valueInt = Int(value) {
+                                kudariRessyaTarget.syubetsu = valueInt
+                            }
+                        case "Ressyabangou":
+                            kudariRessyaTarget.ressyabangou = value
+                        case "Ressyamei":
+                            kudariRessyaTarget.ressyamei = value
+                        case "Gousuu":
+                            kudariRessyaTarget.gousuu = value
+                        case "EkiJikoku":
+                            kudariRessyaTarget.ekiJikoku = EkiJikoku.parse(value) //String -> [String]に変換して代入
+                        case "Bikou":
+                            kudariRessyaTarget.bikou = value
+                        default:
+                            break
+                        }
+                        kudariRessya.lastElement?.lastElement = kudariRessyaTarget
+                    } else if isNobori, var noboriRessyaTarget = noboriRessya.lastElement?.lastElement {
+                        switch key {
+                        case "Houkou":
+                            noboriRessyaTarget.houkou = value
+                        case "Syubetsu":
+                            if let valueInt = Int(value) {
+                                noboriRessyaTarget.syubetsu = valueInt
+                            }
+                        case "Ressyabangou":
+                            noboriRessyaTarget.ressyabangou = value
+                        case "Ressyamei":
+                            noboriRessyaTarget.ressyamei = value
+                        case "Gousuu":
+                            noboriRessyaTarget.gousuu = value
+                        case "EkiJikoku":
+                            noboriRessyaTarget.ekiJikoku = EkiJikoku.parse(value)
+                        case "Bikou":
+                            noboriRessyaTarget.bikou = value
+                        default:
+                            break
+                        }
+                        noboriRessya.lastElement?.lastElement = noboriRessyaTarget
+                    }
+                }
+            }
+            return (kudari: kudariRessya, nobori: noboriRessya)
+        }
     }
 }
 
