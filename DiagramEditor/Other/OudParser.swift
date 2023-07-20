@@ -7,7 +7,7 @@
 
 import Foundation
 
-let oudData = OuDia.parse(OudData.mockOudData)
+let oudData = OuDia.parse(OudData.mockOudText)
 
 class OuDia {
     static func parse(_ text: String) -> OudData {
@@ -358,8 +358,10 @@ class OuDia {
             result.append("Kudari.\n")
             for j in 0..<data.rosen.dia[i].kudari.ressya.count {
                 result.append("Ressya.\n")
-                result.append("Houkou=\(data.rosen.dia[i].kudari.ressya[j].houkou)\n")
-                result.append("Syubetsu=\(data.rosen.dia[i].kudari.ressya[j].syubetsu)\n")
+                if !data.rosen.dia[i].kudari.ressya[j].houkou.isEmpty {
+                    result.append("Houkou=\(data.rosen.dia[i].kudari.ressya[j].houkou)\n")
+                    result.append("Syubetsu=\(data.rosen.dia[i].kudari.ressya[j].syubetsu)\n")
+                }
                 if !data.rosen.dia[i].kudari.ressya[j].ressyabangou.isEmpty {
                     result.append("Ressyabangou=\(data.rosen.dia[i].kudari.ressya[j].ressyabangou)\n")
                 }
@@ -369,7 +371,9 @@ class OuDia {
                 if !data.rosen.dia[i].kudari.ressya[j].gousuu.isEmpty {
                     result.append("Gousuu=\(data.rosen.dia[i].kudari.ressya[j].gousuu)\n")
                 }
-                result.append("EkiJikoku=\(EkiJikoku.stringify(data.rosen.dia[i].kudari.ressya[j].ekiJikoku))\n")
+                if !data.rosen.dia[i].kudari.ressya[j].ekiJikoku.isEmpty {
+                    result.append("EkiJikoku=\(EkiJikoku.stringify(data.rosen.dia[i].kudari.ressya[j].ekiJikoku))\n")
+                }
                 if !data.rosen.dia[i].kudari.ressya[j].bikou.isEmpty {
                     result.append("Bikou=\(data.rosen.dia[i].kudari.ressya[j].bikou)\n")
                 }
@@ -379,8 +383,10 @@ class OuDia {
             result.append("Nobori.\n")
             for j in 0..<data.rosen.dia[i].nobori.ressya.count {
                 result.append("Ressya.\n")
-                result.append("Houkou=\(data.rosen.dia[i].nobori.ressya[j].houkou)\n")
-                result.append("Syubetsu=\(data.rosen.dia[i].nobori.ressya[j].syubetsu)\n")
+                if !data.rosen.dia[i].nobori.ressya[j].houkou.isEmpty {
+                    result.append("Houkou=\(data.rosen.dia[i].nobori.ressya[j].houkou)\n")
+                    result.append("Syubetsu=\(data.rosen.dia[i].nobori.ressya[j].syubetsu)\n")
+                }
                 if !data.rosen.dia[i].nobori.ressya[j].ressyabangou.isEmpty {
                     result.append("Ressyabangou=\(data.rosen.dia[i].nobori.ressya[j].ressyabangou)\n")
                 }
@@ -390,7 +396,9 @@ class OuDia {
                 if !data.rosen.dia[i].nobori.ressya[j].gousuu.isEmpty {
                     result.append("Gousuu=\(data.rosen.dia[i].nobori.ressya[j].gousuu)\n")
                 }
-                result.append("EkiJikoku=\(EkiJikoku.stringify(data.rosen.dia[i].nobori.ressya[j].ekiJikoku))\n") //[String] -> Stringに変換して代入
+                if !data.rosen.dia[i].nobori.ressya[j].ekiJikoku.isEmpty {
+                    result.append("EkiJikoku=\(EkiJikoku.stringify(data.rosen.dia[i].nobori.ressya[j].ekiJikoku))\n") //[String] -> Stringに変換して代入
+                }
                 if !data.rosen.dia[i].nobori.ressya[j].bikou.isEmpty {
                     result.append("Bikou=\(data.rosen.dia[i].nobori.ressya[j].bikou)\n")
                 }
