@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct OudData {
+struct OudData: Equatable {
     var fileType: String
     let rosen: Rosen
     let dispProp: DispProp
     var fileTypeAppComment: String
 }
 
-struct Ressya: Hashable { //インデント数: 4
+struct Ressya: Hashable, Equatable { //インデント数: 4
     var houkou: String
     var syubetsu: Int
     var ressyabangou: String //任意
@@ -24,21 +24,21 @@ struct Ressya: Hashable { //インデント数: 4
     var bikou: String //任意
 }
 
-struct Kudari { //インデント数: 3
+struct Kudari: Equatable { //インデント数: 3
     let ressya: [Ressya]
 }
 
-struct Nobori { //インデント数: 3
+struct Nobori: Equatable { //インデント数: 3
     let ressya: [Ressya]
 }
 
-struct Dia { //インデント数: 2
+struct Dia: Equatable { //インデント数: 2
     var diaName: String
     let kudari: Kudari
     let nobori: Nobori
 }
 
-struct Ressyasyubetsu { //インデント数: 2
+struct Ressyasyubetsu: Equatable { //インデント数: 2
     var syubetsumei: String
     var ryakusyou: String
     var jikokuhyouMojiColor: String
@@ -49,7 +49,7 @@ struct Ressyasyubetsu { //インデント数: 2
     var stopMarkDrawType: String //任意
 }
 
-struct Eki: Hashable { //インデント数: 2
+struct Eki: Hashable, Equatable { //インデント数: 2
     var ekimei: String
     var ekijikokukeisiki: Ekijikokukeisiki
     var ekikibo: String
@@ -58,7 +58,7 @@ struct Eki: Hashable { //インデント数: 2
     var diagramRessyajouhouHyoujiNobori: String //任意
 }
 
-struct DispProp { //インデント数: 1
+struct DispProp: Equatable { //インデント数: 1
     var jikokuhyouFont: [String]
     var jikokuhyouVFont: String
     var diaEkimeiFont: String
@@ -73,7 +73,7 @@ struct DispProp { //インデント数: 1
     var jikokuhyouRessyaWidth: String
 }
 
-struct Rosen { //インデント数: 1
+struct Rosen: Equatable { //インデント数: 1
     var rosenmei: String
     let eki: [Eki]
     let ressyasyubetsu: [Ressyasyubetsu]

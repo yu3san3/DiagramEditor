@@ -18,7 +18,18 @@
 		EBD863DA293B6E97002D835D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D9293B6E97002D835D /* ContentView.swift */; };
 		EBD863DC293B6E9B002D835D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBD863DB293B6E9B002D835D /* Assets.xcassets */; };
 		EBD863E1293B6E9B002D835D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBD863E0293B6E9B002D835D /* Preview Assets.xcassets */; };
+		EBF334A72A6913A20099EE4E /* DiagramEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EBF334A82A6913A20099EE4E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EBD863CA293B6E97002D835D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EBD863D1293B6E97002D835D;
+			remoteInfo = DiagramEditor;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		EBA5403D2A278D73004AC49A /* OudData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudData.swift; sourceTree = "<group>"; };
@@ -35,10 +46,19 @@
 		EBD863DD293B6E9B002D835D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EBD863DE293B6E9B002D835D /* DiagramEditor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiagramEditor.entitlements; sourceTree = "<group>"; };
 		EBD863E0293B6E9B002D835D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		EBF334A42A6913A10099EE4E /* DiagramEditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiagramEditorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		EBD863CF293B6E97002D835D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EBF334A12A6913A10099EE4E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -52,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				EBD863D4293B6E97002D835D /* DiagramEditor */,
+				EBF334A52A6913A20099EE4E /* DiagramEditorTests */,
 				EBD863D3293B6E97002D835D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				EBD863D2293B6E97002D835D /* DiagramEditor.app */,
+				EBF334A42A6913A10099EE4E /* DiagramEditorTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -116,6 +138,14 @@
 			path = "\U0010Other";
 			sourceTree = "<group>";
 		};
+		EBF334A52A6913A20099EE4E /* DiagramEditorTests */ = {
+			isa = PBXGroup;
+			children = (
+				EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */,
+			);
+			path = DiagramEditorTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -136,6 +166,24 @@
 			productReference = EBD863D2293B6E97002D835D /* DiagramEditor.app */;
 			productType = "com.apple.product-type.application";
 		};
+		EBF334A32A6913A10099EE4E /* DiagramEditorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EBF334AA2A6913A20099EE4E /* Build configuration list for PBXNativeTarget "DiagramEditorTests" */;
+			buildPhases = (
+				EBF334A02A6913A10099EE4E /* Sources */,
+				EBF334A12A6913A10099EE4E /* Frameworks */,
+				EBF334A22A6913A10099EE4E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EBF334A92A6913A20099EE4E /* PBXTargetDependency */,
+			);
+			name = DiagramEditorTests;
+			productName = DiagramEditorTests;
+			productReference = EBF334A42A6913A10099EE4E /* DiagramEditorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -143,11 +191,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1410;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1410;
 				TargetAttributes = {
 					EBD863D1293B6E97002D835D = {
 						CreatedOnToolsVersion = 14.1;
+					};
+					EBF334A32A6913A10099EE4E = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = EBD863D1293B6E97002D835D;
 					};
 				};
 			};
@@ -165,6 +217,7 @@
 			projectRoot = "";
 			targets = (
 				EBD863D1293B6E97002D835D /* DiagramEditor */,
+				EBF334A32A6913A10099EE4E /* DiagramEditorTests */,
 			);
 		};
 /* End PBXProject section */
@@ -176,6 +229,13 @@
 			files = (
 				EBD863E1293B6E9B002D835D /* Preview Assets.xcassets in Resources */,
 				EBD863DC293B6E9B002D835D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EBF334A22A6913A10099EE4E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +258,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		EBF334A02A6913A10099EE4E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EBF334A72A6913A20099EE4E /* DiagramEditorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EBF334A92A6913A20099EE4E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EBD863D1293B6E97002D835D /* DiagramEditor */;
+			targetProxy = EBF334A82A6913A20099EE4E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		EBD863E2293B6E9B002D835D /* Debug */ = {
@@ -392,6 +468,50 @@
 			};
 			name = Release;
 		};
+		EBF334AB2A6913A20099EE4E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VXRZ4F779B;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yu3san3.DiagramEditorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiagramEditor.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DiagramEditor";
+			};
+			name = Debug;
+		};
+		EBF334AC2A6913A20099EE4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VXRZ4F779B;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yu3san3.DiagramEditorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiagramEditor.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DiagramEditor";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -409,6 +529,15 @@
 			buildConfigurations = (
 				EBD863E5293B6E9B002D835D /* Debug */,
 				EBD863E6293B6E9B002D835D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EBF334AA2A6913A20099EE4E /* Build configuration list for PBXNativeTarget "DiagramEditorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EBF334AB2A6913A20099EE4E /* Debug */,
+				EBF334AC2A6913A20099EE4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

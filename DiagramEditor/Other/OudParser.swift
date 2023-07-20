@@ -369,7 +369,7 @@ class OuDia {
                 if !data.rosen.dia[i].kudari.ressya[j].gousuu.isEmpty {
                     result.append("Gousuu=\(data.rosen.dia[i].kudari.ressya[j].gousuu)\n")
                 }
-                result.append("EkiJikoku=\(data.rosen.dia[i].kudari.ressya[j].ekiJikoku)\n")
+                result.append("EkiJikoku=\(EkiJikoku.stringify(data.rosen.dia[i].kudari.ressya[j].ekiJikoku))\n")
                 if !data.rosen.dia[i].kudari.ressya[j].bikou.isEmpty {
                     result.append("Bikou=\(data.rosen.dia[i].kudari.ressya[j].bikou)\n")
                 }
@@ -419,25 +419,27 @@ class OuDia {
         result.append("EkimeiLength=\(data.dispProp.ekimeiLength)\n")
         result.append("JikokuhyouRessyaWidth=\(data.dispProp.jikokuhyouRessyaWidth)\n")
         result.append(".\n") //DispProp End
-        result.append("FileTypeAppComment=" + "Diagram Editor Ver. Aplha 1.0.0" + "\n") //ここは各Appが名付ける要素
+        result.append("FileTypeAppComment=" + "Diagram Editor Ver. Alpha 1.0.0") //ここは各Appが名付ける要素
         
         return result
     }
 }
 
 class EkiJikoku {
-    static func parse(_ text: String) -> Array<String> {
-        var result: Array<String> = []
+    static func parse(_ text: String) -> [String] {
+        var result: [String] = []
         result = text.components(separatedBy: ",")
         return result
     }
     
-    static func stringify(_ array: Array<String>) -> String {
+    static func stringify(_ array: [String]) -> String {
         var result: String = ""
         for i in 0 ..< array.count {
             result += array[i] + ","
         }
-        result.removeLast()
+        if !result.isEmpty {
+            result.removeLast()
+        }
         return result
     }
 }
