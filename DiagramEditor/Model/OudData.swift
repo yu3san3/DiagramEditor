@@ -25,17 +25,17 @@ struct Ressya: Hashable, Equatable { //インデント数: 4
 }
 
 struct Kudari: Equatable { //インデント数: 3
-    let ressya: [Ressya]
+    var ressya: [Ressya]
 }
 
 struct Nobori: Equatable { //インデント数: 3
-    let ressya: [Ressya]
+    var ressya: [Ressya]
 }
 
 struct Dia: Equatable { //インデント数: 2
     var diaName: String
-    let kudari: Kudari
-    let nobori: Nobori
+    var kudari: Kudari
+    var nobori: Nobori
 }
 
 struct Ressyasyubetsu: Equatable { //インデント数: 2
