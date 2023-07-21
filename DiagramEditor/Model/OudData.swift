@@ -9,8 +9,8 @@ import Foundation
 
 struct OudData: Equatable {
     var fileType: String
-    let rosen: Rosen
-    let dispProp: DispProp
+    var rosen: Rosen
+    var dispProp: DispProp
     var fileTypeAppComment: String
 }
 
@@ -75,9 +75,9 @@ struct DispProp: Equatable { //インデント数: 1
 
 struct Rosen: Equatable { //インデント数: 1
     var rosenmei: String
-    let eki: [Eki]
-    let ressyasyubetsu: [Ressyasyubetsu]
-    let dia: [Dia]
+    var eki: [Eki]
+    var ressyasyubetsu: [Ressyasyubetsu]
+    var dia: [Dia]
     var kitenJikoku: String
     var diagramDgrYZahyouKyoriDefault: String
     var comment: String
