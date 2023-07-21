@@ -108,122 +108,23 @@ class OuDia {
                 oudData.rosen.dia.lastElement?.nobori.ressya.lastElement = noboriRessyaTarget
             }
             if var ekiTarget = oudData.rosen.eki.lastElement {
-                switch key {
-                case "Ekimei":
-                    ekiTarget.ekimei = value
-                case "Ekijikokukeisiki":
-                    switch value {
-                    case "Jikokukeisiki_Hatsu":
-                        ekiTarget.ekijikokukeisiki = .hatsu
-                    case "Jikokukeisiki_Hatsuchaku":
-                        ekiTarget.ekijikokukeisiki = .hatsuchaku
-                    case "Jikokukeisiki_KudariChaku":
-                        ekiTarget.ekijikokukeisiki = .kudariChaku
-                    case "Jikokukeisiki_NoboriChaku":
-                        ekiTarget.ekijikokukeisiki = .noboriChaku
-                    default:
-                        ekiTarget.ekijikokukeisiki = .hatsu
-                    }
-                case "Ekikibo":
-                    ekiTarget.ekikibo = value
-                case "Kyoukaisen":
-                    ekiTarget.kyoukaisen = value
-                case "DiagramRessyajouhouHyoujiKudari":
-                    ekiTarget.diagramRessyajouhouHyoujiKudari = value
-                case "DiagramRessyajouhouHyoujiNobori":
-                    ekiTarget.diagramRessyajouhouHyoujiNobori = value
-                default:
-                    break
-                }
+                updateEki(in: &ekiTarget, withKey: key, value: value)
                 oudData.rosen.eki.lastElement = ekiTarget
             }
             if var ressyasyubetsuTarget = oudData.rosen.ressyasyubetsu.lastElement {
-                switch key {
-                case "Syubetsumei":
-                    ressyasyubetsuTarget.syubetsumei = value
-                case "Ryakusyou":
-                    ressyasyubetsuTarget.ryakusyou = value
-                case "JikokuhyouMojiColor":
-                    ressyasyubetsuTarget.jikokuhyouMojiColor = value
-                case "JikokuhyouFontIndex":
-                    ressyasyubetsuTarget.jikokuhyouFontIndex = value
-                case "DiagramSenColor":
-                    ressyasyubetsuTarget.diagramSenColor = value
-                case "DiagramSenStyle":
-                    ressyasyubetsuTarget.diagramSenStyle = value
-                case "DiagramSenIsBold":
-                    ressyasyubetsuTarget.diagramSenIsBold = value
-                case "StopMarkDrawType":
-                    ressyasyubetsuTarget.stopMarkDrawType = value
-                default:
-                    break
-                }
+                updateRessyasyubetsu(in: &ressyasyubetsuTarget, withKey: key, value: value)
                 oudData.rosen.ressyasyubetsu.lastElement = ressyasyubetsuTarget
             }
             if var diaTarget = oudData.rosen.dia.lastElement {
-                switch key {
-                case "DiaName":
-                    diaTarget.diaName = value
-                default:
-                    break
-                }
+                updateDia(in: &diaTarget, withKey: key, value: value)
                 oudData.rosen.dia.lastElement = diaTarget
             }
             //
-            var rosenTarget = oudData.rosen
-            switch key {
-            case "Rosenmei":
-                rosenTarget.rosenmei = value
-            case "KitenJikoku":
-                rosenTarget.kitenJikoku = value
-            case "DiagramDgrYZahyouKyoriDefault":
-                rosenTarget.diagramDgrYZahyouKyoriDefault = value
-            case "Comment":
-                rosenTarget.comment = value
-            default:
-                break
-            }
-            oudData.rosen = rosenTarget
+            updateRosen(key: key, value: value)
             //
-            var dispPropTarget = oudData.dispProp
-            switch key {
-            case "JikokuhyouFont":
-                dispPropTarget.jikokuhyouFont.append(value) //この要素は配列で定義されているのでappend()を用いる
-            case "JikokuhyouVFont":
-                dispPropTarget.jikokuhyouVFont = value
-            case "DiaEkimeiFont":
-                dispPropTarget.diaEkimeiFont = value
-            case "DiaJikokuFont":
-                dispPropTarget.diaJikokuFont = value
-            case "DiaRessyaFont":
-                dispPropTarget.diaRessyaFont = value
-            case "CommentFont":
-                dispPropTarget.commentFont = value
-            case "DiaMojiColor":
-                dispPropTarget.diaMojiColor = value
-            case "DiaHaikeiColor":
-                dispPropTarget.diaHaikeiColor = value
-            case "DiaRessyaColor":
-                dispPropTarget.diaRessyaColor = value
-            case "DiaJikuColor":
-                dispPropTarget.diaJikuColor = value
-            case "EkimeiLength":
-                dispPropTarget.ekimeiLength = value
-            case "JikokuhyouRessyaWidth":
-                dispPropTarget.jikokuhyouRessyaWidth = value
-            default:
-                break
-            }
-            oudData.dispProp = dispPropTarget
+            updateDispProp(key: key, value: value)
             //
-            switch key {
-            case "FileType":
-                oudData.fileType = value
-            case "FileTypeAppComment":
-                oudData.fileTypeAppComment = value //ここは各Appが名付ける要素
-            default:
-                break
-            }
+            updateOudData(key: key, value: value)
             return
 
             func updateRessya(in ressya: inout Ressya, withKey key: String, value: String) {
@@ -248,6 +149,126 @@ class OuDia {
                     break
                 }
                 return
+            }
+
+            func updateEki(in eki: inout Eki, withKey key: String, value: String) {
+                switch key {
+                case "Ekimei":
+                    eki.ekimei = value
+                case "Ekijikokukeisiki":
+                    switch value {
+                    case "Jikokukeisiki_Hatsu":
+                        eki.ekijikokukeisiki = .hatsu
+                    case "Jikokukeisiki_Hatsuchaku":
+                        eki.ekijikokukeisiki = .hatsuchaku
+                    case "Jikokukeisiki_KudariChaku":
+                        eki.ekijikokukeisiki = .kudariChaku
+                    case "Jikokukeisiki_NoboriChaku":
+                        eki.ekijikokukeisiki = .noboriChaku
+                    default:
+                        eki.ekijikokukeisiki = .hatsu
+                    }
+                case "Ekikibo":
+                    eki.ekikibo = value
+                case "Kyoukaisen":
+                    eki.kyoukaisen = value
+                case "DiagramRessyajouhouHyoujiKudari":
+                    eki.diagramRessyajouhouHyoujiKudari = value
+                case "DiagramRessyajouhouHyoujiNobori":
+                    eki.diagramRessyajouhouHyoujiNobori = value
+                default:
+                    break
+                }
+                return
+            }
+
+            func updateRessyasyubetsu(in ressyasyubetsu: inout Ressyasyubetsu, withKey key: String, value: String) {
+                switch key {
+                case "Syubetsumei":
+                    ressyasyubetsu.syubetsumei = value
+                case "Ryakusyou":
+                    ressyasyubetsu.ryakusyou = value
+                case "JikokuhyouMojiColor":
+                    ressyasyubetsu.jikokuhyouMojiColor = value
+                case "JikokuhyouFontIndex":
+                    ressyasyubetsu.jikokuhyouFontIndex = value
+                case "DiagramSenColor":
+                    ressyasyubetsu.diagramSenColor = value
+                case "DiagramSenStyle":
+                    ressyasyubetsu.diagramSenStyle = value
+                case "DiagramSenIsBold":
+                    ressyasyubetsu.diagramSenIsBold = value
+                case "StopMarkDrawType":
+                    ressyasyubetsu.stopMarkDrawType = value
+                default:
+                    break
+                }
+            }
+
+            func updateDia(in dia: inout Dia, withKey key: String, value: String) {
+                switch key {
+                case "DiaName":
+                    dia.diaName = value
+                default:
+                    break
+                }
+            }
+
+            func updateRosen(key: String, value: String) {
+                switch key {
+                case "Rosenmei":
+                    oudData.rosen.rosenmei = value
+                case "KitenJikoku":
+                    oudData.rosen.kitenJikoku = value
+                case "DiagramDgrYZahyouKyoriDefault":
+                    oudData.rosen.diagramDgrYZahyouKyoriDefault = value
+                case "Comment":
+                    oudData.rosen.comment = value
+                default:
+                    break
+                }
+            }
+
+            func updateDispProp(key: String, value: String) {
+                switch key {
+                case "JikokuhyouFont":
+                    oudData.dispProp.jikokuhyouFont.append(value) //この要素は配列で定義されているのでappend()を用いる
+                case "JikokuhyouVFont":
+                    oudData.dispProp.jikokuhyouVFont = value
+                case "DiaEkimeiFont":
+                    oudData.dispProp.diaEkimeiFont = value
+                case "DiaJikokuFont":
+                    oudData.dispProp.diaJikokuFont = value
+                case "DiaRessyaFont":
+                    oudData.dispProp.diaRessyaFont = value
+                case "CommentFont":
+                    oudData.dispProp.commentFont = value
+                case "DiaMojiColor":
+                    oudData.dispProp.diaMojiColor = value
+                case "DiaHaikeiColor":
+                    oudData.dispProp.diaHaikeiColor = value
+                case "DiaRessyaColor":
+                    oudData.dispProp.diaRessyaColor = value
+                case "DiaJikuColor":
+                    oudData.dispProp.diaJikuColor = value
+                case "EkimeiLength":
+                    oudData.dispProp.ekimeiLength = value
+                case "JikokuhyouRessyaWidth":
+                    oudData.dispProp.jikokuhyouRessyaWidth = value
+                default:
+                    break
+                }
+            }
+
+            func updateOudData(key: String, value: String) {
+                switch key {
+                case "FileType":
+                    oudData.fileType = value
+                case "FileTypeAppComment":
+                    oudData.fileTypeAppComment = value //ここは各Appが名付ける要素
+                default:
+                    break
+                }
             }
         }
     }
