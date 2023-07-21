@@ -296,118 +296,117 @@ class OuDia {
 
 private extension OuDia {
     static func parseDia(text: String) -> [Dia] {
-        let ressya = parseRessya()
-        let kudariRessya = ressya.kudari
-        let noboriRessya = ressya.nobori
-        let kudari: [Kudari] = kudariRessya.map { Kudari(ressya: $0) }
-        let nobori: [Nobori] = noboriRessya.map { Nobori(ressya: $0) }
-        let dia: [Dia] = zip(kudari, nobori).map { Dia(diaName: "", kudari: $0.0, nobori: $0.1) }
+        let ressya = parseRessya(text: text)
+        let dia = generateDia(kudariRessya: ressya.kudari, noboriRessya: ressya.nobori)
         return dia
 
-        func parseRessya() -> (kudari: [[Ressya]], nobori: [[Ressya]]) {
+        func parseRessya(text: String) -> (kudari: [[Ressya]], nobori: [[Ressya]]) {
+            enum ProcessState {
+                case none
+                case kudari
+                case nobori
+            }
+
             var kudariRessya: [[Ressya]] = []
             var noboriRessya: [[Ressya]] = []
 
-            var isKudari: Bool = false //どの構成要素を処理しているか示すBool
-            var isNobori: Bool = false
-            var isRessya: Bool = false
+            var isRessya = false
+            var processState: ProcessState = .none //どの構成要素を処理しているかを示す
 
             for lineRow in text.components(separatedBy: .newlines) { //textを1行づつ処理
                 let line: String = lineRow.trimmingCharacters(in: .whitespaces) //行の端にある空白を削除
                 if line.isEmpty {
                     continue
                 } else if line == "." { //行がピリオドの場合
-                    if isRessya {
-                        isRessya = false
-                    } else {
-                        if isKudari {
-                            isKudari = false
-                        }
-                        if isNobori {
-                            isNobori = false
-                        }
-                    }
+                    resetProcessState()
                 } else if line.hasSuffix(".") { //行がピリオドで終わっている場合
-                    let type = String(line.dropLast())
-                    switch type {
-                    case "Dia":
-                        kudariRessya.append([])
-                        noboriRessya.append([])
-                    case "Kudari":
-                        isKudari = true //Kudari.の処理中であることを示すBool
-                    case "Nobori":
-                        isNobori = true
-                    case "Ressya":
-                        isRessya = true
-                        if isKudari, var kudariTarget = kudariRessya.lastElement {
-                            //空の要素をひとつ追加
-                            kudariTarget.append(Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: ""))
-                            kudariRessya.lastElement = kudariTarget
-                        }
-                        if isNobori, var noboriTarget = noboriRessya.lastElement {
-                            noboriTarget.append(Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: ""))
-                            noboriRessya.lastElement = noboriTarget
-                        }
-                    default:
-                        break
-                    }
+                    handleScopeEntry(line: line)
                 } else if line.contains("=") { // 行にイコールが含まれている場合
-                    var keyAndValue: [String] = line.components(separatedBy: "=")
-                    let key: String = keyAndValue.removeFirst() //イコールの左側
-                    let value: String = keyAndValue.joined(separator: "=") //イコールの右側
-                    if isKudari, var kudariRessyaTarget = kudariRessya.lastElement?.lastElement {
-                        switch key {
-                        case "Houkou":
-                            kudariRessyaTarget.houkou = value
-                        case "Syubetsu":
-                            if let valueInt = Int(value) {
-                                kudariRessyaTarget.syubetsu = valueInt
-                            }
-                        case "Ressyabangou":
-                            kudariRessyaTarget.ressyabangou = value
-                        case "Ressyamei":
-                            kudariRessyaTarget.ressyamei = value
-                        case "Gousuu":
-                            kudariRessyaTarget.gousuu = value
-                        case "EkiJikoku":
-                            kudariRessyaTarget.ekiJikoku = EkiJikoku.parse(value) //String -> [String]に変換して代入
-                        case "Bikou":
-                            kudariRessyaTarget.bikou = value
-                        default:
-                            break
-                        }
-                        kudariRessya.lastElement?.lastElement = kudariRessyaTarget
-                    } else if isNobori, var noboriRessyaTarget = noboriRessya.lastElement?.lastElement {
-                        switch key {
-                        case "Houkou":
-                            noboriRessyaTarget.houkou = value
-                        case "Syubetsu":
-                            if let valueInt = Int(value) {
-                                noboriRessyaTarget.syubetsu = valueInt
-                            }
-                        case "Ressyabangou":
-                            noboriRessyaTarget.ressyabangou = value
-                        case "Ressyamei":
-                            noboriRessyaTarget.ressyamei = value
-                        case "Gousuu":
-                            noboriRessyaTarget.gousuu = value
-                        case "EkiJikoku":
-                            noboriRessyaTarget.ekiJikoku = EkiJikoku.parse(value)
-                        case "Bikou":
-                            noboriRessyaTarget.bikou = value
-                        default:
-                            break
-                        }
-                        noboriRessya.lastElement?.lastElement = noboriRessyaTarget
-                    }
+                    setValueFromKey(line: line)
                 }
             }
             return (kudari: kudariRessya, nobori: noboriRessya)
+
+            func resetProcessState() {
+                if isRessya {
+                    isRessya = false
+                } else {
+                    processState = .none
+                }
+            }
+
+            func handleScopeEntry(line: String) {
+                switch line {
+                case "Dia.":
+                    kudariRessya.append([])
+                    noboriRessya.append([])
+                case "Kudari.":
+                    processState = .kudari //Kudari.の処理中であることを示すBool
+                case "Nobori.":
+                    processState = .nobori
+                case "Ressya.":
+                    isRessya = true
+                    if case .kudari = processState, var kudariTarget = kudariRessya.lastElement {
+                        //空の要素をひとつ追加
+                        kudariTarget.append(Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: ""))
+                        kudariRessya.lastElement = kudariTarget
+                    }
+                    if case .nobori = processState, var noboriTarget = noboriRessya.lastElement {
+                        noboriTarget.append(Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: ""))
+                        noboriRessya.lastElement = noboriTarget
+                    }
+                default:
+                    break
+                }
+            }
+
+            func setValueFromKey(line: String) {
+                var keyAndValue: [String] = line.components(separatedBy: "=")
+                let key: String = keyAndValue.removeFirst() //イコールの左側
+                let value: String = keyAndValue.joined(separator: "=") //イコールの右側
+                if case .kudari = processState, var kudariRessyaTarget = kudariRessya.lastElement?.lastElement {
+                    updateRessya(in: &kudariRessyaTarget, withKey: key, value: value)
+                    kudariRessya.lastElement?.lastElement = kudariRessyaTarget
+                } else if case .nobori = processState, var noboriRessyaTarget = noboriRessya.lastElement?.lastElement {
+                    updateRessya(in: &noboriRessyaTarget, withKey: key, value: value)
+                    noboriRessya.lastElement?.lastElement = noboriRessyaTarget
+                }
+
+                func updateRessya(in ressya: inout Ressya, withKey key: String, value: String) {
+                    switch key {
+                    case "Houkou":
+                        ressya.houkou = value
+                    case "Syubetsu":
+                        if let valueInt = Int(value) {
+                            ressya.syubetsu = valueInt
+                        }
+                    case "Ressyabangou":
+                        ressya.ressyabangou = value
+                    case "Ressyamei":
+                        ressya.ressyamei = value
+                    case "Gousuu":
+                        ressya.gousuu = value
+                    case "EkiJikoku":
+                        ressya.ekiJikoku = EkiJikoku.parse(value) //String -> [String]に変換して代入
+                    case "Bikou":
+                        ressya.bikou = value
+                    default:
+                        break
+                    }
+                }
+            }
+        }
+
+        func generateDia(kudariRessya: [[Ressya]], noboriRessya: [[Ressya]]) -> [Dia] {
+            let kudari: [Kudari] = kudariRessya.map { Kudari(ressya: $0) }
+            let nobori: [Nobori] = noboriRessya.map { Nobori(ressya: $0) }
+            let dia: [Dia] = zip(kudari, nobori).map { Dia(diaName: "", kudari: $0.0, nobori: $0.1) }
+            return dia
         }
     }
 }
 
-class EkiJikoku {
+private class EkiJikoku {
     static func parse(_ text: String) -> [String] {
         var result: [String] = []
         result = text.components(separatedBy: ",")
