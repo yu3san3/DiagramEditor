@@ -11,26 +11,24 @@ let oudData = OuDia.parse(OudData.mockOudText)
 
 class OuDia {
     static func parse(_ text: String) -> OudData {
-
         var dia = parseDia(text: text)
         
-        var ressyasyubetsu: [Ressyasyubetsu] = [Ressyasyubetsu(syubetsumei: "", ryakusyou: "", jikokuhyouMojiColor: "", jikokuhyouFontIndex: "", diagramSenColor: "", diagramSenStyle: "", diagramSenIsBold: "", stopMarkDrawType: "")]
-        var eki: [Eki] = [Eki(ekimei: "", ekijikokukeisiki: .hatsu, ekikibo: "", kyoukaisen: "", diagramRessyajouhouHyoujiKudari: "", diagramRessyajouhouHyoujiNobori: "")]
+        var ressyasyubetsu: [Ressyasyubetsu] = []
+        var eki: [Eki] = []
         
-        var diaTarget: Int = 0 //配列内の編集すべきインデックスを示す
+        var diaTargetIndex: Int = 0 //配列内の編集すべきインデックスを示す
         
         for lineRow in text.components(separatedBy: .newlines) {
             let line: String = lineRow.trimmingCharacters(in: .whitespaces)
             if line == "" {
                 continue
             } else if line.hasSuffix(".") {
-                let type: String = String(line.dropLast())
-                switch type {
-                case "Eki":
+                switch line {
+                case "Eki.":
                     eki.append(Eki(ekimei: "", ekijikokukeisiki: .hatsu, ekikibo: "", kyoukaisen: "", diagramRessyajouhouHyoujiKudari: "", diagramRessyajouhouHyoujiNobori: ""))
-                case "Ressyasyubetsu":
+                case "Ressyasyubetsu.":
                     ressyasyubetsu.append(Ressyasyubetsu(syubetsumei: "", ryakusyou: "", jikokuhyouMojiColor: "", jikokuhyouFontIndex: "", diagramSenColor: "", diagramSenStyle: "", diagramSenIsBold: "", stopMarkDrawType: ""))
-                case "Dia":
+                case "Dia.":
                     break
                 default:
                     break
@@ -39,59 +37,68 @@ class OuDia {
                 var keyAndValue: [String] = line.components(separatedBy: "=")
                 let key: String = keyAndValue.removeFirst()
                 let value: String = keyAndValue.joined(separator: "=")
-                let ekiTarget: Int = (eki.endIndex-1)-1 //配列内の編集すべきインデックスを示す
-                let ressyasyubetsuTarget: Int = (ressyasyubetsu.endIndex-1)-1
-                switch key {
-                case "Ekimei":
-                    eki[ekiTarget].ekimei = value
-                case "Ekijikokukeisiki":
-                    switch value {
-                    case "Jikokukeisiki_Hatsu":
-                        eki[ekiTarget].ekijikokukeisiki = .hatsu
-                    case "Jikokukeisiki_Hatsuchaku":
-                        eki[ekiTarget].ekijikokukeisiki = .hatsuchaku
-                    case "Jikokukeisiki_KudariChaku":
-                        eki[ekiTarget].ekijikokukeisiki = .kudariChaku
-                    case "Jikokukeisiki_NoboriChaku":
-                        eki[ekiTarget].ekijikokukeisiki = .noboriChaku
+                if var ekiTarget = eki.lastElement {
+                    switch key {
+                    case "Ekimei":
+                        ekiTarget.ekimei = value
+                    case "Ekijikokukeisiki":
+                        switch value {
+                        case "Jikokukeisiki_Hatsu":
+                            ekiTarget.ekijikokukeisiki = .hatsu
+                        case "Jikokukeisiki_Hatsuchaku":
+                            ekiTarget.ekijikokukeisiki = .hatsuchaku
+                        case "Jikokukeisiki_KudariChaku":
+                            ekiTarget.ekijikokukeisiki = .kudariChaku
+                        case "Jikokukeisiki_NoboriChaku":
+                            ekiTarget.ekijikokukeisiki = .noboriChaku
+                        default:
+                            ekiTarget.ekijikokukeisiki = .hatsu
+                        }
+                    case "Ekikibo":
+                        ekiTarget.ekikibo = value
+                    case "Kyoukaisen":
+                        ekiTarget.kyoukaisen = value
+                    case "DiagramRessyajouhouHyoujiKudari":
+                        ekiTarget.diagramRessyajouhouHyoujiKudari = value
+                    case "DiagramRessyajouhouHyoujiNobori":
+                        ekiTarget.diagramRessyajouhouHyoujiNobori = value
                     default:
-                        eki[ekiTarget].ekijikokukeisiki = .hatsu
+                        break
                     }
-                case "Ekikibo":
-                    eki[ekiTarget].ekikibo = value
-                case "Kyoukaisen":
-                    eki[ekiTarget].kyoukaisen = value
-                case "DiagramRessyajouhouHyoujiKudari":
-                    eki[ekiTarget].diagramRessyajouhouHyoujiKudari = value
-                case "DiagramRessyajouhouHyoujiNobori":
-                    eki[ekiTarget].diagramRessyajouhouHyoujiNobori = value
-                case "Syubetsumei":
-                    ressyasyubetsu[ressyasyubetsuTarget].syubetsumei = value
-                case "Ryakusyou":
-                    ressyasyubetsu[ressyasyubetsuTarget].ryakusyou = value
-                case "JikokuhyouMojiColor":
-                    ressyasyubetsu[ressyasyubetsuTarget].jikokuhyouMojiColor = value
-                case "JikokuhyouFontIndex":
-                    ressyasyubetsu[ressyasyubetsuTarget].jikokuhyouFontIndex = value
-                case "DiagramSenColor":
-                    ressyasyubetsu[ressyasyubetsuTarget].diagramSenColor = value
-                case "DiagramSenStyle":
-                    ressyasyubetsu[ressyasyubetsuTarget].diagramSenStyle = value
-                case "DiagramSenIsBold":
-                    ressyasyubetsu[ressyasyubetsuTarget].diagramSenIsBold = value
-                case "StopMarkDrawType":
-                    ressyasyubetsu[ressyasyubetsuTarget].stopMarkDrawType = value
+                    eki.lastElement = ekiTarget
+                }
+                if var ressyasyubetsuTarget = ressyasyubetsu.lastElement {
+                    switch key {
+                    case "Syubetsumei":
+                        ressyasyubetsuTarget.syubetsumei = value
+                    case "Ryakusyou":
+                        ressyasyubetsuTarget.ryakusyou = value
+                    case "JikokuhyouMojiColor":
+                        ressyasyubetsuTarget.jikokuhyouMojiColor = value
+                    case "JikokuhyouFontIndex":
+                        ressyasyubetsuTarget.jikokuhyouFontIndex = value
+                    case "DiagramSenColor":
+                        ressyasyubetsuTarget.diagramSenColor = value
+                    case "DiagramSenStyle":
+                        ressyasyubetsuTarget.diagramSenStyle = value
+                    case "DiagramSenIsBold":
+                        ressyasyubetsuTarget.diagramSenIsBold = value
+                    case "StopMarkDrawType":
+                        ressyasyubetsuTarget.stopMarkDrawType = value
+                    default:
+                        break
+                    }
+                    ressyasyubetsu.lastElement = ressyasyubetsuTarget
+                }
+                switch key {
                 case "DiaName":
-                    dia[diaTarget].diaName = value
-                    diaTarget += 1 //DiaName=〇〇の回数を数えるInt
+                    dia[diaTargetIndex].diaName = value
+                    diaTargetIndex += 1 //DiaName=〇〇の回数を数えるInt
                 default:
                     break
                 }
             }
         }
-        eki.removeLast() //余分な空の要素を削除
-        ressyasyubetsu.removeLast()
-        //kudariressyaやnoboriressya, diaの配列はもともと空だったため、removeLast()で余分な要素を取り除く必要はない
         
         var dispProp: DispProp = DispProp(jikokuhyouFont: [], jikokuhyouVFont: "", diaEkimeiFont: "", diaJikokuFont: "", diaRessyaFont: "", commentFont: "", diaMojiColor: "", diaHaikeiColor: "", diaRessyaColor: "", diaJikuColor: "", ekimeiLength: "", jikokuhyouRessyaWidth: "")
         var rosen: Rosen = Rosen(rosenmei: "", eki: eki, ressyasyubetsu: ressyasyubetsu, dia: dia, kitenJikoku: "", diagramDgrYZahyouKyoriDefault: "", comment: "")
@@ -358,6 +365,7 @@ private extension OuDia {
                 default:
                     break
                 }
+                return
             }
 
             func setValueFromKey(line: String) {
@@ -371,6 +379,7 @@ private extension OuDia {
                     updateRessya(in: &noboriRessyaTarget, withKey: key, value: value)
                     noboriRessya.lastElement?.lastElement = noboriRessyaTarget
                 }
+                return
 
                 func updateRessya(in ressya: inout Ressya, withKey key: String, value: String) {
                     switch key {
@@ -393,6 +402,7 @@ private extension OuDia {
                     default:
                         break
                     }
+                    return
                 }
             }
         }
