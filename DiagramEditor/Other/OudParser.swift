@@ -87,7 +87,7 @@ class OuDia {
                     }
                 }
             case "Eki.":
-                oudData.rosen.eki.append( Eki(ekimei: "", ekijikokukeisiki: .hatsu, ekikibo: "", kyoukaisen: "", diagramRessyajouhouHyoujiKudari: "", diagramRessyajouhouHyoujiNobori: "") )
+                oudData.rosen.eki.append( Eki(ekimei: "", ekijikokukeisiki: .hatsu, ekikibo: .ippan, kyoukaisen: "", diagramRessyajouhouHyoujiKudari: "", diagramRessyajouhouHyoujiNobori: "") )
             case "Ressyasyubetsu.":
                 oudData.rosen.ressyasyubetsu.append( Ressyasyubetsu(syubetsumei: "", ryakusyou: "", jikokuhyouMojiColor: "", jikokuhyouFontIndex: "", diagramSenColor: "", diagramSenStyle: "", diagramSenIsBold: "", stopMarkDrawType: "") )
             case "Dia.":
@@ -159,19 +159,14 @@ class OuDia {
                         eki.ekimei = value
                     case "Ekijikokukeisiki":
                         switch value {
-                        case "Jikokukeisiki_Hatsu":
-                            eki.ekijikokukeisiki = .hatsu
-                        case "Jikokukeisiki_Hatsuchaku":
-                            eki.ekijikokukeisiki = .hatsuchaku
-                        case "Jikokukeisiki_KudariChaku":
-                            eki.ekijikokukeisiki = .kudariChaku
-                        case "Jikokukeisiki_NoboriChaku":
-                            eki.ekijikokukeisiki = .noboriChaku
-                        default:
-                            eki.ekijikokukeisiki = .hatsu
+                        case let jikokukeisiki:
+                            eki.ekijikokukeisiki = Ekijikokukeisiki(rawValue: jikokukeisiki) ?? .hatsu
                         }
                     case "Ekikibo":
-                        eki.ekikibo = value
+                        switch value {
+                        case let kibo:
+                            eki.ekikibo = Ekikibo(rawValue: kibo) ?? .ippan
+                        }
                     case "Kyoukaisen":
                         eki.kyoukaisen = value
                     case "DiagramRessyajouhouHyoujiKudari":
@@ -283,17 +278,8 @@ class OuDia {
         for i in 0..<data.rosen.eki.count {
             result.append("Eki.\n")
             result.append("Ekimei=\(data.rosen.eki[i].ekimei)\n")
-            switch data.rosen.eki[i].ekijikokukeisiki {
-            case .hatsu:
-                result.append("Ekijikokukeisiki=Jikokukeisiki_Hatsu\n")
-            case .hatsuchaku:
-                result.append("Ekijikokukeisiki=Jikokukeisiki_Hatsuchaku\n")
-            case .kudariChaku:
-                result.append("Ekijikokukeisiki=Jikokukeisiki_KudariChaku\n")
-            case .noboriChaku:
-                result.append("Ekijikokukeisiki=Jikokukeisiki_NoboriChaku\n")
-            }
-            result.append("Ekikibo=\(data.rosen.eki[i].ekikibo)\n")
+            result.append("Ekijikokukeisiki=\(data.rosen.eki[i].ekijikokukeisiki.rawValue)\n")
+            result.append("Ekikibo=\(data.rosen.eki[i].ekikibo.rawValue)\n")
             if !data.rosen.eki[i].kyoukaisen.isEmpty {
                 result.append("Kyoukaisen=\(data.rosen.eki[i].kyoukaisen)\n")
             }
