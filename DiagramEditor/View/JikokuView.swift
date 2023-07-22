@@ -88,6 +88,6 @@ struct JikokuView: View {
 struct JikokuView_Previews: PreviewProvider {
     static var previews: some View {
         let index: Int = 0
-        JikokuView(jikoku: oudData.rosen.dia[0].kudari.ressya[0].ekiJikoku, rows: oudData.rosen.eki, index: index)
+        JikokuView(jikoku: OudData.mockOudData.rosen.dia[0].kudari.ressya[0].ekiJikoku, rows: OudData.mockOudData.rosen.eki, index: index)
     }
 }

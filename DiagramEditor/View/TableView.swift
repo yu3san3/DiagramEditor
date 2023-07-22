@@ -41,6 +41,7 @@ struct JikokuhyouView: View {
     
     let columns: [Ressya]// = oudData.rosen.dia[0].kudari.ressya
     let rows: [Eki]// = oudData.rosen.eki
+    let ressyasyubetsu: [Ressyasyubetsu]
     
     let columnCount = { (columns: [Ressya]) -> Int in
         return columns.count
@@ -178,8 +179,8 @@ struct JikokuhyouView: View {
                     HStack(spacing: 0) {
                         ForEach(columns, id: \.self) { column in
                             //column.syubetsuはString型
-                            if oudData.rosen.ressyasyubetsu.indices.contains(column.syubetsu) {
-                                Text(oudData.rosen.ressyasyubetsu[column.syubetsu].ryakusyou)
+                            if ressyasyubetsu.indices.contains(column.syubetsu) {
+                                Text(ressyasyubetsu[column.syubetsu].ryakusyou)
                                     .font(.caption)
                                     .frame(
                                         width: table.columnWidth,
@@ -327,7 +328,15 @@ private struct ObservableScrollView<Content: View>: View {
 
 struct TableView_Previews: PreviewProvider {
     static var previews: some View {
-        JikokuhyouView(houkou: .kudari, columns: oudData.rosen.dia[0].kudari.ressya, rows: oudData.rosen.eki)
-        JikokuhyouView(houkou: .nobori, columns: oudData.rosen.dia[0].nobori.ressya, rows: oudData.rosen.eki)
+        JikokuhyouView(houkou: .kudari,
+                       columns: OudData.mockOudData.rosen.dia[0].kudari.ressya,
+                       rows: OudData.mockOudData.rosen.eki,
+                       ressyasyubetsu: OudData.mockOudData.rosen.ressyasyubetsu
+        )
+        JikokuhyouView(houkou: .nobori,
+                       columns: OudData.mockOudData.rosen.dia[0].nobori.ressya,
+                       rows: OudData.mockOudData.rosen.eki,
+                       ressyasyubetsu: OudData.mockOudData.rosen.ressyasyubetsu
+        )
     }
 }

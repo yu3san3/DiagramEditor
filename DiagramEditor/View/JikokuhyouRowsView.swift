@@ -78,6 +78,6 @@ struct JikokuhyouRows: View {
 struct JikokuhyouRows_Previews: PreviewProvider {
     static var previews: some View {
         let table = Table()
-        JikokuhyouRows(houkou: Houkou.kudari, row: oudData.rosen.eki[0], table: table)
+        JikokuhyouRows(houkou: .kudari, row: OudData.mockOudData.rosen.eki[0], table: table)
     }
 }

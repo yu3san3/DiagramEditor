@@ -7,8 +7,6 @@
 
 import Foundation
 
-let oudData = OuDia.parse(OudData.mockOudText)
-
 class OuDia {
     static func parse(_ text: String) -> OudData {
         enum ProcessState {
