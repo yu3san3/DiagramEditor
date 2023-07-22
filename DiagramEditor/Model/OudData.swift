@@ -14,48 +14,14 @@ struct OudData: Equatable {
     var fileTypeAppComment: String
 }
 
-struct Ressya: Hashable, Equatable { //インデント数: 4
-    var houkou: String
-    var syubetsu: Int
-    var ressyabangou: String //任意
-    var ressyamei: String //任意
-    var gousuu: String //任意
-    var ekiJikoku: [String]
-    var bikou: String //任意
-}
-
-struct Kudari: Equatable { //インデント数: 3
-    var ressya: [Ressya]
-}
-
-struct Nobori: Equatable { //インデント数: 3
-    var ressya: [Ressya]
-}
-
-struct Dia: Equatable { //インデント数: 2
-    var diaName: String
-    var kudari: Kudari
-    var nobori: Nobori
-}
-
-struct Ressyasyubetsu: Equatable { //インデント数: 2
-    var syubetsumei: String
-    var ryakusyou: String
-    var jikokuhyouMojiColor: String
-    var jikokuhyouFontIndex: String
-    var diagramSenColor: String
-    var diagramSenStyle: DiagramSenStyle
-    var diagramSenIsBold: String //任意
-    var stopMarkDrawType: String //任意
-}
-
-struct Eki: Hashable, Equatable { //インデント数: 2
-    var ekimei: String
-    var ekijikokukeisiki: Ekijikokukeisiki
-    var ekikibo: Ekikibo
-    var kyoukaisen: String //任意
-    var diagramRessyajouhouHyoujiKudari: String //任意
-    var diagramRessyajouhouHyoujiNobori: String //任意
+struct Rosen: Equatable { //インデント数: 1
+    var rosenmei: String
+    var eki: [Eki]
+    var ressyasyubetsu: [Ressyasyubetsu]
+    var dia: [Dia]
+    var kitenJikoku: String
+    var diagramDgrYZahyouKyoriDefault: String
+    var comment: String
 }
 
 struct DispProp: Equatable { //インデント数: 1
@@ -73,14 +39,48 @@ struct DispProp: Equatable { //インデント数: 1
     var jikokuhyouRessyaWidth: String
 }
 
-struct Rosen: Equatable { //インデント数: 1
-    var rosenmei: String
-    var eki: [Eki]
-    var ressyasyubetsu: [Ressyasyubetsu]
-    var dia: [Dia]
-    var kitenJikoku: String
-    var diagramDgrYZahyouKyoriDefault: String
-    var comment: String
+struct Eki: Hashable, Equatable { //インデント数: 2
+    var ekimei: String
+    var ekijikokukeisiki: Ekijikokukeisiki
+    var ekikibo: Ekikibo
+    var kyoukaisen: String //任意
+    var diagramRessyajouhouHyoujiKudari: String //任意
+    var diagramRessyajouhouHyoujiNobori: String //任意
+}
+
+struct Ressyasyubetsu: Equatable { //インデント数: 2
+    var syubetsumei: String
+    var ryakusyou: String
+    var jikokuhyouMojiColor: String
+    var jikokuhyouFontIndex: String
+    var diagramSenColor: String
+    var diagramSenStyle: DiagramSenStyle
+    var diagramSenIsBold: String //任意
+    var stopMarkDrawType: String //任意
+}
+
+struct Dia: Equatable { //インデント数: 2
+    var diaName: String
+    var kudari: Kudari
+    var nobori: Nobori
+}
+
+struct Kudari: Equatable { //インデント数: 3
+    var ressya: [Ressya]
+}
+
+struct Nobori: Equatable { //インデント数: 3
+    var ressya: [Ressya]
+}
+
+struct Ressya: Hashable, Equatable { //インデント数: 4
+    var houkou: String
+    var syubetsu: Int
+    var ressyabangou: String //任意
+    var ressyamei: String //任意
+    var gousuu: String //任意
+    var ekiJikoku: [String]
+    var bikou: String //任意
 }
 
 enum Ekijikokukeisiki: String {
