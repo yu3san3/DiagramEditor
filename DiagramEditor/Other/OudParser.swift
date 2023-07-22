@@ -89,7 +89,7 @@ class OuDia {
             case "Eki.":
                 oudData.rosen.eki.append( Eki(ekimei: "", ekijikokukeisiki: .hatsu, ekikibo: .ippan, kyoukaisen: "", diagramRessyajouhouHyoujiKudari: "", diagramRessyajouhouHyoujiNobori: "") )
             case "Ressyasyubetsu.":
-                oudData.rosen.ressyasyubetsu.append( Ressyasyubetsu(syubetsumei: "", ryakusyou: "", jikokuhyouMojiColor: "", jikokuhyouFontIndex: "", diagramSenColor: "", diagramSenStyle: "", diagramSenIsBold: "", stopMarkDrawType: "") )
+                oudData.rosen.ressyasyubetsu.append( Ressyasyubetsu(syubetsumei: "", ryakusyou: "", jikokuhyouMojiColor: "", jikokuhyouFontIndex: "", diagramSenColor: "", diagramSenStyle: .jissen, diagramSenIsBold: "", stopMarkDrawType: "") )
             case "Dia.":
                 oudData.rosen.dia.append( Dia(diaName: "", kudari: Kudari(ressya: []), nobori: Nobori(ressya: [])) )
             default:
@@ -191,7 +191,10 @@ class OuDia {
                     case "DiagramSenColor":
                         ressyasyubetsu.diagramSenColor = value
                     case "DiagramSenStyle":
-                        ressyasyubetsu.diagramSenStyle = value
+                        switch value {
+                        case let senStyle:
+                            ressyasyubetsu.diagramSenStyle = DiagramSenStyle(rawValue: senStyle) ?? .jissen
+                        }
                     case "DiagramSenIsBold":
                         ressyasyubetsu.diagramSenIsBold = value
                     case "StopMarkDrawType":
@@ -298,7 +301,7 @@ class OuDia {
             result.append("JikokuhyouMojiColor=\(data.rosen.ressyasyubetsu[i].jikokuhyouMojiColor)\n")
             result.append("JikokuhyouFontIndex=\(data.rosen.ressyasyubetsu[i].jikokuhyouFontIndex)\n")
             result.append("DiagramSenColor=\(data.rosen.ressyasyubetsu[i].diagramSenColor)\n")
-            result.append("DiagramSenStyle=\(data.rosen.ressyasyubetsu[i].diagramSenStyle)\n")
+            result.append("DiagramSenStyle=\(data.rosen.ressyasyubetsu[i].diagramSenStyle.rawValue)\n")
             if !data.rosen.ressyasyubetsu[i].diagramSenIsBold.isEmpty {
                 result.append("DiagramSenIsBold=\(data.rosen.ressyasyubetsu[i].diagramSenIsBold)\n")
             }
