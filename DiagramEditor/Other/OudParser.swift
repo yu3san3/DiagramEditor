@@ -404,13 +404,6 @@ private class EkiJikoku {
     }
     
     static func stringify(_ jikokuArr: [String]) -> String {
-        var result: String = ""
-        for jikoku in jikokuArr {
-            result += jikoku + ","
-        }
-        if !result.isEmpty {
-            result.removeLast()
-        }
-        return result
+        return jikokuArr.joined(separator: ",")
     }
 }
