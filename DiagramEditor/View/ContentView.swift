@@ -11,7 +11,12 @@ struct ContentView: View {
     @Binding var document: DiagramEditorDocument
 
     var body: some View {
-        TextEditor(text: $document.text)
+//        TextEditor(text: $document.text)
+        JikokuhyouView(houkou: .kudari,
+                       columns: OudData.mockOudData.rosen.dia[0].kudari.ressya,
+                       rows: OudData.mockOudData.rosen.eki,
+                       ressyasyubetsu: OudData.mockOudData.rosen.ressyasyubetsu
+        )
     }
 }
 

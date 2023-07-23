@@ -16,20 +16,18 @@ class Table {
     let rowHeight: CGFloat = 20
     
     //Viewの幅と表の大きさを渡すと余白の幅が返ってくる
-    let marginWidth = { (viewWidth: CGFloat, contentSize: CGSize) -> CGFloat in
-        let table = Table()
+    func calculateMarginWidth(viewWidth: CGFloat, contentSize: CGSize) -> CGFloat {
 //        print("viewWidth:\(viewWidth)")
-        let viewWidthExcludingTopLeftCell: CGFloat = viewWidth - table.rowWidth
-        let columnWidthExcludingTopLeftCell: CGFloat = contentSize.width - table.rowWidth
+        let viewWidthExcludingTopLeftCell: CGFloat = viewWidth - self.rowWidth
+        let columnWidthExcludingTopLeftCell: CGFloat = contentSize.width - self.rowWidth
         return viewWidthExcludingTopLeftCell - columnWidthExcludingTopLeftCell
     }
     
     //Viewの高さと表の大きさを渡すと余白の高さが返ってくる
-    let marginHeight = { (viewHeight: CGFloat, contentSize: CGSize) -> CGFloat in
-        let table = Table()
+    func calculateMarginHeight(viewHeight: CGFloat, contentSize: CGSize) -> CGFloat {
 //        print("viewHeight:\(viewHeight)")
-        let viewHeightExcludingTopLeftCell: CGFloat = viewHeight - table.columnHeight
-        let rowHeightExcludingTopLeftCell: CGFloat = contentSize.height - table.columnHeight
+        let viewHeightExcludingTopLeftCell: CGFloat = viewHeight - self.columnHeight
+        let rowHeightExcludingTopLeftCell: CGFloat = contentSize.height - self.columnHeight
         return viewHeightExcludingTopLeftCell - rowHeightExcludingTopLeftCell
     }
 
@@ -247,8 +245,8 @@ struct JikokuhyouView: View {
                 }
                 .offset(
                     //scrollOffset - 余白調整分
-                    x: scrollOffset.x - table.marginWidth(geometry.size.width, contentSize)/2,
-                    y: scrollOffset.y - table.marginHeight(geometry.size.height, contentSize)/2
+                    x: scrollOffset.x - table.calculateMarginWidth(viewWidth: geometry.size.width, contentSize: contentSize)/2,
+                    y: scrollOffset.y - table.calculateMarginHeight(viewHeight: geometry.size.height, contentSize: contentSize)/2
                 )
             }
         }
@@ -319,8 +317,8 @@ private struct ObservableScrollView<Content: View>: View {
     //表の要素が少ない時の表示のズレを補正する関数
     func zeroIn(_ value: CGPoint, geometry: GeometryProxy) -> CGPoint {
         var result: CGPoint = .zero
-        result.x = value.x - max((table.marginWidth(geometry.size.width, contentSize))/2, 0)
-        result.y = value.y - max((table.marginHeight(geometry.size.height, contentSize))/2, 0)
+        result.x = value.x - max((table.calculateMarginWidth(viewWidth: geometry.size.width, contentSize: contentSize))/2, 0)
+        result.y = value.y - max((table.calculateMarginHeight(viewHeight: geometry.size.height, contentSize: contentSize))/2, 0)
         print(result)
         return result
     }
