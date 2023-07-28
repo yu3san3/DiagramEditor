@@ -30,7 +30,6 @@ class Table {
         let rowHeightExcludingTopLeftCell: CGFloat = contentSize.height - self.columnHeight
         return viewHeightExcludingTopLeftCell - rowHeightExcludingTopLeftCell
     }
-
 }
 
 struct JikokuhyouView: View {
@@ -78,6 +77,7 @@ struct JikokuhyouView: View {
                 //実際に画面に表示されてるView
                 HStack(spacing: 0) {
                     leftContentView()
+                        .frame(width: table.rowWidth)
                     rightContentView(geometry)
                 }
                 //スクロールを検知するView
@@ -130,7 +130,7 @@ struct JikokuhyouView: View {
             }
             //列
             ScrollView(.vertical, showsIndicators: false) {
-                VStack(spacing: 0) {
+                LazyVStack(spacing: 0) {
                     if houkou == .kudari {
                         ForEach(rows, id: \.self) { row in
                             JikokuhyouRows(houkou: houkou, row: row, table: table)
@@ -162,8 +162,8 @@ struct JikokuhyouView: View {
         VStack(spacing: 0) {
             //行
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyVStack(spacing: 0) {
-                    HStack(spacing: 0) {
+                VStack(spacing: 0) {
+                    LazyHStack(spacing: 0) {
                         ForEach(columns, id: \.self) { column in
                             Text(column.ressyabangou)
                                 .font(.caption)
@@ -174,7 +174,8 @@ struct JikokuhyouView: View {
                                 .border(Color.red)
                         }
                     }
-                    HStack(spacing: 0) {
+                    .frame(height: table.columnHeight)
+                    LazyHStack(spacing: 0) {
                         ForEach(columns, id: \.self) { column in
                             //column.syubetsuはString型
                             if ressyasyubetsu.indices.contains(column.syubetsu) {
@@ -191,7 +192,8 @@ struct JikokuhyouView: View {
                             }
                         }
                     }
-                    HStack(spacing: 0) {
+                    .frame(height: table.columnHeight)
+                    LazyHStack(spacing: 0) {
                         ForEach(columns, id: \.self) { column in
                             VStack {
                                 VText(text: column.ressyamei)
@@ -206,15 +208,16 @@ struct JikokuhyouView: View {
                             .border(Color.red)
                         }
                     }
+                    .frame(height: table.columnHeight*6)
                 }
                 .offset(x: scrollOffset.x)
             }
             .disabled(true)
             //コンテンツ
             ScrollView([.vertical, .horizontal], showsIndicators: false) {
-                HStack(spacing: 0) {
+                LazyHStack(spacing: 0) {
                     ForEach(columns, id: \.self) { column in
-                        VStack(spacing: 0) {
+                        LazyVStack(spacing: 0) {
                             ForEach(0..<rows.count, id: \.self) { index in
                                 JikokuView(
                                     jikoku: column.ekiJikoku,
@@ -241,8 +244,10 @@ struct JikokuhyouView: View {
                             )
                             .border(Color.yellow)
                         }
+                        .frame(height: contentSize.height)
                     }
                 }
+                .frame(width: contentSize.width)
                 .offset(
                     //scrollOffset - 余白調整分
                     x: scrollOffset.x - table.calculateMarginWidth(viewWidth: geometry.size.width, contentSize: contentSize)/2,
