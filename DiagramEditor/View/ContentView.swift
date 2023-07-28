@@ -13,9 +13,8 @@ struct ContentView: View {
     var body: some View {
 //        TextEditor(text: $document.text)
         JikokuhyouView(houkou: .kudari,
-                       columns: OudData.mockOudData.rosen.dia[0].kudari.ressya,
-                       rows: OudData.mockOudData.rosen.eki,
-                       ressyasyubetsu: OudData.mockOudData.rosen.ressyasyubetsu
+                       ressya: OudData.mockOudData.rosen.dia[0].kudari.ressya,
+                       rosen: OudData.mockOudData.rosen
         )
     }
 }

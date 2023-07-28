@@ -40,30 +40,29 @@ struct JikokuhyouView: View {
     let rows: [Eki]// = oudData.rosen.eki
     let ressyasyubetsu: [Ressyasyubetsu]
     
-    let columnCount = { (columns: [Ressya]) -> Int in
-        return columns.count
-    }
-    let rowCount = { (rows: [Eki]) -> Int in
-        return rows.count
-    }
+    let columnCount: Int
+    let rowCount: Int
     
     //時刻形式が発着である回数を数える
-    let hatsuchakuCount = { (eki: [Eki]) -> Int in
-        var result: Int = 0
-        for i in 0..<eki.count {
-            if eki[i].ekijikokukeisiki == .hatsuchaku {
-                result += 1
-            }
-        }
-        return result
+    var hatsuchakuCount: Int {
+        rows.filter { $0.ekijikokukeisiki == .hatsuchaku }.count
+    }
+
+    init(houkou: Houkou, ressya: [Ressya], rosen: Rosen) {
+        self.houkou = houkou
+        self.columns = ressya
+        self.rows = rosen.eki
+        self.ressyasyubetsu = rosen.ressyasyubetsu
+        self.columnCount = ressya.count
+        self.rowCount = rosen.eki.count
     }
     
     //表の大きさ
     var contentSize: CGSize {
         .init(
-            width: (table.columnWidth * CGFloat(columnCount(columns))) + table.rowWidth,
+            width: (table.columnWidth * CGFloat(columnCount)) + table.rowWidth,
             //高さ: (列の高さ * (駅数 + うち時刻形式が発着となっている回数)) + 行の高さ * 8 * 6 (← 固定行の分の高さ * 備考の高さ)
-            height: (table.rowHeight * CGFloat(rowCount(rows)+hatsuchakuCount(rows))) + table.columnHeight * (8 + 6)
+            height: (table.rowHeight * CGFloat(rowCount+hatsuchakuCount)) + table.columnHeight * (8 + 6)
         )
     }
     
@@ -117,7 +116,7 @@ struct JikokuhyouView: View {
                     )
                     .border(Color.yellow)
                 VStack {
-                    VText(text: "列車名")
+                    VText("列車名")
                         .font(.caption)
                         .padding(3)
                     Spacer()
@@ -141,7 +140,7 @@ struct JikokuhyouView: View {
                         }
                     }
                     VStack {
-                        VText(text: "備考")
+                        VText("備考")
                             .font(.caption)
                             .padding(3)
                         Spacer()
@@ -162,9 +161,9 @@ struct JikokuhyouView: View {
         VStack(spacing: 0) {
             //行
             ScrollView(.horizontal, showsIndicators: false) {
-                VStack(spacing: 0) {
-                    LazyHStack(spacing: 0) {
-                        ForEach(columns, id: \.self) { column in
+                LazyHStack(spacing: 0) {
+                    ForEach(columns, id: \.self) { column in
+                        VStack(spacing: 0) {
                             Text(column.ressyabangou)
                                 .font(.caption)
                                 .frame(
@@ -172,12 +171,7 @@ struct JikokuhyouView: View {
                                     height: table.columnHeight
                                 )
                                 .border(Color.red)
-                        }
-                    }
-                    .frame(height: table.columnHeight)
-                    LazyHStack(spacing: 0) {
-                        ForEach(columns, id: \.self) { column in
-                            //column.syubetsuはString型
+                            //column.syubetsuはInt型
                             if ressyasyubetsu.indices.contains(column.syubetsu) {
                                 Text(ressyasyubetsu[column.syubetsu].ryakusyou)
                                     .font(.caption)
@@ -190,13 +184,8 @@ struct JikokuhyouView: View {
                                 Text("Index Overflow")
                                     .font(.caption)
                             }
-                        }
-                    }
-                    .frame(height: table.columnHeight)
-                    LazyHStack(spacing: 0) {
-                        ForEach(columns, id: \.self) { column in
                             VStack {
-                                VText(text: column.ressyamei)
+                                VText(column.ressyamei)
                                     .font(.caption)
                                     .padding(3) //ここに数字入れないとなんか表示がおかしくなる
                                 Spacer()
@@ -208,9 +197,9 @@ struct JikokuhyouView: View {
                             .border(Color.red)
                         }
                     }
-                    .frame(height: table.columnHeight*6)
                 }
                 .offset(x: scrollOffset.x)
+                .frame(height: table.columnHeight*8)
             }
             .disabled(true)
             //コンテンツ
@@ -231,9 +220,8 @@ struct JikokuhyouView: View {
                                 )
                                 .border(Color.green)
                             }
-                            .drawingGroup()
                             VStack { //備考
-                                VText(text: column.bikou)
+                                VText(column.bikou)
                                     .font(.caption)
                                     .padding(3)
                                 Spacer()
@@ -332,14 +320,12 @@ private struct ObservableScrollView<Content: View>: View {
 struct TableView_Previews: PreviewProvider {
     static var previews: some View {
         JikokuhyouView(houkou: .kudari,
-                       columns: OudData.mockOudData.rosen.dia[0].kudari.ressya,
-                       rows: OudData.mockOudData.rosen.eki,
-                       ressyasyubetsu: OudData.mockOudData.rosen.ressyasyubetsu
+                       ressya: OudData.mockOudData.rosen.dia[0].kudari.ressya,
+                       rosen: OudData.mockOudData.rosen
         )
         JikokuhyouView(houkou: .nobori,
-                       columns: OudData.mockOudData.rosen.dia[0].nobori.ressya,
-                       rows: OudData.mockOudData.rosen.eki,
-                       ressyasyubetsu: OudData.mockOudData.rosen.ressyasyubetsu
+                       ressya: OudData.mockOudData.rosen.dia[0].nobori.ressya,
+                       rosen: OudData.mockOudData.rosen
         )
     }
 }

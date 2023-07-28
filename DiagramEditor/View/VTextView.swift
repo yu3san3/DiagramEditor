@@ -9,6 +9,10 @@ import SwiftUI
 
 struct VText: View {
     let text: String
+
+    init(_ text: String) {
+        self.text = text
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -21,7 +25,7 @@ struct VText: View {
 
 struct VTextView_Previews: PreviewProvider {
     static var previews: some View {
-        VText(text:
+        VText(
 """
 こんにちは、世界！
 Hello, World!
