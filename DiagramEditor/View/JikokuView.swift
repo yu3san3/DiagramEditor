@@ -59,28 +59,26 @@ struct JikokuView: View {
             } else {
                 //Ekijikokukeisikiが発着の場合は、2回描画する
 //                Text(String(index))
-//                Text(String(index))
+                //                Text(String(index))
                 Text("・・")
                 Text("・・")
             }
         }
     }
 
-    
+    @ViewBuilder
     func passingPatternView(patternNum: String) -> some View {
-        Group {
-            switch patternNum {
-            case "": //時刻データが空(運行なし)。
-                Text("・・")
-            case "1": //停車
-                Text("◯")
-            case "2": //通過
-                Text("レ")
-            case "3": //経由なし
-                Text("||")
-            default:
-                Text("？")
-            }
+        switch patternNum {
+        case "": //時刻データが空(運行なし)。
+            Text("・・")
+        case "1": //停車
+            Text("◯")
+        case "2": //通過
+            Text("レ")
+        case "3": //経由なし
+            Text("||")
+        default:
+            Text("？")
         }
     }
 }
