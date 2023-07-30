@@ -83,6 +83,12 @@ struct Ressya: Hashable, Equatable { //インデント数: 4
     var bikou: String //任意
 }
 
+struct Jikoku: Equatable {
+    var arrivalStatus: ArrivalStatus
+    var chaku: String
+    var hatsu: String
+}
+
 enum Ekijikokukeisiki: String {
     case hatsu = "Jikokukeisiki_Hatsu"
     case hatsuchaku = "Jikokukeisiki_Hatsuchaku"
@@ -100,6 +106,13 @@ enum DiagramSenStyle: String {
     case hasen = "SenStyle_Hasen"
     case tensen = "SenStyle_Tensen"
     case ittensasen = "SenStyle_Ittensasen"
+}
+
+enum ArrivalStatus: String {
+    case notOperate = "" //運行なし
+    case stop = "1" //停車
+    case pass = "2" //通過
+    case notGoThrough = "3" //経由なし
 }
 
 extension OudData {

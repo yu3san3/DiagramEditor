@@ -20,6 +20,12 @@ final class DiagramEditorTests: XCTestCase {
         XCTAssertEqual(testOudText, stringifiedData)
     }
 
+    func testEkiJikokuParser() throws {
+        let testJikokuData = ",,,,,,,,,,,,,,1;200,2,2,1;308/310,2,2,2,1;353/355,2,2,2,2,1;457/,3,3,3,3,3,1;459,1;510/512,2,2,1;604/"
+        let parsedData = EkiJikoku.parse(testJikokuData)
+        print(parsedData)
+    }
+
     func testPerformanceOudParse() throws {
         measure {
             let _ = OuDia.parse(testOudText)

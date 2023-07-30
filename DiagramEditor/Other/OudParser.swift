@@ -396,7 +396,7 @@ class OuDia {
     }
 }
 
-private class EkiJikoku {
+class EkiJikoku {
     static func parse(_ text: String) -> [String] {
         return text.components(separatedBy: ",")
     }
