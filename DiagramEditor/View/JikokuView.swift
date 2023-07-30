@@ -9,7 +9,7 @@ import SwiftUI
 
 struct JikokuView: View {
     let jikoku: [String]
-    let rows: [Eki]
+    let columns: [Eki]
     let index: Int
     
     var body: some View {
@@ -17,7 +17,7 @@ struct JikokuView: View {
             let jikokuComponents: [String] = jikoku[index].components(separatedBy: ";") //通過パターンと時刻データを分ける
             if jikokuComponents.indices.contains(1) { //時刻データがある場合。jikokuArray[0]で通過パターンを取り出せる。
                 if jikokuComponents[1].last == "/" { //発時刻省略(着時刻のみ) 600/
-                    if rows[index].ekijikokukeisiki != .hatsuchaku {
+                    if columns[index].ekijikokukeisiki != .hatsuchaku {
                         Text(jikokuComponents[1].dropLast())
                     } else {
                         Text(jikokuComponents[1].dropLast())
@@ -31,7 +31,7 @@ struct JikokuView: View {
                 } else { //着時刻省略(発時刻のみ) 600
                     if jikoku.indices.contains(index-1) {
                         if jikoku[index-1] == "3" || jikoku[index-1] == "" {
-                            if rows[index].ekijikokukeisiki == .hatsuchaku {
+                            if columns[index].ekijikokukeisiki == .hatsuchaku {
                                 Text("!?")
                             }
                         }
@@ -39,7 +39,7 @@ struct JikokuView: View {
                     Text(jikokuComponents[1])
                 }
             } else { //通過パターン(停車・通過など)のみの場合。時刻データがない場合。
-                if rows[index].ekijikokukeisiki != .hatsuchaku {
+                if columns[index].ekijikokukeisiki != .hatsuchaku {
                     passingPatternView(patternNum: jikokuComponents[0])
                 } else {
                     if jikoku[index-1] == "3" {
@@ -53,7 +53,7 @@ struct JikokuView: View {
                 }
             }
         } else {
-            if rows[index].ekijikokukeisiki != .hatsuchaku {
+            if columns[index].ekijikokukeisiki != .hatsuchaku {
 //                Text(String(index))
                 Text("・・")
             } else {
@@ -86,6 +86,6 @@ struct JikokuView: View {
 struct JikokuView_Previews: PreviewProvider {
     static var previews: some View {
         let index: Int = 0
-        JikokuView(jikoku: OudData.mockOudData.rosen.dia[0].kudari.ressya[0].ekiJikoku, rows: OudData.mockOudData.rosen.eki, index: index)
+        JikokuView(jikoku: OudData.mockOudData.rosen.dia[0].kudari.ressya[0].ekiJikoku, columns: OudData.mockOudData.rosen.eki, index: index)
     }
 }

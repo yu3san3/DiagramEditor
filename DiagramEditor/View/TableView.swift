@@ -36,8 +36,8 @@ struct JikokuhyouView: View {
     
     let houkou: Houkou
     
-    let columns: [Ressya]// = oudData.rosen.dia[0].kudari.ressya
-    let rows: [Eki]// = oudData.rosen.eki
+    let rows: [Ressya]// = oudData.rosen.dia[0].kudari.ressya
+    let columns: [Eki]// = oudData.rosen.eki
     let ressyasyubetsu: [Ressyasyubetsu]
     
     let columnCount: Int
@@ -45,13 +45,13 @@ struct JikokuhyouView: View {
     
     //時刻形式が発着である回数を数える
     var hatsuchakuCount: Int {
-        rows.filter { $0.ekijikokukeisiki == .hatsuchaku }.count
+        columns.filter { $0.ekijikokukeisiki == .hatsuchaku }.count
     }
 
     init(houkou: Houkou, ressya: [Ressya], rosen: Rosen) {
         self.houkou = houkou
-        self.columns = ressya
-        self.rows = rosen.eki
+        self.rows = ressya
+        self.columns = rosen.eki
         self.ressyasyubetsu = rosen.ressyasyubetsu
         self.columnCount = ressya.count
         self.rowCount = rosen.eki.count
@@ -131,12 +131,12 @@ struct JikokuhyouView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack(spacing: 0) {
                     if houkou == .kudari {
-                        ForEach(rows, id: \.self) { row in
-                            JikokuhyouRows(houkou: houkou, row: row, table: table)
+                        ForEach(columns, id: \.self) { row in
+                            JikokuhyouRows(houkou: houkou, column: row, table: table)
                         }
                     } else if houkou == .nobori {
-                        ForEach(rows.reversed(), id: \.self) { row in
-                            JikokuhyouRows(houkou: houkou, row: row, table: table)
+                        ForEach(columns.reversed(), id: \.self) { row in
+                            JikokuhyouRows(houkou: houkou, column: row, table: table)
                         }
                     }
                     VStack {
@@ -162,7 +162,7 @@ struct JikokuhyouView: View {
             //行
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 0) {
-                    ForEach(columns, id: \.self) { column in
+                    ForEach(rows, id: \.self) { column in
                         VStack(spacing: 0) {
                             Text(column.ressyabangou)
                                 .font(.caption)
@@ -205,12 +205,12 @@ struct JikokuhyouView: View {
             //コンテンツ
             ScrollView([.vertical, .horizontal], showsIndicators: false) {
                 LazyHStack(spacing: 0) {
-                    ForEach(columns, id: \.self) { column in
+                    ForEach(rows, id: \.self) { row in
                         LazyVStack(spacing: 0) {
-                            ForEach(0..<rows.count, id: \.self) { index in
+                            ForEach(0..<columns.count, id: \.self) { index in
                                 JikokuView(
-                                    jikoku: column.ekiJikoku,
-                                    rows: rows,
+                                    jikoku: row.ekiJikoku,
+                                    columns: columns,
                                     index: index
                                 )
                                 .font(.caption)
@@ -221,7 +221,7 @@ struct JikokuhyouView: View {
                                 .border(Color.green)
                             }
                             VStack { //備考
-                                VText(column.bikou)
+                                VText(row.bikou)
                                     .font(.caption)
                                     .padding(3)
                                 Spacer()

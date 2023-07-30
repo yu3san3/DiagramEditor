@@ -16,16 +16,16 @@ struct JikokuhyouRows: View {
     
     let houkou: Houkou
     
-    let row: Eki
+    let column: Eki
     let table: Table
     
     var body: some View {
-        switch row.ekijikokukeisiki {
+        switch column.ekijikokukeisiki {
         case .hatsu:
             JikokuhyouRowsTemplateView("発")
         case .hatsuchaku:
             HStack {
-                Text(row.ekimei)
+                Text(column.ekimei)
                     .padding(2)
                 Spacer()
                 VStack(spacing: 0) {
@@ -60,7 +60,7 @@ struct JikokuhyouRows: View {
     
     func JikokuhyouRowsTemplateView(_ hatsucakuText: String) -> some View {
         HStack {
-            Text(row.ekimei)
+            Text(column.ekimei)
                 .padding(2)
             Spacer()
             Text(hatsucakuText)
@@ -78,6 +78,6 @@ struct JikokuhyouRows: View {
 struct JikokuhyouRows_Previews: PreviewProvider {
     static var previews: some View {
         let table = Table()
-        JikokuhyouRows(houkou: .kudari, row: OudData.mockOudData.rosen.eki[0], table: table)
+        JikokuhyouRows(houkou: .kudari, column: OudData.mockOudData.rosen.eki[0], table: table)
     }
 }
