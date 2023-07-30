@@ -7,29 +7,13 @@
 
 import SwiftUI
 
-struct VText: View {
-    let text: String
-
-    init(_ text: String) {
-        self.text = text
-    }
-    
-    var body: some View {
+extension View {
+    @ViewBuilder
+    func VText(_ text: String) -> some View {
         VStack(spacing: 0) {
             ForEach (Array(text), id: \.self) { str in
                 Text(String(str))
             }
         }
-    }
-}
-
-struct VTextView_Previews: PreviewProvider {
-    static var previews: some View {
-        VText(
-"""
-こんにちは、世界！
-Hello, World!
-"""
-        )
     }
 }
