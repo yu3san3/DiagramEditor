@@ -397,11 +397,73 @@ class OuDia {
 }
 
 class EkiJikoku {
-    static func parse(_ text: String) -> [String] {
-        return text.components(separatedBy: ",")
+    static func parse(_ text: String) -> [Jikoku] {
+        var result: [Jikoku] = []
+        let jikokuArray = text.components(separatedBy: ",")
+        for jikoku in jikokuArray {
+            switch jikoku {
+            case "": //""
+                result.append( Jikoku(arrivalStatus: .notOperate, chaku: "", hatsu: "") )
+            case let onlyArrivalStatus where !onlyArrivalStatus.contains(";"): //"3"
+                let arrivalStatus = ArrivalStatus(rawValue: onlyArrivalStatus) ?? .notOperate
+                result.append( Jikoku(arrivalStatus: arrivalStatus, chaku: "", hatsu: "") )
+            case let arrivalStatusAndTime where arrivalStatusAndTime.contains(";"): //"1;123/456 etc..."
+                let jikokuComponents = arrivalStatusAndTime.components(separatedBy: ";") //["1", "123/456"]
+                let arrivalStatus = ArrivalStatus(rawValue: jikokuComponents[0]) ?? .notOperate
+                let time = jikokuComponents[1] //"123/456"
+                switch time {
+                case let departure where !departure.contains("/"): //着時刻省略(123)
+                    result.append( Jikoku(arrivalStatus: arrivalStatus, chaku: "", hatsu: departure) )
+                case let arrival where arrival.last == "/": //発時刻省略(123/)
+                    let arrivalTime = String( arrival.dropLast() )
+                    result.append( Jikoku(arrivalStatus: arrivalStatus, chaku: arrivalTime, hatsu: ""))
+                case let arrivalAndDeparture where arrivalAndDeparture.contains("/"): //省略なし(123/456)
+                    let timeComponents = arrivalAndDeparture.components(separatedBy: "/")
+                    let arrival = timeComponents[0]
+                    let departure = timeComponents[1]
+                    result.append( Jikoku(arrivalStatus: arrivalStatus, chaku: arrival, hatsu: departure) )
+                default:
+                    print("Ekijikoku.parse error: unexpected time data")
+                    break
+                }
+            default:
+                print("Ekijikoku.parse error: unexpected jikoku data")
+                break
+            }
+        }
+        return result
     }
     
-    static func stringify(_ jikokuArr: [String]) -> String {
-        return jikokuArr.joined(separator: ",")
+    static func stringify(_ jikokuArr: [Jikoku]) -> String {
+        var result: String = ""
+        for jikoku in jikokuArr {
+            switch jikoku {
+            case let notOperate where notOperate.arrivalStatus == .notOperate: //""
+                break
+            case let onlyArrivalStatus where onlyArrivalStatus.chaku.isEmpty && onlyArrivalStatus.hatsu.isEmpty: //"3"
+                result.append(onlyArrivalStatus.arrivalStatus.rawValue)
+            case let arrivalStatusAndTime where !arrivalStatusAndTime.chaku.isEmpty || !arrivalStatusAndTime.hatsu.isEmpty: //"1;123/456"
+                result.append(arrivalStatusAndTime.arrivalStatus.rawValue)
+                result.append(";")
+                switch arrivalStatusAndTime {
+                case let departure where departure.chaku.isEmpty && !departure.hatsu.isEmpty: //123
+                    result.append(departure.hatsu)
+                case let arrival where !arrival.chaku.isEmpty && arrival.hatsu.isEmpty: //123/
+                    result.append(arrival.chaku)
+                    result.append("/")
+                case let arrivalAndDeparture where !arrivalAndDeparture.chaku.isEmpty && !arrivalAndDeparture.hatsu.isEmpty: //123/456
+                    result.append(arrivalAndDeparture.chaku)
+                    result.append("/")
+                    result.append(arrivalAndDeparture.hatsu)
+                default:
+                    break
+                }
+            default:
+                break
+            }
+            result.append(",")
+        }
+        result.removeLast()
+        return result
     }
 }
