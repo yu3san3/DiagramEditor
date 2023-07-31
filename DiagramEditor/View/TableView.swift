@@ -17,7 +17,7 @@ class Table {
     
     //Viewの幅と表の大きさを渡すと余白の幅が返ってくる
     func calculateMarginWidth(viewWidth: CGFloat, contentSize: CGSize) -> CGFloat {
-//        print("viewWidth:\(viewWidth)")
+        //        print("viewWidth:\(viewWidth)")
         let viewWidthExcludingTopLeftCell: CGFloat = viewWidth - self.rowWidth
         let columnWidthExcludingTopLeftCell: CGFloat = contentSize.width - self.rowWidth
         return viewWidthExcludingTopLeftCell - columnWidthExcludingTopLeftCell
@@ -25,7 +25,7 @@ class Table {
     
     //Viewの高さと表の大きさを渡すと余白の高さが返ってくる
     func calculateMarginHeight(viewHeight: CGFloat, contentSize: CGSize) -> CGFloat {
-//        print("viewHeight:\(viewHeight)")
+        //        print("viewHeight:\(viewHeight)")
         let viewHeightExcludingTopLeftCell: CGFloat = viewHeight - self.columnHeight
         let rowHeightExcludingTopLeftCell: CGFloat = contentSize.height - self.columnHeight
         return viewHeightExcludingTopLeftCell - rowHeightExcludingTopLeftCell
@@ -204,44 +204,14 @@ struct JikokuhyouView: View {
             .disabled(true)
             //コンテンツ
             ScrollView([.vertical, .horizontal], showsIndicators: false) {
-                LazyHStack(spacing: 0) {
-                    ForEach(rows, id: \.self) { row in
-                        LazyVStack(spacing: 0) {
-                            ForEach(0..<columns.count, id: \.self) { index in
-                                JikokuView(
-                                    jikoku: row.ekiJikoku,
-                                    columns: columns,
-                                    index: index
-                                )
-                                .font(.caption)
-                                .frame(
-                                    width: table.columnWidth,
-                                    height: table.rowHeight
-                                )
-                                .border(Color.green)
-                            }
-                            VStack { //備考
-                                VText(row.bikou)
-                                    .font(.caption)
-                                    .padding(3)
-                                Spacer()
-                            }
-                            .frame(
-                                width: table.columnWidth,
-                                height: table.columnHeight*6
-                            )
-                            .border(Color.yellow)
-                        }
-                        .frame(height: contentSize.height)
-                    }
-                }
-                .frame(width: contentSize.width)
-                .offset(
-                    //scrollOffset - 余白調整分
-                    x: scrollOffset.x - table.calculateMarginWidth(viewWidth: geometry.size.width, contentSize: contentSize)/2,
-                    y: scrollOffset.y - table.calculateMarginHeight(viewHeight: geometry.size.height, contentSize: contentSize)/2
-                )
+                JikokuView(ressyas: rows, ekis: columns)
+                    .offset(
+                        //scrollOffset - 余白調整分
+                        x: scrollOffset.x - table.calculateMarginWidth(viewWidth: geometry.size.width, contentSize: contentSize)/2,
+                        y: scrollOffset.y - table.calculateMarginHeight(viewHeight: geometry.size.height, contentSize: contentSize)/2
+                    )
             }
+            .disabled(true)
         }
     }
 }

@@ -8,84 +8,79 @@
 import SwiftUI
 
 struct JikokuView: View {
-    let jikoku: [String]
-    let columns: [Eki]
-    let index: Int
-    
+    let ressyas: [Ressya]
+    let ekis: [Eki]
+
+    let table = Table()
+
     var body: some View {
-        if jikoku.indices.contains(index) {
-            let jikokuComponents: [String] = jikoku[index].components(separatedBy: ";") //通過パターンと時刻データを分ける
-            if jikokuComponents.indices.contains(1) { //時刻データがある場合。jikokuArray[0]で通過パターンを取り出せる。
-                if jikokuComponents[1].last == "/" { //発時刻省略(着時刻のみ) 600/
-                    if columns[index].ekijikokukeisiki != .hatsuchaku {
-                        Text(jikokuComponents[1].dropLast())
-                    } else {
-                        Text(jikokuComponents[1].dropLast())
-                        Text("・・")
-                    }
-                } else if jikokuComponents[1].contains("/") { //省略なし 600/610
-                    let hatsuchakuComponents: [String] = jikokuComponents[1].components(separatedBy: "/") //発時刻と着時刻に分ける
-                    ForEach (hatsuchakuComponents, id: \.self) { component in
-                        Text(component)
-                    }
-                } else { //着時刻省略(発時刻のみ) 600
-                    if jikoku.indices.contains(index-1) {
-                        if jikoku[index-1] == "3" || jikoku[index-1] == "" {
-                            if columns[index].ekijikokukeisiki == .hatsuchaku {
-                                Text("!?")
-                            }
+        LazyHStack(spacing: 0) {
+            ForEach(ressyas, id: \.self) { ressya in
+                LazyVStack(spacing: 0) {
+                    let array = Array( zipLongest(ekis, ressya.ekiJikoku) )
+                    ForEach(array, id: \.0) { eki, jikoku in
+                        let _ = debugPrint(eki)
+                        switch eki?.ekijikokukeisiki {
+                        case .hatsuchaku:
+                            Text(jikoku?.chaku ?? "nil")
+                            Text(jikoku?.hatsu ?? "nil")
+                        case .hatsu:
+                            Text(jikoku?.hatsu ?? "nil")
+                        case .kudariChaku:
+                            Text("kudariChaku")
+                        case .noboriChaku:
+                            Text("noboriChaku")
+                        case .none:
+                            Text("none")
                         }
                     }
-                    Text(jikokuComponents[1])
-                }
-            } else { //通過パターン(停車・通過など)のみの場合。時刻データがない場合。
-                if columns[index].ekijikokukeisiki != .hatsuchaku {
-                    passingPatternView(patternNum: jikokuComponents[0])
-                } else {
-                    if jikoku[index-1] == "3" {
-                        Text("||")
-                        passingPatternView(patternNum: jikokuComponents[0])
-                    } else {
-                        //Ekijikokukeisikiが発着の場合は、2回描画する
-                        passingPatternView(patternNum: jikokuComponents[0])
-                        passingPatternView(patternNum: jikokuComponents[0])
+                    .font(.caption)
+                    .frame(
+                        width: table.columnWidth,
+                        height: table.rowHeight
+                    )
+                    .border(Color.green)
+                    VStack { //備考
+                        VText(ressya.bikou)
+                            .font(.caption)
+                            .padding(3)
+                        Spacer()
                     }
+                    .frame(
+                        width: table.columnWidth,
+                        height: table.columnHeight*6
+                    )
+                    .border(Color.yellow)
                 }
-            }
-        } else {
-            if columns[index].ekijikokukeisiki != .hatsuchaku {
-//                Text(String(index))
-                Text("・・")
-            } else {
-                //Ekijikokukeisikiが発着の場合は、2回描画する
-//                Text(String(index))
-                //                Text(String(index))
-                Text("・・")
-                Text("・・")
             }
         }
     }
+}
 
-    @ViewBuilder
-    func passingPatternView(patternNum: String) -> some View {
-        switch patternNum {
-        case "": //時刻データが空(運行なし)。
-            Text("・・")
-        case "1": //停車
-            Text("◯")
-        case "2": //通過
-            Text("レ")
-        case "3": //経由なし
-            Text("||")
-        default:
-            Text("？")
+private func zipLongest<T, U>(_ first: [T], _ second: [U]) -> AnyIterator<(T?, U?)> {
+    // インデックスとイテレータを初期化する
+    var index = 0
+    var firstIterator = first.makeIterator()
+    var secondIterator = second.makeIterator()
+
+    // イテレータを返すクロージャを定義する
+    return AnyIterator {
+        // 両方のシーケンスが終了したらnilを返す
+        if index >= first.count && index >= second.count {
+            return nil
         }
+        // インデックスに対応する要素を取得する
+        let firstElement = index < first.count ? firstIterator.next() : nil
+        let secondElement = index < second.count ? secondIterator.next() : nil
+        // インデックスをインクリメントする
+        index += 1
+        // 要素のペアを返す
+        return (firstElement, secondElement)
     }
 }
 
 struct JikokuView_Previews: PreviewProvider {
     static var previews: some View {
-        let index: Int = 0
-        JikokuView(jikoku: OudData.mockOudData.rosen.dia[0].kudari.ressya[0].ekiJikoku, columns: OudData.mockOudData.rosen.eki, index: index)
+        JikokuView(ressyas: OudData.mockOudData.rosen.dia[0].kudari.ressya, ekis: OudData.mockOudData.rosen.eki)
     }
 }
