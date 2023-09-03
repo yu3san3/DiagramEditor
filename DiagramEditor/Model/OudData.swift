@@ -73,7 +73,8 @@ struct Nobori: Equatable { //インデント数: 3
     var ressya: [Ressya]
 }
 
-struct Ressya: Hashable, Equatable { //インデント数: 4
+struct Ressya: Identifiable, Equatable { //インデント数: 4
+    let id = UUID()
     var houkou: String
     var syubetsu: Int
     var ressyabangou: String //任意
@@ -83,7 +84,8 @@ struct Ressya: Hashable, Equatable { //インデント数: 4
     var bikou: String //任意
 }
 
-struct Jikoku: Hashable, Equatable {
+struct Jikoku: Identifiable, Equatable {
+    let id = UUID()
     var arrivalStatus: ArrivalStatus
     var chaku: String
     var hatsu: String

@@ -15,10 +15,10 @@ struct JikokuView: View {
 
     var body: some View {
         LazyHStack(spacing: 0) {
-            ForEach(ressyas, id: \.self) { ressya in
+            ForEach(ressyas) { ressya in
                 LazyVStack(spacing: 0) {
                     let array = Array( zipLongest(ekis, ressya.ekiJikoku) )
-                    ForEach(array, id: \.0) { eki, jikoku in
+                    ForEach(array, id: \.1?.id) { eki, jikoku in
                         let _ = debugPrint(eki)
                         switch eki?.ekijikokukeisiki {
                         case .hatsuchaku:
@@ -27,9 +27,9 @@ struct JikokuView: View {
                         case .hatsu:
                             Text(jikoku?.hatsu ?? "nil")
                         case .kudariChaku:
-                            Text("kudariChaku")
+                            Text("くだり着")
                         case .noboriChaku:
-                            Text("noboriChaku")
+                            Text("のぼり着")
                         case .none:
                             Text("none")
                         }
@@ -82,5 +82,6 @@ private func zipLongest<T, U>(_ first: [T], _ second: [U]) -> AnyIterator<(T?, U
 struct JikokuView_Previews: PreviewProvider {
     static var previews: some View {
         JikokuView(ressyas: OudData.mockOudData.rosen.dia[0].kudari.ressya, ekis: OudData.mockOudData.rosen.eki)
+        JikokuView(ressyas: OudData.mockOudData.rosen.dia[0].nobori.ressya, ekis: OudData.mockOudData.rosen.eki)
     }
 }

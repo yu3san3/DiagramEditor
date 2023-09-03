@@ -162,7 +162,7 @@ struct JikokuhyouView: View {
             //行
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 0) {
-                    ForEach(rows, id: \.self) { column in
+                    ForEach(rows) { column in
                         VStack(spacing: 0) {
                             Text(column.ressyabangou)
                                 .font(.caption)
