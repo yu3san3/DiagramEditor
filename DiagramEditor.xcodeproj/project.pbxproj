@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB72D5F42AA479C800779186 /* OudDataStringifyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */; };
 		EBA5403E2A278D73004AC49A /* OudData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403D2A278D73004AC49A /* OudData.swift */; };
-		EBA540402A278E4D004AC49A /* OudParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403F2A278E4D004AC49A /* OudParser.swift */; };
+		EBA540402A278E4D004AC49A /* OudDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403F2A278E4D004AC49A /* OudDataParser.swift */; };
 		EBA540422A278EFE004AC49A /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540412A278EFE004AC49A /* TableView.swift */; };
 		EBA540442A278F56004AC49A /* VTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540432A278F56004AC49A /* VTextView.swift */; };
 		EBA540462A278FBE004AC49A /* JikokuhyouColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540452A278FBE004AC49A /* JikokuhyouColumnView.swift */; };
@@ -33,8 +34,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudDataStringifyer.swift; sourceTree = "<group>"; };
 		EBA5403D2A278D73004AC49A /* OudData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudData.swift; sourceTree = "<group>"; };
-		EBA5403F2A278E4D004AC49A /* OudParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudParser.swift; sourceTree = "<group>"; };
+		EBA5403F2A278E4D004AC49A /* OudDataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudDataParser.swift; sourceTree = "<group>"; };
 		EBA540412A278EFE004AC49A /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		EBA540432A278F56004AC49A /* VTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VTextView.swift; sourceTree = "<group>"; };
 		EBA540452A278FBE004AC49A /* JikokuhyouColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JikokuhyouColumnView.swift; sourceTree = "<group>"; };
@@ -135,7 +137,8 @@
 		EBF3349A2A690A8F0099EE4E /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				EBA5403F2A278E4D004AC49A /* OudParser.swift */,
+				EBA5403F2A278E4D004AC49A /* OudDataParser.swift */,
+				EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */,
 				EBF334AD2A699D3C0099EE4E /* Extensions.swift */,
 			);
 			path = Other;
@@ -249,11 +252,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBA540402A278E4D004AC49A /* OudParser.swift in Sources */,
+				EBA540402A278E4D004AC49A /* OudDataParser.swift in Sources */,
 				EBA540422A278EFE004AC49A /* TableView.swift in Sources */,
 				EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */,
 				EBA540462A278FBE004AC49A /* JikokuhyouColumnView.swift in Sources */,
 				EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */,
+				EB72D5F42AA479C800779186 /* OudDataStringifyer.swift in Sources */,
 				EBF334AE2A699D3C0099EE4E /* Extensions.swift in Sources */,
 				EBA540482A278FEF004AC49A /* JikokuView.swift in Sources */,
 				EBA5403E2A278D73004AC49A /* OudData.swift in Sources */,

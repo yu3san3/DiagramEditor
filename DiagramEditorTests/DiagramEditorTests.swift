@@ -12,29 +12,31 @@ final class DiagramEditorTests: XCTestCase {
     let testOudText = OudData.mockOudText
     let testOudData = OudData.mockOudData
 
-    func testOudParser() throws {
-        let parsedData = OuDia.parse(testOudText)
-        XCTAssertEqual(parsedData, testOudData)
+    func testOudDataParser() throws {
+        let parsedData = OudDataParser.parse(testOudText)
+        XCTAssertEqual(parsedData, testOudData) //IdentifiableだからEqualにならない(?)
+    }
 
-        let stringifiedData = OuDia.stringify(testOudData)
+    func testOudDataStringifyer() throws {
+        let stringifiedData = OudDataStringifyer.stringify(testOudData)
         XCTAssertEqual(testOudText, stringifiedData)
     }
 
     func testEkiJikokuParser() throws {
         let testJikokuData = ",,,,,,,,,,,,,,1;200,2,2,1;308/310,2,2,2,1;353/355,2,2,2,2,1;457/,3,3,3,3,3,1;459,1;510/512,2,2,1;604/"
-        let parsedData = EkiJikoku.parse(testJikokuData)
+        let parsedData = EkiJikokuParser.parse(testJikokuData)
         print(parsedData)
     }
 
     func testPerformanceOudParse() throws {
         measure {
-            let _ = OuDia.parse(testOudText)
+            let _ = OudDataParser.parse(testOudText)
         }
     }
 
     func testPerformanceOudStringify() throws {
         measure {
-            let _ = OuDia.stringify(testOudData)
+            let _ = OudDataStringifyer.stringify(testOudData)
         }
     }
 }
