@@ -12,7 +12,7 @@ enum Houkou {
     case nobori
 }
 
-struct JikokuhyouRows: View {
+struct StationListView: View {
     
     let houkou: Houkou
     
@@ -78,6 +78,6 @@ struct JikokuhyouRows: View {
 struct JikokuhyouRows_Previews: PreviewProvider {
     static var previews: some View {
         let table = Table()
-        JikokuhyouRows(houkou: .kudari, column: OudData.mockOudData.rosen.eki[0], table: table)
+        StationListView(houkou: .kudari, column: OudData.mockOudData.rosen.eki[0], table: table)
     }
 }

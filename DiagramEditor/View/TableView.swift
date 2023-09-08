@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-class Table {
-    
+struct Table {
     //表の属性を決める
     let columnWidth: CGFloat = 40
     let columnHeight: CGFloat = 20
@@ -17,7 +16,6 @@ class Table {
     
     //Viewの幅と表の大きさを渡すと余白の幅が返ってくる
     func calculateMarginWidth(viewWidth: CGFloat, contentSize: CGSize) -> CGFloat {
-        //        print("viewWidth:\(viewWidth)")
         let viewWidthExcludingTopLeftCell: CGFloat = viewWidth - self.rowWidth
         let columnWidthExcludingTopLeftCell: CGFloat = contentSize.width - self.rowWidth
         return viewWidthExcludingTopLeftCell - columnWidthExcludingTopLeftCell
@@ -25,7 +23,6 @@ class Table {
     
     //Viewの高さと表の大きさを渡すと余白の高さが返ってくる
     func calculateMarginHeight(viewHeight: CGFloat, contentSize: CGSize) -> CGFloat {
-        //        print("viewHeight:\(viewHeight)")
         let viewHeightExcludingTopLeftCell: CGFloat = viewHeight - self.columnHeight
         let rowHeightExcludingTopLeftCell: CGFloat = contentSize.height - self.columnHeight
         return viewHeightExcludingTopLeftCell - rowHeightExcludingTopLeftCell
@@ -47,15 +44,6 @@ struct JikokuhyouView: View {
     var hatsuchakuCount: Int {
         columns.filter { $0.ekijikokukeisiki == .hatsuchaku }.count
     }
-
-    init(houkou: Houkou, ressya: [Ressya], rosen: Rosen) {
-        self.houkou = houkou
-        self.rows = ressya
-        self.columns = rosen.eki
-        self.ressyasyubetsu = rosen.ressyasyubetsu
-        self.columnCount = ressya.count
-        self.rowCount = rosen.eki.count
-    }
     
     //表の大きさ
     var contentSize: CGSize {
@@ -69,7 +57,16 @@ struct JikokuhyouView: View {
     @State private var scrollOffset: CGPoint = .zero
     
     var table = Table()
-    
+
+    init(houkou: Houkou, ressya: [Ressya], rosen: Rosen) {
+        self.houkou = houkou
+        self.rows = ressya
+        self.columns = rosen.eki
+        self.ressyasyubetsu = rosen.ressyasyubetsu
+        self.columnCount = ressya.count
+        self.rowCount = rosen.eki.count
+    }
+
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -100,43 +97,17 @@ struct JikokuhyouView: View {
     func leftContentView() -> some View {
         VStack(spacing: 0) {
             //左上セル
-            VStack(spacing: 0) {
-                Text("列車番号")
-                    .font(.caption)
-                    .frame(
-                        width: table.rowWidth,
-                        height: table.columnHeight
-                    )
-                    .border(Color.yellow)
-                Text("列車種別")
-                    .font(.caption)
-                    .frame(
-                        width: table.rowWidth,
-                        height: table.columnHeight
-                    )
-                    .border(Color.yellow)
-                VStack {
-                    VText("列車名")
-                        .font(.caption)
-                        .padding(3)
-                    Spacer()
-                }
-                .frame(
-                    width: table.rowWidth,
-                    height: table.columnHeight*6
-                )
-                .border(Color.yellow)
-            }
+            topLeftCell
             //列
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack(spacing: 0) {
                     if houkou == .kudari {
-                        ForEach(columns, id: \.self) { row in
-                            JikokuhyouRows(houkou: houkou, column: row, table: table)
+                        ForEach(columns, id: \.self) { column in
+                            StationListView(houkou: houkou, column: column, table: table)
                         }
                     } else if houkou == .nobori {
-                        ForEach(columns.reversed(), id: \.self) { row in
-                            JikokuhyouRows(houkou: houkou, column: row, table: table)
+                        ForEach(columns.reversed(), id: \.self) { column in
+                            StationListView(houkou: houkou, column: column, table: table)
                         }
                     }
                     VStack {
@@ -154,6 +125,36 @@ struct JikokuhyouView: View {
                 .offset(y: scrollOffset.y)
             }
             .disabled(true)
+        }
+    }
+
+    var topLeftCell: some View {
+        VStack(spacing: 0) {
+            Text("列車番号")
+                .font(.caption)
+                .frame(
+                    width: table.rowWidth,
+                    height: table.columnHeight
+                )
+                .border(Color.yellow)
+            Text("列車種別")
+                .font(.caption)
+                .frame(
+                    width: table.rowWidth,
+                    height: table.columnHeight
+                )
+                .border(Color.yellow)
+            VStack {
+                VText("列車名")
+                    .font(.caption)
+                    .padding(3)
+                Spacer()
+            }
+            .frame(
+                width: table.rowWidth,
+                height: table.columnHeight*6
+            )
+            .border(Color.yellow)
         }
     }
 
@@ -216,28 +217,6 @@ struct JikokuhyouView: View {
     }
 }
 
-//CGPointに+=演算子を定義
-private extension CGPoint {
-    static func + (lhs: Self, rhs: Self) -> Self {
-        CGPoint(
-            x: lhs.x + rhs.x,
-            y: lhs.y + rhs.y
-        )
-    }
-
-    static func += (lhs: inout Self, rhs: Self) {
-        lhs = lhs + rhs
-    }
-}
-
-//PreferenceKeyを作成
-private struct ScrollViewOffsetPreferenceKey: PreferenceKey {
-    static var defaultValue = CGPoint.zero
-    static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) {
-        value += nextValue()
-    }
-}
-
 //スクロールを検知するView
 private struct ObservableScrollView<Content: View>: View {
     let axis: Axis.Set
@@ -269,11 +248,8 @@ private struct ObservableScrollView<Content: View>: View {
         .coordinateSpace(name: scrollSpace)
         //座標の変化を検知する
         .onPreferenceChange(ScrollViewOffsetPreferenceKey.self) { value in
-//            DispatchQueue.main.async {
-                //scrollOffsetに座標を伝えてViewに反映させる
-                scrollOffset = zeroIn(value, geometry: geometry)
-                //            print(scrollOffset)
-//            }
+            //scrollOffsetに座標を伝えてViewに反映させる
+            scrollOffset = zeroIn(value, geometry: geometry)
         }
     }
     
@@ -284,6 +260,28 @@ private struct ObservableScrollView<Content: View>: View {
         result.y = value.y - max((table.calculateMarginHeight(viewHeight: geometry.size.height, contentSize: contentSize))/2, 0)
         print(result)
         return result
+    }
+}
+
+//CGPointに+=演算子を定義
+private extension CGPoint {
+    static func + (lhs: Self, rhs: Self) -> Self {
+        CGPoint(
+            x: lhs.x + rhs.x,
+            y: lhs.y + rhs.y
+        )
+    }
+
+    static func += (lhs: inout Self, rhs: Self) {
+        lhs = lhs + rhs
+    }
+}
+
+//PreferenceKeyを作成
+private struct ScrollViewOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue = CGPoint.zero
+    static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) {
+        value += nextValue()
     }
 }
 
