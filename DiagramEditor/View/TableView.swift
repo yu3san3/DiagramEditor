@@ -30,9 +30,7 @@ struct Table {
 }
 
 struct JikokuhyouView: View {
-    
     let houkou: Houkou
-    
     let rows: [Ressya]// = oudData.rosen.dia[0].kudari.ressya
     let columns: [Eki]// = oudData.rosen.eki
     let ressyasyubetsu: [Ressyasyubetsu]
@@ -60,8 +58,13 @@ struct JikokuhyouView: View {
 
     init(houkou: Houkou, ressya: [Ressya], rosen: Rosen) {
         self.houkou = houkou
+        switch houkou {
+        case .kudari:
+            self.columns = rosen.eki
+        case .nobori:
+            self.columns = rosen.eki.reversed()
+        }
         self.rows = ressya
-        self.columns = rosen.eki
         self.ressyasyubetsu = rosen.ressyasyubetsu
         self.columnCount = ressya.count
         self.rowCount = rosen.eki.count
@@ -101,14 +104,8 @@ struct JikokuhyouView: View {
             //列
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack(spacing: 0) {
-                    if houkou == .kudari {
-                        ForEach(columns, id: \.self) { column in
-                            StationListView(houkou: houkou, column: column, table: table)
-                        }
-                    } else if houkou == .nobori {
-                        ForEach(columns.reversed(), id: \.self) { column in
-                            StationListView(houkou: houkou, column: column, table: table)
-                        }
+                    ForEach(columns) { column in
+                        StationListView(houkou: houkou, column: column, table: table)
                     }
                     VStack {
                         VText("備考")

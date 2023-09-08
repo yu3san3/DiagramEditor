@@ -80,7 +80,9 @@ private func zipLongest<T, U>(_ first: [T], _ second: [U]) -> AnyIterator<(T?, U
 
 struct JikokuView_Previews: PreviewProvider {
     static var previews: some View {
-        JikokuView(ressyas: OudData.mockOudData.rosen.dia[0].kudari.ressya, ekis: OudData.mockOudData.rosen.eki)
+        ScrollView([.vertical, .horizontal]) {
+            JikokuView(ressyas: OudData.mockOudData.rosen.dia[0].kudari.ressya, ekis: OudData.mockOudData.rosen.eki)
+        }
         JikokuView(ressyas: OudData.mockOudData.rosen.dia[0].nobori.ressya, ekis: OudData.mockOudData.rosen.eki)
     }
 }

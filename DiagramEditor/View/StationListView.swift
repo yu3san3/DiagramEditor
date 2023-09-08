@@ -7,13 +7,7 @@
 
 import SwiftUI
 
-enum Houkou {
-    case kudari
-    case nobori
-}
-
 struct StationListView: View {
-    
     let houkou: Houkou
     
     let column: Eki

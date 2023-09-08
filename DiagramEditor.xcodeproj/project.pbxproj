@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB275C592AAAFE1B00D8994A /* Houkou.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB275C582AAAFE1B00D8994A /* Houkou.swift */; };
 		EB72D5F42AA479C800779186 /* OudDataStringifyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */; };
 		EBA5403E2A278D73004AC49A /* OudData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403D2A278D73004AC49A /* OudData.swift */; };
 		EBA540402A278E4D004AC49A /* OudDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403F2A278E4D004AC49A /* OudDataParser.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB275C582AAAFE1B00D8994A /* Houkou.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Houkou.swift; sourceTree = "<group>"; };
 		EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudDataStringifyer.swift; sourceTree = "<group>"; };
 		EBA5403D2A278D73004AC49A /* OudData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudData.swift; sourceTree = "<group>"; };
 		EBA5403F2A278E4D004AC49A /* OudDataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudDataParser.swift; sourceTree = "<group>"; };
@@ -72,6 +74,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EB275C572AAAFDF400D8994A /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				EB275C582AAAFE1B00D8994A /* Houkou.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
 		EBD863C9293B6E97002D835D = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +147,7 @@
 		EBF3349A2A690A8F0099EE4E /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				EB275C572AAAFDF400D8994A /* Enum */,
 				EBA5403F2A278E4D004AC49A /* OudDataParser.swift */,
 				EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */,
 				EBF334AD2A699D3C0099EE4E /* Extensions.swift */,
@@ -262,6 +273,7 @@
 				EBA540482A278FEF004AC49A /* JikokuView.swift in Sources */,
 				EBA5403E2A278D73004AC49A /* OudData.swift in Sources */,
 				EBD863DA293B6E97002D835D /* ContentView.swift in Sources */,
+				EB275C592AAAFE1B00D8994A /* Houkou.swift in Sources */,
 				EBA540442A278F56004AC49A /* VTextView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

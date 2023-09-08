@@ -83,7 +83,7 @@ class OudDataParser {
                                                                ressyabangou: "",
                                                                ressyamei: "",
                                                                gousuu: "",
-                                                               ekiJikoku: [],
+                                                               ekiJikoku: EkiJikokuParser.parse("", ekiCount: ekiCount),
                                                                bikou: "")
                         )
                         oudData.rosen.dia.lastElement = diaTarget
@@ -94,7 +94,7 @@ class OudDataParser {
                                                                ressyabangou: "",
                                                                ressyamei: "",
                                                                gousuu: "",
-                                                               ekiJikoku: [],
+                                                               ekiJikoku: EkiJikokuParser.parse("", ekiCount: ekiCount),
                                                                bikou: "")
                         )
                         oudData.rosen.dia.lastElement = diaTarget
