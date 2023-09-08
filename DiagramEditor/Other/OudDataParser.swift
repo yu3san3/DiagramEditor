@@ -43,7 +43,9 @@ class OudDataParser {
         var isRessya = false
         var processingHoukouState: ProcessState = .none //どの構成要素を処理しているかを示す
 
-        for lineRow in text.components(separatedBy: .newlines) { //textを1行づつ処理
+        let lineRowArray = text.components(separatedBy: .newlines)
+        let ekiCount = lineRowArray.filter{ $0 == "Eki." }.count
+        for lineRow in lineRowArray { //textを1行づつ処理
             let line: String = lineRow.trimmingCharacters(in: .whitespaces) //行の端にある空白を削除
             if line.isEmpty {
                 continue
@@ -76,11 +78,25 @@ class OudDataParser {
                 if var diaTarget = oudData.rosen.dia.lastElement {
                     if case .kudari = processingHoukouState {
                         //空の要素をひとつ追加
-                        diaTarget.kudari.ressya.append( Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: "") )
+                        diaTarget.kudari.ressya.append( Ressya(houkou: "",
+                                                               syubetsu: 0,
+                                                               ressyabangou: "",
+                                                               ressyamei: "",
+                                                               gousuu: "",
+                                                               ekiJikoku: [],
+                                                               bikou: "")
+                        )
                         oudData.rosen.dia.lastElement = diaTarget
                     }
                     if case .nobori = processingHoukouState {
-                        diaTarget.nobori.ressya.append( Ressya(houkou: "", syubetsu: 0, ressyabangou: "", ressyamei: "", gousuu: "", ekiJikoku: [], bikou: "") )
+                        diaTarget.nobori.ressya.append( Ressya(houkou: "",
+                                                               syubetsu: 0,
+                                                               ressyabangou: "",
+                                                               ressyamei: "",
+                                                               gousuu: "",
+                                                               ekiJikoku: [],
+                                                               bikou: "")
+                        )
                         oudData.rosen.dia.lastElement = diaTarget
                     }
                 }
@@ -143,7 +159,7 @@ class OudDataParser {
                     case "Gousuu":
                         ressya.gousuu = value
                     case "EkiJikoku":
-                        ressya.ekiJikoku = EkiJikokuParser.parse(value)
+                        ressya.ekiJikoku = EkiJikokuParser.parse(value, ekiCount: ekiCount)
                     case "Bikou":
                         ressya.bikou = value
                     default:
@@ -273,7 +289,7 @@ class OudDataParser {
 }
 
 class EkiJikokuParser {
-    static func parse(_ text: String) -> [Jikoku] {
+    static func parse(_ text: String, ekiCount: Int) -> [Jikoku] {
         var result: [Jikoku] = []
         let jikokuArray = text.components(separatedBy: ",")
         for jikoku in jikokuArray {
@@ -299,15 +315,36 @@ class EkiJikokuParser {
                     let departure = timeComponents[1]
                     result.append( Jikoku(arrivalStatus: arrivalStatus, chaku: arrival, hatsu: departure) )
                 default:
-                    print("Ekijikoku.parse error: unexpected time data")
+                    print("Ekijikoku Parse Error: unexpected time data")
                     break
                 }
             default:
-                print("Ekijikoku.parse error: unexpected jikoku data")
+                print("Ekijikoku Parse Error: unexpected jikoku data")
                 break
             }
         }
+        result += getAdditonalJikoku(diffBetweenEkiAndResultCount: ekiCount - result.count)
         return result
+    }
+
+    private static func getAdditonalJikoku(diffBetweenEkiAndResultCount: Int) -> [Jikoku] {
+        guard diffBetweenEkiAndResultCount.isPositive else {
+            fatalError("ekiCount - result.countの差が0未満です。")
+        }
+        var additionalJikoku: [Jikoku] = []
+        for _ in 0..<diffBetweenEkiAndResultCount { //一意のUUIDを振るためにforで回してる
+            additionalJikoku.append( Jikoku(arrivalStatus: .notOperate, chaku: "", hatsu: "") )
+        }
+        return additionalJikoku
     }
 }
 
+private extension Int {
+    var isPositive: Bool {
+        if self >= 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+}

@@ -19,7 +19,6 @@ struct JikokuView: View {
                 LazyVStack(spacing: 0) {
                     let array = Array( zipLongest(ekis, ressya.ekiJikoku) )
                     ForEach(array, id: \.1?.id) { eki, jikoku in
-                        let _ = debugPrint(eki)
                         switch eki?.ekijikokukeisiki {
                         case .hatsuchaku:
                             Text(jikoku?.chaku ?? "nil")
