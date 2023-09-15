@@ -26,9 +26,19 @@ struct JikokuView: View {
                         case .hatsu:
                             Text(jikoku?.hatsu ?? "nil")
                         case .kudariChaku:
-                            Text("くだり着")
+                            switch ressya.houkou {
+                            case .kudari:
+                                Text(jikoku?.chaku ?? "nil")
+                            case .nobori:
+                                Text(jikoku?.hatsu ?? "nil")
+                            }
                         case .noboriChaku:
-                            Text("のぼり着")
+                            switch ressya.houkou {
+                            case .kudari:
+                                Text(jikoku?.hatsu ?? "nil")
+                            case .nobori:
+                                Text(jikoku?.chaku ?? "nil")
+                            }
                         case .none:
                             Text("none")
                         }
@@ -39,20 +49,24 @@ struct JikokuView: View {
                         height: table.rowHeight
                     )
                     .border(Color.green)
-                    VStack { //備考
-                        VText(ressya.bikou)
-                            .font(.caption)
-                            .padding(3)
-                        Spacer()
-                    }
-                    .frame(
-                        width: table.columnWidth,
-                        height: table.columnHeight*6
-                    )
-                    .border(Color.yellow)
+                    makeBikouCell(text: ressya.bikou)
                 }
             }
         }
+    }
+
+    func makeBikouCell(text: String) -> some View {
+        VStack { //備考
+            VText(text)
+                .font(.caption)
+                .padding(3)
+            Spacer()
+        }
+        .frame(
+            width: table.columnWidth,
+            height: table.columnHeight*6
+        )
+        .border(Color.yellow)
     }
 }
 

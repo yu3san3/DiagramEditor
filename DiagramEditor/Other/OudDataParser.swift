@@ -78,7 +78,7 @@ class OudDataParser {
                 if var diaTarget = oudData.rosen.dia.lastElement {
                     if case .kudari = processingHoukouState {
                         //空の要素をひとつ追加
-                        diaTarget.kudari.ressya.append( Ressya(houkou: "",
+                        diaTarget.kudari.ressya.append( Ressya(houkou: .kudari,
                                                                syubetsu: 0,
                                                                ressyabangou: "",
                                                                ressyamei: "",
@@ -89,7 +89,7 @@ class OudDataParser {
                         oudData.rosen.dia.lastElement = diaTarget
                     }
                     if case .nobori = processingHoukouState {
-                        diaTarget.nobori.ressya.append( Ressya(houkou: "",
+                        diaTarget.nobori.ressya.append( Ressya(houkou: .kudari,
                                                                syubetsu: 0,
                                                                ressyabangou: "",
                                                                ressyamei: "",
@@ -147,7 +147,14 @@ class OudDataParser {
                 func updateRessya(in ressya: inout Ressya, withKey key: String, value: String) {
                     switch key {
                     case "Houkou":
-                        ressya.houkou = value
+                        switch value {
+                        case "Kudari":
+                            ressya.houkou = .kudari
+                        case "Nobori":
+                            ressya.houkou = .nobori
+                        default:
+                            break
+                        }
                     case "Syubetsu":
                         if let valueInt = Int(value) {
                             ressya.syubetsu = valueInt

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Houkou {
-    case kudari
-    case nobori
+enum Houkou: String {
+    case kudari = "Kudari"
+    case nobori = "Nobori"
 }

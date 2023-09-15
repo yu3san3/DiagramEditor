@@ -85,10 +85,8 @@ class OudDataStringifyer {
                 func stringifyRessya(ressyaArr: [Ressya]) {
                     for ressya in ressyaArr {
                         result.append("Ressya.\n")
-                        if !ressya.houkou.isEmpty {
-                            result.append("Houkou=\(ressya.houkou)\n")
-                            result.append("Syubetsu=\(ressya.syubetsu)\n")
-                        }
+                        result.append("Houkou=\(ressya.houkou.rawValue)\n")
+                        result.append("Syubetsu=\(ressya.syubetsu)\n")
                         if !ressya.ressyabangou.isEmpty {
                             result.append("Ressyabangou=\(ressya.ressyabangou)\n")
                         }
