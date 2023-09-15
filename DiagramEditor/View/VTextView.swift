@@ -11,6 +11,7 @@ extension View {
     @ViewBuilder
     func VText(_ text: String) -> some View {
         VStack(spacing: 0) {
+            //FIXME: - idをselfにしていることで、重複する可能性がある
             ForEach (Array(text), id: \.self) { str in
                 Text(String(str))
             }

@@ -1,5 +1,5 @@
 //
-//  TableView.swift
+//  JikokuhyouView.swift
 //  DiagramEditor
 //
 //  Created by 丹羽雄一朗 on 2023/05/31.
@@ -99,25 +99,14 @@ struct JikokuhyouView: View {
 
     func leftContentView() -> some View {
         VStack(spacing: 0) {
-            //左上セル
             topLeftCell
             //列
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack(spacing: 0) {
-                    ForEach(columns) { column in
-                        StationListView(houkou: houkou, column: column, table: table)
+                    ForEach(columns) { eki in
+                        StationListView(houkou: houkou, column: eki, table: table)
                     }
-                    VStack {
-                        VText("備考")
-                            .font(.caption)
-                            .padding(3)
-                        Spacer()
-                    }
-                    .frame(
-                        width: table.rowWidth,
-                        height: table.columnHeight*6
-                    )
-                    .border(Color.yellow)
+                    bottomLeftCell
                 }
                 .offset(y: scrollOffset.y)
             }
@@ -155,14 +144,28 @@ struct JikokuhyouView: View {
         }
     }
 
+    var bottomLeftCell: some View {
+        VStack {
+            VText("備考")
+                .font(.caption)
+                .padding(3)
+            Spacer()
+        }
+        .frame(
+            width: table.rowWidth,
+            height: table.columnHeight*6
+        )
+        .border(Color.yellow)
+    }
+
     func rightContentView(_ geometry: GeometryProxy) -> some View {
         VStack(spacing: 0) {
             //行
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 0) {
-                    ForEach(rows) { column in
+                    ForEach(rows) { ressya in
                         VStack(spacing: 0) {
-                            Text(column.ressyabangou)
+                            Text(ressya.ressyabangou)
                                 .font(.caption)
                                 .frame(
                                     width: table.columnWidth,
@@ -170,8 +173,8 @@ struct JikokuhyouView: View {
                                 )
                                 .border(Color.red)
                             //column.syubetsuはInt型
-                            if ressyasyubetsu.indices.contains(column.syubetsu) {
-                                Text(ressyasyubetsu[column.syubetsu].ryakusyou)
+                            if ressyasyubetsu.indices.contains(ressya.syubetsu) {
+                                Text(ressyasyubetsu[ressya.syubetsu].ryakusyou)
                                     .font(.caption)
                                     .frame(
                                         width: table.columnWidth,
@@ -183,7 +186,7 @@ struct JikokuhyouView: View {
                                     .font(.caption)
                             }
                             VStack {
-                                VText(column.ressyamei)
+                                VText(ressya.ressyamei)
                                     .font(.caption)
                                     .padding(3) //ここに数字入れないとなんか表示がおかしくなる
                                 Spacer()
@@ -255,7 +258,6 @@ private struct ObservableScrollView<Content: View>: View {
         var result: CGPoint = .zero
         result.x = value.x - max((table.calculateMarginWidth(viewWidth: geometry.size.width, contentSize: contentSize))/2, 0)
         result.y = value.y - max((table.calculateMarginHeight(viewHeight: geometry.size.height, contentSize: contentSize))/2, 0)
-        print(result)
         return result
     }
 }
@@ -282,7 +284,7 @@ private struct ScrollViewOffsetPreferenceKey: PreferenceKey {
     }
 }
 
-struct TableView_Previews: PreviewProvider {
+struct JikokuhyouView_Previews: PreviewProvider {
     static var previews: some View {
         JikokuhyouView(houkou: .kudari,
                        ressya: OudData.mockOudData.rosen.dia[0].kudari.ressya,

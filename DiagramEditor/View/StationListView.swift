@@ -1,5 +1,5 @@
 //
-//  JikokuhyouRowsView.swift
+//  StationListView.swift
 //  DiagramEditor
 //
 //  Created by 丹羽雄一朗 on 2023/05/31.
@@ -69,7 +69,7 @@ struct StationListView: View {
     }
 }
 
-struct JikokuhyouRows_Previews: PreviewProvider {
+struct StationListView_Previews: PreviewProvider {
     static var previews: some View {
         let table = Table()
         StationListView(houkou: .kudari, column: OudData.mockOudData.rosen.eki[0], table: table)
