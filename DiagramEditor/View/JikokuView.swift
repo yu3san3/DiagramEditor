@@ -21,21 +21,58 @@ struct JikokuView: View {
                     ForEach(array, id: \.1?.id) { eki, jikoku in
                         switch eki?.ekijikokukeisiki {
                         case .hatsuchaku:
-                            Text(jikoku?.chaku ?? "nil")
-                            Text(jikoku?.hatsu ?? "nil")
+                            switch jikoku?.arrivalStatus {
+                            case .stop:
+                                Text(jikoku?.chaku ?? "nil")
+                                Text(jikoku?.hatsu ?? "nil")
+                            case .pass:
+                                Text("ﾚ")
+                                Text("ﾚ")
+                            case .notOperate:
+                                Text("･･")
+                                Text("･･")
+                            case .notGoThrough:
+                                Text("||")
+                                Text("||")
+                            case .none:
+                                Text("none")
+                                Text("none")
+                            }
                         case .hatsu:
                             Text(jikoku?.hatsu ?? "nil")
                         case .kudariChaku:
                             switch ressya.houkou {
                             case .kudari:
-                                Text(jikoku?.chaku ?? "nil")
+                                switch jikoku?.arrivalStatus {
+                                case .stop:
+                                    Text(jikoku?.chaku ?? "nil")
+                                case .pass:
+                                    Text("ﾚ")
+                                case .notOperate:
+                                    Text("･･")
+                                case .notGoThrough:
+                                    Text("||")
+                                case .none:
+                                    Text("none")
+                                }
                             case .nobori:
                                 Text(jikoku?.hatsu ?? "nil")
                             }
                         case .noboriChaku:
                             switch ressya.houkou {
                             case .kudari:
-                                Text(jikoku?.hatsu ?? "nil")
+                                switch jikoku?.arrivalStatus {
+                                case .stop:
+                                    Text(jikoku?.hatsu ?? "nil")
+                                case .pass:
+                                    Text("ﾚ")
+                                case .notOperate:
+                                    Text("･･")
+                                case .notGoThrough:
+                                    Text("||")
+                                case .none:
+                                    Text("none")
+                                }
                             case .nobori:
                                 Text(jikoku?.chaku ?? "nil")
                             }
