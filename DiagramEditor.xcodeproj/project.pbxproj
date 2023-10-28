@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		EB275C592AAAFE1B00D8994A /* Houkou.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB275C582AAAFE1B00D8994A /* Houkou.swift */; };
+		EB55FD352AECF70300FCCAF9 /* Ekijikokukeisiki.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD342AECF70300FCCAF9 /* Ekijikokukeisiki.swift */; };
+		EB55FD372AECF76E00FCCAF9 /* ArrivalStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD362AECF76E00FCCAF9 /* ArrivalStatus.swift */; };
+		EB55FD392AECF87200FCCAF9 /* DiagramSenStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD382AECF87200FCCAF9 /* DiagramSenStyle.swift */; };
+		EB55FD3B2AECF88C00FCCAF9 /* Ekikibo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD3A2AECF88C00FCCAF9 /* Ekikibo.swift */; };
 		EB72D5F42AA479C800779186 /* OudDataStringifyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */; };
 		EBA5403E2A278D73004AC49A /* OudData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403D2A278D73004AC49A /* OudData.swift */; };
 		EBA540402A278E4D004AC49A /* OudDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403F2A278E4D004AC49A /* OudDataParser.swift */; };
@@ -36,6 +40,10 @@
 
 /* Begin PBXFileReference section */
 		EB275C582AAAFE1B00D8994A /* Houkou.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Houkou.swift; sourceTree = "<group>"; };
+		EB55FD342AECF70300FCCAF9 /* Ekijikokukeisiki.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ekijikokukeisiki.swift; sourceTree = "<group>"; };
+		EB55FD362AECF76E00FCCAF9 /* ArrivalStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalStatus.swift; sourceTree = "<group>"; };
+		EB55FD382AECF87200FCCAF9 /* DiagramSenStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramSenStyle.swift; sourceTree = "<group>"; };
+		EB55FD3A2AECF88C00FCCAF9 /* Ekikibo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ekikibo.swift; sourceTree = "<group>"; };
 		EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudDataStringifyer.swift; sourceTree = "<group>"; };
 		EBA5403D2A278D73004AC49A /* OudData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudData.swift; sourceTree = "<group>"; };
 		EBA5403F2A278E4D004AC49A /* OudDataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudDataParser.swift; sourceTree = "<group>"; };
@@ -78,6 +86,10 @@
 			isa = PBXGroup;
 			children = (
 				EB275C582AAAFE1B00D8994A /* Houkou.swift */,
+				EB55FD342AECF70300FCCAF9 /* Ekijikokukeisiki.swift */,
+				EB55FD362AECF76E00FCCAF9 /* ArrivalStatus.swift */,
+				EB55FD3A2AECF88C00FCCAF9 /* Ekikibo.swift */,
+				EB55FD382AECF87200FCCAF9 /* DiagramSenStyle.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -263,18 +275,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB55FD392AECF87200FCCAF9 /* DiagramSenStyle.swift in Sources */,
 				EBA540402A278E4D004AC49A /* OudDataParser.swift in Sources */,
 				EBA540422A278EFE004AC49A /* JikokuhyouView.swift in Sources */,
 				EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */,
 				EBA540462A278FBE004AC49A /* StationListView.swift in Sources */,
 				EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */,
+				EB55FD3B2AECF88C00FCCAF9 /* Ekikibo.swift in Sources */,
 				EB72D5F42AA479C800779186 /* OudDataStringifyer.swift in Sources */,
 				EBF334AE2A699D3C0099EE4E /* Extensions.swift in Sources */,
 				EBA540482A278FEF004AC49A /* JikokuView.swift in Sources */,
 				EBA5403E2A278D73004AC49A /* OudData.swift in Sources */,
 				EBD863DA293B6E97002D835D /* ContentView.swift in Sources */,
 				EB275C592AAAFE1B00D8994A /* Houkou.swift in Sources */,
+				EB55FD372AECF76E00FCCAF9 /* ArrivalStatus.swift in Sources */,
 				EBA540442A278F56004AC49A /* VTextView.swift in Sources */,
+				EB55FD352AECF70300FCCAF9 /* Ekijikokukeisiki.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

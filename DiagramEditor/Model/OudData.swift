@@ -85,37 +85,11 @@ struct Ressya: Identifiable, Equatable { //インデント数: 4
     var bikou: String //任意
 }
 
-struct Jikoku: Identifiable, Equatable {
+struct Jikoku: Identifiable, Equatable { //インデント数: 5
     let id = UUID()
     var arrivalStatus: ArrivalStatus
     var chaku: String
     var hatsu: String
-}
-
-enum Ekijikokukeisiki: String {
-    case hatsu = "Jikokukeisiki_Hatsu"
-    case hatsuchaku = "Jikokukeisiki_Hatsuchaku"
-    case kudariChaku = "Jikokukeisiki_KudariChaku"
-    case noboriChaku = "Jikokukeisiki_NoboriChaku"
-}
-
-enum Ekikibo: String {
-    case ippan = "Ekikibo_Ippan"
-    case syuyou = "Ekikibo_Syuyou"
-}
-
-enum DiagramSenStyle: String {
-    case jissen = "SenStyle_Jissen"
-    case hasen = "SenStyle_Hasen"
-    case tensen = "SenStyle_Tensen"
-    case ittensasen = "SenStyle_Ittensasen"
-}
-
-enum ArrivalStatus: String {
-    case notOperate = "" //運行なし
-    case stop = "1" //停車
-    case pass = "2" //通過
-    case notGoThrough = "3" //経由なし
 }
 
 extension OudData {
