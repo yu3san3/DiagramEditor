@@ -20,7 +20,7 @@ struct Rosen: Equatable { //インデント数: 1
     var ressyasyubetsu: [Ressyasyubetsu]
     var dia: [Dia]
     var kitenJikoku: String
-    var diagramDgrYZahyouKyoriDefault: String
+    var diagramDgrYZahyouKyoriDefault: Int
     var comment: String
 }
 
@@ -53,7 +53,7 @@ struct Ressyasyubetsu: Equatable { //インデント数: 2
     var syubetsumei: String
     var ryakusyou: String
     var jikokuhyouMojiColor: String
-    var jikokuhyouFontIndex: String
+    var jikokuhyouFontIndex: Int
     var diagramSenColor: String
     var diagramSenStyle: DiagramSenStyle
     var diagramSenIsBold: String //任意

@@ -21,7 +21,7 @@ class OudDataParser {
                                            ressyasyubetsu: [],
                                            dia: [],
                                            kitenJikoku: "",
-                                           diagramDgrYZahyouKyoriDefault: "",
+                                           diagramDgrYZahyouKyoriDefault: 60,
                                            comment: ""
                                           ),
                               dispProp: DispProp(jikokuhyouFont: [],
@@ -103,7 +103,7 @@ class OudDataParser {
             case "Eki.":
                 oudData.rosen.eki.append( Eki(ekimei: "", ekijikokukeisiki: .hatsu, ekikibo: .ippan, kyoukaisen: "", diagramRessyajouhouHyoujiKudari: "", diagramRessyajouhouHyoujiNobori: "") )
             case "Ressyasyubetsu.":
-                oudData.rosen.ressyasyubetsu.append( Ressyasyubetsu(syubetsumei: "", ryakusyou: "", jikokuhyouMojiColor: "", jikokuhyouFontIndex: "", diagramSenColor: "", diagramSenStyle: .jissen, diagramSenIsBold: "", stopMarkDrawType: "") )
+                oudData.rosen.ressyasyubetsu.append( Ressyasyubetsu(syubetsumei: "", ryakusyou: "", jikokuhyouMojiColor: "", jikokuhyouFontIndex: 0, diagramSenColor: "", diagramSenStyle: .jissen, diagramSenIsBold: "", stopMarkDrawType: "") )
             case "Dia.":
                 oudData.rosen.dia.append( Dia(diaName: "", kudari: Kudari(ressya: []), nobori: Nobori(ressya: [])) )
             default:
@@ -208,7 +208,9 @@ class OudDataParser {
                     case "JikokuhyouMojiColor":
                         ressyasyubetsu.jikokuhyouMojiColor = value
                     case "JikokuhyouFontIndex":
-                        ressyasyubetsu.jikokuhyouFontIndex = value
+                        if let valueInt = Int(value) {
+                            ressyasyubetsu.jikokuhyouFontIndex = valueInt
+                        }
                     case "DiagramSenColor":
                         ressyasyubetsu.diagramSenColor = value
                     case "DiagramSenStyle":
@@ -241,7 +243,9 @@ class OudDataParser {
                     case "KitenJikoku":
                         oudData.rosen.kitenJikoku = value
                     case "DiagramDgrYZahyouKyoriDefault":
-                        oudData.rosen.diagramDgrYZahyouKyoriDefault = value
+                        if let valueInt = Int(value) {
+                            oudData.rosen.diagramDgrYZahyouKyoriDefault = valueInt
+                        }
                     case "Comment":
                         oudData.rosen.comment = value
                     default:
