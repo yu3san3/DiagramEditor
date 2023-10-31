@@ -14,15 +14,19 @@ extension UTType {
     }
 }
 
-struct DiagramEditorDocument: FileDocument {
-    var text: String
+final class DiagramEditorDocument: ReferenceFileDocument {
+    @Published var oudData: OudData
 
-    init(text: String = "Hello, world!") {
-        self.text = text
+    init(oudData: OudData = OudData.mockOudData) {
+        self.oudData = oudData
     }
 
     //開くことができるドキュメントのタイプを設定
     static var readableContentTypes: [UTType] { [.oudiaEditDocument] }
+
+    func snapshot(contentType: UTType) throws -> OudData {
+        return oudData
+    }
 
     //ファイルの読み込みを担当
     init(configuration: ReadConfiguration) throws {
@@ -33,11 +37,12 @@ struct DiagramEditorDocument: FileDocument {
             //UTF-8など、Shift-JIS以外の形式で保存されているファイルではエラーとなり開けない
             throw CocoaError(.fileReadCorruptFile)
         }
-        text = string
+        self.oudData = OudDataParser.parse(string)
     }
     
     //ファイルの保存を担当
-    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+    func fileWrapper(snapshot: OudData, configuration: WriteConfiguration) throws -> FileWrapper {
+        let text = OudDataStringifyer.stringify(oudData)
         let data = text.data(using: .shiftJIS)! //UTF-8 StringをShift-JIS Dataに変換
         return .init(regularFileWithContents: data)
     }

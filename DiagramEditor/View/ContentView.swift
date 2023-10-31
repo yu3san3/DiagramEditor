@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Binding var document: DiagramEditorDocument
+    @EnvironmentObject var document: DiagramEditorDocument
 
     var body: some View {
-//        TextEditor(text: $document.text)
         JikokuhyouView(houkou: .kudari,
-                       ressya: OudData.mockOudData.rosen.dia[0].kudari.ressya,
-                       rosen: OudData.mockOudData.rosen
+                       ressya: document.oudData.rosen.dia[0].kudari.ressya,
+                       rosen: document.oudData.rosen
         )
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(document: .constant(DiagramEditorDocument()))
+        ContentView()
+            .environmentObject(DiagramEditorDocument())
     }
 }
