@@ -47,8 +47,8 @@ struct JikokuhyouView: View {
     var contentSize: CGSize {
         .init(
             width: (table.columnWidth * CGFloat(columnCount)) + table.rowWidth,
-            //高さ: (列の高さ * (駅数 + うち時刻形式が発着となっている回数)) + 行の高さ * 8 * 6 (← 固定行の分の高さ * 備考の高さ)
-            height: (table.rowHeight * CGFloat(rowCount+hatsuchakuCount)) + table.columnHeight * (8 + 6)
+            //高さ: (列の高さ * (駅数 + うち時刻形式が発着となっている回数)) + 行の高さ * ( 固定行の分の高さ + 備考の高さ)
+            height: (table.rowHeight * CGFloat(rowCount + hatsuchakuCount)) + table.columnHeight * (8 + 6)
         )
     }
     
@@ -76,7 +76,6 @@ struct JikokuhyouView: View {
                 //実際に画面に表示されてるView
                 HStack(spacing: 0) {
                     leftContentView()
-                        .frame(width: table.rowWidth)
                     rightContentView(geometry)
                 }
                 //スクロールを検知するView
@@ -104,7 +103,7 @@ struct JikokuhyouView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack(spacing: 0) {
                     ForEach(columns) { eki in
-                        StationListView(houkou: houkou, column: eki, table: table)
+                        StationListItem(houkou: houkou, column: eki, table: table)
                     }
                     bottomLeftCell
                 }
@@ -112,6 +111,7 @@ struct JikokuhyouView: View {
             }
             .disabled(true)
         }
+        .frame(width: table.rowWidth)
     }
 
     var topLeftCell: some View {
@@ -199,8 +199,8 @@ struct JikokuhyouView: View {
                         }
                     }
                 }
-                .offset(x: scrollOffset.x)
                 .frame(height: table.columnHeight*8)
+                .offset(x: scrollOffset.x)
             }
             .disabled(true)
             //コンテンツ

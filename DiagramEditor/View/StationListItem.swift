@@ -1,5 +1,5 @@
 //
-//  StationListView.swift
+//  StationListItem.swift
 //  DiagramEditor
 //
 //  Created by 丹羽雄一朗 on 2023/05/31.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StationListView: View {
+struct StationListItem: View {
     let houkou: Houkou
     
     let column: Eki
@@ -38,15 +38,13 @@ struct StationListView: View {
         case .kudariChaku:
             if houkou == .kudari {
                 JikokuhyouRowsTemplateView("着")
-            }
-            if houkou == .nobori {
+            } else if houkou == .nobori {
                 JikokuhyouRowsTemplateView("発")
             }
         case .noboriChaku:
             if houkou == .kudari {
                 JikokuhyouRowsTemplateView("発")
-            }
-            if houkou == .nobori {
+            } else if houkou == .nobori {
                 JikokuhyouRowsTemplateView("着")
             }
         }
@@ -72,6 +70,6 @@ struct StationListView: View {
 struct StationListView_Previews: PreviewProvider {
     static var previews: some View {
         let table = Table()
-        StationListView(houkou: .kudari, column: OudData.mockOudData.rosen.eki[0], table: table)
+        StationListItem(houkou: .kudari, column: OudData.mockOudData.rosen.eki[0], table: table)
     }
 }
