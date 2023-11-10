@@ -8,77 +8,31 @@
 import SwiftUI
 
 struct JikokuView: View {
-    let ressyas: [Ressya]
-    let ekis: [Eki]
+    @EnvironmentObject var document: DiagramEditorDocument
+
+    let houkou: Houkou
+    let diaNum: Int
 
     let table = Table()
 
     var body: some View {
+        switch houkou {
+        case .kudari:
+            makeJikokuView(ressyas: document.oudData.rosen.dia[diaNum].kudari.ressya,
+                           ekis: document.oudData.rosen.eki)
+        case .nobori:
+            makeJikokuView(ressyas: document.oudData.rosen.dia[diaNum].nobori.ressya,
+                           ekis: document.oudData.rosen.eki.reversed() )
+        }
+    }
+
+    func makeJikokuView(ressyas: [Ressya], ekis: [Eki]) -> some View {
         LazyHStack(spacing: 0) {
             ForEach(ressyas) { ressya in
                 LazyVStack(spacing: 0) {
                     let array = Array( zipLongest(ekis, ressya.ekiJikoku) )
                     ForEach(array, id: \.1?.id) { eki, jikoku in
-                        switch eki?.ekijikokukeisiki {
-                        case .hatsuchaku:
-                            switch jikoku?.arrivalStatus {
-                            case .stop:
-                                Text(jikoku?.chaku ?? "nil")
-                                Text(jikoku?.hatsu ?? "nil")
-                            case .pass:
-                                Text("ﾚ")
-                                Text("ﾚ")
-                            case .notOperate:
-                                Text("･･")
-                                Text("･･")
-                            case .notGoThrough:
-                                Text("||")
-                                Text("||")
-                            case .none:
-                                Text("none")
-                                Text("none")
-                            }
-                        case .hatsu:
-                            Text(jikoku?.hatsu ?? "nil")
-                        case .kudariChaku:
-                            switch ressya.houkou {
-                            case .kudari:
-                                switch jikoku?.arrivalStatus {
-                                case .stop:
-                                    Text(jikoku?.chaku ?? "nil")
-                                case .pass:
-                                    Text("ﾚ")
-                                case .notOperate:
-                                    Text("･･")
-                                case .notGoThrough:
-                                    Text("||")
-                                case .none:
-                                    Text("none")
-                                }
-                            case .nobori:
-                                Text(jikoku?.hatsu ?? "nil")
-                            }
-                        case .noboriChaku:
-                            switch ressya.houkou {
-                            case .kudari:
-                                switch jikoku?.arrivalStatus {
-                                case .stop:
-                                    Text(jikoku?.hatsu ?? "nil")
-                                case .pass:
-                                    Text("ﾚ")
-                                case .notOperate:
-                                    Text("･･")
-                                case .notGoThrough:
-                                    Text("||")
-                                case .none:
-                                    Text("none")
-                                }
-                            case .nobori:
-                                Text(jikoku?.chaku ?? "nil")
-                            }
-                        case .none:
-                            Text("none")
-                        }
+                        makeJikokuCell(eki: eki, jikoku: jikoku, ressya: ressya)
                     }
                     .font(.caption)
                     .frame(
@@ -89,6 +43,70 @@ struct JikokuView: View {
                     makeBikouCell(text: ressya.bikou)
                 }
             }
+        }
+    }
+
+    @ViewBuilder
+    func makeJikokuCell(eki: Eki?, jikoku: Jikoku?, ressya: Ressya) -> some View {
+        switch eki?.ekijikokukeisiki {
+        case .hatsuchaku:
+            switch jikoku?.arrivalStatus {
+            case .stop:
+                Text(jikoku?.chaku ?? "nil")
+                Text(jikoku?.hatsu ?? "nil")
+            case .pass:
+                Text("ﾚ")
+                Text("ﾚ")
+            case .notOperate:
+                Text("･･")
+                Text("･･")
+            case .notGoThrough:
+                Text("||")
+                Text("||")
+            case .none:
+                Text("none")
+                Text("none")
+            }
+        case .hatsu:
+            Text(jikoku?.hatsu ?? "nil")
+        case .kudariChaku:
+            switch ressya.houkou {
+            case .kudari:
+                switch jikoku?.arrivalStatus {
+                case .stop:
+                    Text(jikoku?.chaku ?? "nil")
+                case .pass:
+                    Text("ﾚ")
+                case .notOperate:
+                    Text("･･")
+                case .notGoThrough:
+                    Text("||")
+                case .none:
+                    Text("none")
+                }
+            case .nobori:
+                Text(jikoku?.hatsu ?? "nil")
+            }
+        case .noboriChaku:
+            switch ressya.houkou {
+            case .kudari:
+                switch jikoku?.arrivalStatus {
+                case .stop:
+                    Text(jikoku?.hatsu ?? "nil")
+                case .pass:
+                    Text("ﾚ")
+                case .notOperate:
+                    Text("･･")
+                case .notGoThrough:
+                    Text("||")
+                case .none:
+                    Text("none")
+                }
+            case .nobori:
+                Text(jikoku?.chaku ?? "nil")
+            }
+        case .none:
+            Text("none")
         }
     }
 
@@ -132,10 +150,12 @@ private func zipLongest<T, U>(_ first: [T], _ second: [U]) -> AnyIterator<(T?, U
 struct JikokuView_Previews: PreviewProvider {
     static var previews: some View {
         ScrollView([.vertical, .horizontal]) {
-            JikokuView(ressyas: OudData.mockOudData.rosen.dia[0].kudari.ressya, ekis: OudData.mockOudData.rosen.eki)
+            JikokuView(houkou: .kudari, diaNum: 0)
+                .environmentObject(DiagramEditorDocument())
         }
         ScrollView([.vertical, .horizontal]) {
-            JikokuView(ressyas: OudData.mockOudData.rosen.dia[0].nobori.ressya, ekis: OudData.mockOudData.rosen.eki)
+            JikokuView(houkou: .nobori, diaNum: 0)
+                .environmentObject(DiagramEditorDocument())
         }
     }
 }

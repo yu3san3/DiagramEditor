@@ -205,7 +205,7 @@ struct JikokuhyouView: View {
             .disabled(true)
             //コンテンツ
             ScrollView([.vertical, .horizontal], showsIndicators: false) {
-                JikokuView(ressyas: rows, ekis: columns)
+                JikokuView(houkou: .kudari, diaNum: 0)
                     .offset(
                         //scrollOffset - 余白調整分
                         x: scrollOffset.x - table.calculateMarginWidth(viewWidth: geometry.size.width, contentSize: contentSize)/2,
