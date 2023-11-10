@@ -7,55 +7,57 @@
 
 import SwiftUI
 
-struct SyncedScrollView<Content:View,VSyncedContent:View,HSyncedContent:View>: View {
+struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: View, TopLeftCell: View>: View {
 
-    let content:Content
-    let verticallySyncedContent:VSyncedContent
-    let horizontallySyncedContent:HSyncedContent
+    let content: Content
+    let verticallySyncedContent: VSyncedContent
+    let horizontallySyncedContent: HSyncedContent
+    let topLeftCell: TopLeftCell
 
-    init(@ViewBuilder content: () -> Content, @ViewBuilder vSyncedContent: () -> VSyncedContent, @ViewBuilder hSyncedContent: () -> HSyncedContent) {
+    init(@ViewBuilder content: () -> Content,
+         @ViewBuilder vSyncedContent: () -> VSyncedContent,
+         @ViewBuilder hSyncedContent: () -> HSyncedContent,
+         @ViewBuilder topLeftCell: () -> TopLeftCell) {
         self.content = content()
         self.verticallySyncedContent = vSyncedContent()
         self.horizontallySyncedContent = hSyncedContent()
+        self.topLeftCell = topLeftCell()
     }
 
     @State private var offset = CGPoint(x: 0, y: 0)
 
     var body: some View {
-        VStack(alignment: .leading,spacing: 0){
+        VStack(alignment: .leading, spacing: 0){
             Spacer()
-            // Synchronised with main ScrollView
-            ScrollView(.horizontal) {
-                HStack {
+            HStack(spacing: 0) {
+                topLeftCell
+                // Synchronised with main ScrollView
+                ScrollView(.horizontal) {
                     horizontallySyncedContent
+                        .offset(x: -offset.x)
                 }
-                .offset(x: -offset.x)
+                .disabled(true)
             }
-            .disabled(true)
 
-            HStack(alignment: .top,spacing: 0) {
+            HStack(alignment: .top, spacing: 0) {
                 // Synchronised with main ScrollView
                 ScrollView {
-                    VStack {
-                        verticallySyncedContent
-                    }
-                    .offset(y: -offset.y)
+                    verticallySyncedContent
+                        .offset(y: -offset.y)
                 }
                 .disabled(true)
 
                 // MainScrollView
                 ScrollView([.vertical, .horizontal]) {
-                    VStack {
-                        content
-                    }
-                    .background( GeometryReader {
-                        Color.clear.preference(key: ViewOffsetKey.self,
-                                               value: CGPoint(x:-$0.frame(in: .named("scroll")).origin.x,y:-$0.frame(in: .named("scroll")).origin.y) )
-                    })
-                    .onPreferenceChange(ViewOffsetKey.self) { value in
-                        print("offset >> \(value)")
-                        offset = value
-                    }
+                    content
+                        .background(GeometryReader {
+                            Color.clear.preference(key: ViewOffsetKey.self,
+                                                   value: CGPoint(x:-$0.frame(in: .named("scroll")).origin.x,y:-$0.frame(in: .named("scroll")).origin.y) )
+                        })
+                        .onPreferenceChange(ViewOffsetKey.self) { value in
+                            print("offset >> \(value)")
+                            offset = value
+                        }
                 }
                 .coordinateSpace(name: "scroll")
             }
@@ -77,29 +79,40 @@ struct ViewOffsetKey: PreferenceKey {
 
 struct SyncedScrollView_Previews: PreviewProvider {
     static var previews: some View {
-        SyncedScrollView{
-            LazyHStack{
-                ForEach(1..<30) { column in
-                    LazyVStack{
-                        ForEach(1..<30) { row in
+        SyncedScrollView {
+            LazyHStack(spacing: 0) {
+                ForEach(1..<100) { column in
+                    LazyVStack(spacing: 0) {
+                        ForEach(1..<100) { row in
                             Text("R:\(row)\nC:\(column)")
                                 .frame(width: 80, height: 80)
-                        }.background(.green)
+                        }
+                        .background(.green)
                     }
                 }
             }
-        }vSyncedContent:{
-            ForEach(1..<30) { row in
-                Text("R:\(row)\nC:\(0)")
-                    .frame(width: 80, height: 80)
-            }.background(.pink)
-                .padding(.trailing,8)
-        }hSyncedContent:{
-            ForEach(0..<30) { column in
-                Text("R:\(0)\nC:\(column)")
-                    .frame(width: 80, height: 80)
-            }.background(.yellow)
-                .padding(.bottom,8)
+        } vSyncedContent: {
+            LazyVStack(spacing: 0) {
+                ForEach(1..<100) { row in
+                    Text("R:\(row)\nC:\(0)")
+                        .frame(width: 80, height: 80)
+                }
+                .background(.pink)
+            }
+            .frame(width: 80)
+        } hSyncedContent: {
+            LazyHStack(spacing: 0) {
+                ForEach(1..<100) { column in
+                    Text("R:\(0)\nC:\(column)")
+                        .frame(width: 80, height: 80)
+                }
+                .background(.yellow)
+            }
+            .frame(height: 80)
+        } topLeftCell: {
+            Text("R:\(0)\nC:\(0)")
+                .frame(width: 80, height: 80)
+                .background(.blue)
         }
     }
 }
