@@ -13,6 +13,7 @@
 		EB55FD392AECF87200FCCAF9 /* DiagramSenStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD382AECF87200FCCAF9 /* DiagramSenStyle.swift */; };
 		EB55FD3B2AECF88C00FCCAF9 /* Ekikibo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD3A2AECF88C00FCCAF9 /* Ekikibo.swift */; };
 		EB72D5F42AA479C800779186 /* OudDataStringifyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */; };
+		EB8E1E3B2AFE065B00707DC6 /* SyncedScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8E1E3A2AFE065B00707DC6 /* SyncedScrollView.swift */; };
 		EBA5403E2A278D73004AC49A /* OudData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403D2A278D73004AC49A /* OudData.swift */; };
 		EBA540402A278E4D004AC49A /* OudDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403F2A278E4D004AC49A /* OudDataParser.swift */; };
 		EBA540422A278EFE004AC49A /* JikokuhyouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540412A278EFE004AC49A /* JikokuhyouView.swift */; };
@@ -45,6 +46,7 @@
 		EB55FD382AECF87200FCCAF9 /* DiagramSenStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramSenStyle.swift; sourceTree = "<group>"; };
 		EB55FD3A2AECF88C00FCCAF9 /* Ekikibo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ekikibo.swift; sourceTree = "<group>"; };
 		EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudDataStringifyer.swift; sourceTree = "<group>"; };
+		EB8E1E3A2AFE065B00707DC6 /* SyncedScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncedScrollView.swift; sourceTree = "<group>"; };
 		EBA5403D2A278D73004AC49A /* OudData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudData.swift; sourceTree = "<group>"; };
 		EBA5403F2A278E4D004AC49A /* OudDataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudDataParser.swift; sourceTree = "<group>"; };
 		EBA540412A278EFE004AC49A /* JikokuhyouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JikokuhyouView.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				EBD863D9293B6E97002D835D /* ContentView.swift */,
+				EB8E1E3A2AFE065B00707DC6 /* SyncedScrollView.swift */,
 				EBA540412A278EFE004AC49A /* JikokuhyouView.swift */,
 				EBA540432A278F56004AC49A /* VTextView.swift */,
 				EBA540452A278FBE004AC49A /* StationListItem.swift */,
@@ -281,6 +284,7 @@
 				EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */,
 				EBA540462A278FBE004AC49A /* StationListItem.swift in Sources */,
 				EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */,
+				EB8E1E3B2AFE065B00707DC6 /* SyncedScrollView.swift in Sources */,
 				EB55FD3B2AECF88C00FCCAF9 /* Ekikibo.swift in Sources */,
 				EB72D5F42AA479C800779186 /* OudDataStringifyer.swift in Sources */,
 				EBF334AE2A699D3C0099EE4E /* Extensions.swift in Sources */,
