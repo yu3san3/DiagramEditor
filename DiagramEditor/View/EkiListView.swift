@@ -1,5 +1,5 @@
 //
-//  StationListItem.swift
+//  EkiListView.swift
 //  DiagramEditor
 //
 //  Created by 丹羽雄一朗 on 2023/05/31.
@@ -7,19 +7,29 @@
 
 import SwiftUI
 
-struct StationListItem: View {
+struct EkiListView: View {
+    @EnvironmentObject var document: DiagramEditorDocument
+
     let houkou: Houkou
-    
-    let column: Eki
-    let table: Table
-    
+
+    let table = Table()
+
     var body: some View {
-        switch column.ekijikokukeisiki {
+        LazyVStack(spacing: 0) {
+            ForEach(document.oudData.rosen.eki) { eki in
+                makeEkiListItem(eki: eki)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func makeEkiListItem(eki: Eki) -> some View {
+        switch eki.ekijikokukeisiki {
         case .hatsu:
-            JikokuhyouRowsTemplateView("発")
+            makeEkiListTemplateView(eki: eki, hatsuOrChaku: "発")
         case .hatsuchaku:
             HStack {
-                Text(column.ekimei)
+                Text(eki.ekimei)
                     .padding(2)
                 Spacer()
                 VStack(spacing: 0) {
@@ -37,25 +47,25 @@ struct StationListItem: View {
             .border(Color.blue)
         case .kudariChaku:
             if houkou == .kudari {
-                JikokuhyouRowsTemplateView("着")
+                makeEkiListTemplateView(eki: eki, hatsuOrChaku: "着")
             } else if houkou == .nobori {
-                JikokuhyouRowsTemplateView("発")
+                makeEkiListTemplateView(eki: eki, hatsuOrChaku: "発")
             }
         case .noboriChaku:
             if houkou == .kudari {
-                JikokuhyouRowsTemplateView("発")
+                makeEkiListTemplateView(eki: eki, hatsuOrChaku: "発")
             } else if houkou == .nobori {
-                JikokuhyouRowsTemplateView("着")
+                makeEkiListTemplateView(eki: eki, hatsuOrChaku: "着")
             }
         }
     }
-    
-    func JikokuhyouRowsTemplateView(_ hatsucakuText: String) -> some View {
+
+    private func makeEkiListTemplateView(eki: Eki, hatsuOrChaku: String) -> some View {
         HStack {
-            Text(column.ekimei)
+            Text(eki.ekimei)
                 .padding(2)
             Spacer()
-            Text(hatsucakuText)
+            Text(hatsuOrChaku)
                 .padding(2)
         }
         .font(.caption)
@@ -69,7 +79,7 @@ struct StationListItem: View {
 
 struct StationListView_Previews: PreviewProvider {
     static var previews: some View {
-        let table = Table()
-        StationListItem(houkou: .kudari, column: OudData.mockOudData.rosen.eki[0], table: table)
+        EkiListView(houkou: .kudari)
+            .environmentObject(DiagramEditorDocument())
     }
 }

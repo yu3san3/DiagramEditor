@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB1D0CC52AFE7AA300994C3E /* RessyaInfoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D0CC42AFE7AA300994C3E /* RessyaInfoListItem.swift */; };
 		EB275C592AAAFE1B00D8994A /* Houkou.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB275C582AAAFE1B00D8994A /* Houkou.swift */; };
 		EB55FD352AECF70300FCCAF9 /* Ekijikokukeisiki.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD342AECF70300FCCAF9 /* Ekijikokukeisiki.swift */; };
 		EB55FD372AECF76E00FCCAF9 /* ArrivalStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD362AECF76E00FCCAF9 /* ArrivalStatus.swift */; };
@@ -14,11 +15,12 @@
 		EB55FD3B2AECF88C00FCCAF9 /* Ekikibo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD3A2AECF88C00FCCAF9 /* Ekikibo.swift */; };
 		EB72D5F42AA479C800779186 /* OudDataStringifyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */; };
 		EB8E1E3B2AFE065B00707DC6 /* SyncedScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8E1E3A2AFE065B00707DC6 /* SyncedScrollView.swift */; };
+		EB8E1E3D2AFE1CC500707DC6 /* TimeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8E1E3C2AFE1CC500707DC6 /* TimeTableView.swift */; };
 		EBA5403E2A278D73004AC49A /* OudData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403D2A278D73004AC49A /* OudData.swift */; };
 		EBA540402A278E4D004AC49A /* OudDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403F2A278E4D004AC49A /* OudDataParser.swift */; };
 		EBA540422A278EFE004AC49A /* JikokuhyouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540412A278EFE004AC49A /* JikokuhyouView.swift */; };
 		EBA540442A278F56004AC49A /* VTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540432A278F56004AC49A /* VTextView.swift */; };
-		EBA540462A278FBE004AC49A /* StationListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540452A278FBE004AC49A /* StationListItem.swift */; };
+		EBA540462A278FBE004AC49A /* EkiListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540452A278FBE004AC49A /* EkiListView.swift */; };
 		EBA540482A278FEF004AC49A /* JikokuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540472A278FEF004AC49A /* JikokuView.swift */; };
 		EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */; };
 		EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */; };
@@ -40,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB1D0CC42AFE7AA300994C3E /* RessyaInfoListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RessyaInfoListItem.swift; sourceTree = "<group>"; };
 		EB275C582AAAFE1B00D8994A /* Houkou.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Houkou.swift; sourceTree = "<group>"; };
 		EB55FD342AECF70300FCCAF9 /* Ekijikokukeisiki.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ekijikokukeisiki.swift; sourceTree = "<group>"; };
 		EB55FD362AECF76E00FCCAF9 /* ArrivalStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalStatus.swift; sourceTree = "<group>"; };
@@ -47,11 +50,12 @@
 		EB55FD3A2AECF88C00FCCAF9 /* Ekikibo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ekikibo.swift; sourceTree = "<group>"; };
 		EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudDataStringifyer.swift; sourceTree = "<group>"; };
 		EB8E1E3A2AFE065B00707DC6 /* SyncedScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncedScrollView.swift; sourceTree = "<group>"; };
+		EB8E1E3C2AFE1CC500707DC6 /* TimeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableView.swift; sourceTree = "<group>"; };
 		EBA5403D2A278D73004AC49A /* OudData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudData.swift; sourceTree = "<group>"; };
 		EBA5403F2A278E4D004AC49A /* OudDataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudDataParser.swift; sourceTree = "<group>"; };
 		EBA540412A278EFE004AC49A /* JikokuhyouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JikokuhyouView.swift; sourceTree = "<group>"; };
 		EBA540432A278F56004AC49A /* VTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VTextView.swift; sourceTree = "<group>"; };
-		EBA540452A278FBE004AC49A /* StationListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationListItem.swift; sourceTree = "<group>"; };
+		EBA540452A278FBE004AC49A /* EkiListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EkiListView.swift; sourceTree = "<group>"; };
 		EBA540472A278FEF004AC49A /* JikokuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JikokuView.swift; sourceTree = "<group>"; };
 		EBD863D2293B6E97002D835D /* DiagramEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiagramEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorApp.swift; sourceTree = "<group>"; };
@@ -152,8 +156,10 @@
 				EBD863D9293B6E97002D835D /* ContentView.swift */,
 				EB8E1E3A2AFE065B00707DC6 /* SyncedScrollView.swift */,
 				EBA540412A278EFE004AC49A /* JikokuhyouView.swift */,
+				EB8E1E3C2AFE1CC500707DC6 /* TimeTableView.swift */,
+				EB1D0CC42AFE7AA300994C3E /* RessyaInfoListItem.swift */,
 				EBA540432A278F56004AC49A /* VTextView.swift */,
-				EBA540452A278FBE004AC49A /* StationListItem.swift */,
+				EBA540452A278FBE004AC49A /* EkiListView.swift */,
 				EBA540472A278FEF004AC49A /* JikokuView.swift */,
 			);
 			path = View;
@@ -282,12 +288,14 @@
 				EBA540402A278E4D004AC49A /* OudDataParser.swift in Sources */,
 				EBA540422A278EFE004AC49A /* JikokuhyouView.swift in Sources */,
 				EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */,
-				EBA540462A278FBE004AC49A /* StationListItem.swift in Sources */,
+				EBA540462A278FBE004AC49A /* EkiListView.swift in Sources */,
 				EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */,
 				EB8E1E3B2AFE065B00707DC6 /* SyncedScrollView.swift in Sources */,
 				EB55FD3B2AECF88C00FCCAF9 /* Ekikibo.swift in Sources */,
+				EB8E1E3D2AFE1CC500707DC6 /* TimeTableView.swift in Sources */,
 				EB72D5F42AA479C800779186 /* OudDataStringifyer.swift in Sources */,
 				EBF334AE2A699D3C0099EE4E /* Extensions.swift in Sources */,
+				EB1D0CC52AFE7AA300994C3E /* RessyaInfoListItem.swift in Sources */,
 				EBA540482A278FEF004AC49A /* JikokuView.swift in Sources */,
 				EBA5403E2A278D73004AC49A /* OudData.swift in Sources */,
 				EBD863DA293B6E97002D835D /* ContentView.swift in Sources */,

@@ -102,9 +102,7 @@ struct JikokuhyouView: View {
             //列
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack(spacing: 0) {
-                    ForEach(columns) { eki in
-                        StationListItem(houkou: houkou, column: eki, table: table)
-                    }
+                    EkiListView(houkou: houkou)
                     bottomLeftCell
                 }
                 .offset(y: scrollOffset.y)
