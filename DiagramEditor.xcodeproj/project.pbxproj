@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EB1D0CC52AFE7AA300994C3E /* RessyaInfoListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D0CC42AFE7AA300994C3E /* RessyaInfoListItem.swift */; };
+		EB1D0CC52AFE7AA300994C3E /* RessyaInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D0CC42AFE7AA300994C3E /* RessyaInfoList.swift */; };
 		EB275C592AAAFE1B00D8994A /* Houkou.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB275C582AAAFE1B00D8994A /* Houkou.swift */; };
 		EB55FD352AECF70300FCCAF9 /* Ekijikokukeisiki.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD342AECF70300FCCAF9 /* Ekijikokukeisiki.swift */; };
 		EB55FD372AECF76E00FCCAF9 /* ArrivalStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD362AECF76E00FCCAF9 /* ArrivalStatus.swift */; };
@@ -42,7 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EB1D0CC42AFE7AA300994C3E /* RessyaInfoListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RessyaInfoListItem.swift; sourceTree = "<group>"; };
+		EB1D0CC42AFE7AA300994C3E /* RessyaInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RessyaInfoList.swift; sourceTree = "<group>"; };
 		EB275C582AAAFE1B00D8994A /* Houkou.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Houkou.swift; sourceTree = "<group>"; };
 		EB55FD342AECF70300FCCAF9 /* Ekijikokukeisiki.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ekijikokukeisiki.swift; sourceTree = "<group>"; };
 		EB55FD362AECF76E00FCCAF9 /* ArrivalStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalStatus.swift; sourceTree = "<group>"; };
@@ -157,7 +157,7 @@
 				EB8E1E3A2AFE065B00707DC6 /* SyncedScrollView.swift */,
 				EBA540412A278EFE004AC49A /* JikokuhyouView.swift */,
 				EB8E1E3C2AFE1CC500707DC6 /* TimeTableView.swift */,
-				EB1D0CC42AFE7AA300994C3E /* RessyaInfoListItem.swift */,
+				EB1D0CC42AFE7AA300994C3E /* RessyaInfoList.swift */,
 				EBA540432A278F56004AC49A /* VTextView.swift */,
 				EBA540452A278FBE004AC49A /* EkiListView.swift */,
 				EBA540472A278FEF004AC49A /* JikokuView.swift */,
@@ -295,7 +295,7 @@
 				EB8E1E3D2AFE1CC500707DC6 /* TimeTableView.swift in Sources */,
 				EB72D5F42AA479C800779186 /* OudDataStringifyer.swift in Sources */,
 				EBF334AE2A699D3C0099EE4E /* Extensions.swift in Sources */,
-				EB1D0CC52AFE7AA300994C3E /* RessyaInfoListItem.swift in Sources */,
+				EB1D0CC52AFE7AA300994C3E /* RessyaInfoList.swift in Sources */,
 				EBA540482A278FEF004AC49A /* JikokuView.swift in Sources */,
 				EBA5403E2A278D73004AC49A /* OudData.swift in Sources */,
 				EBD863DA293B6E97002D835D /* ContentView.swift in Sources */,
