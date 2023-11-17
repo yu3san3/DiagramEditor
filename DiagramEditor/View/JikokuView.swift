@@ -36,8 +36,8 @@ struct JikokuView: View {
                     }
                     .font(.caption)
                     .frame(
-                        width: table.columnWidth,
-                        height: table.rowHeight
+                        width: table.jikokuWidth,
+                        height: table.jikokuHeight
                     )
                     .border(Color.green)
                     makeBikouCell(text: ressya.bikou)
@@ -118,8 +118,8 @@ struct JikokuView: View {
             Spacer()
         }
         .frame(
-            width: table.columnWidth,
-            height: table.columnHeight*6
+            width: table.jikokuWidth,
+            height: table.jikokuHeight*6
         )
         .border(Color.yellow)
     }

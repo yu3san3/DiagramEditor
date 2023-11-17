@@ -28,8 +28,8 @@ struct RessyaInfoList: View {
             Text(ressya.ressyabangou)
                 .font(.caption)
                 .frame(
-                    width: table.columnWidth,
-                    height: table.columnHeight
+                    width: table.jikokuWidth,
+                    height: table.jikokuHeight
                 )
                 .border(Color.red)
             //column.syubetsuはInt型
@@ -37,8 +37,8 @@ struct RessyaInfoList: View {
                 Text(document.oudData.rosen.ressyasyubetsu[ressya.syubetsu].ryakusyou)
                     .font(.caption)
                     .frame(
-                        width: table.columnWidth,
-                        height: table.columnHeight
+                        width: table.jikokuWidth,
+                        height: table.jikokuHeight
                     )
                     .border(Color.red)
             } else {
@@ -52,8 +52,8 @@ struct RessyaInfoList: View {
                 Spacer()
             }
             .frame(
-                width: table.columnWidth,
-                height: table.columnHeight*6
+                width: table.jikokuWidth,
+                height: table.jikokuHeight*6
             )
             .border(Color.red)
         }

@@ -158,9 +158,9 @@
 				EBA540412A278EFE004AC49A /* JikokuhyouView.swift */,
 				EB8E1E3C2AFE1CC500707DC6 /* TimeTableView.swift */,
 				EB1D0CC42AFE7AA300994C3E /* RessyaInfoList.swift */,
-				EBA540432A278F56004AC49A /* VTextView.swift */,
 				EBA540452A278FBE004AC49A /* EkiListView.swift */,
 				EBA540472A278FEF004AC49A /* JikokuView.swift */,
+				EBA540432A278F56004AC49A /* VTextView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

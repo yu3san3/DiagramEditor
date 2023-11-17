@@ -41,8 +41,8 @@ struct EkiListView: View {
             }
             .font(.caption)
             .frame(
-                width: table.rowWidth,
-                height: table.rowHeight*2
+                width: table.ekiWidth,
+                height: table.jikokuHeight*2
             )
             .border(Color.blue)
         case .kudariChaku:
@@ -70,8 +70,8 @@ struct EkiListView: View {
         }
         .font(.caption)
         .frame(
-            width: table.rowWidth,
-            height: table.rowHeight
+            width: table.ekiWidth,
+            height: table.jikokuHeight
         )
         .border(Color.blue)
     }

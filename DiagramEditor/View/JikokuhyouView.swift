@@ -9,22 +9,21 @@ import SwiftUI
 
 struct Table {
     //表の属性を決める
-    let columnWidth: CGFloat = 40
-    let columnHeight: CGFloat = 20
-    let rowWidth: CGFloat = 80
-    let rowHeight: CGFloat = 20
+    let jikokuWidth: CGFloat = 40
+    let jikokuHeight: CGFloat = 20
+    let ekiWidth: CGFloat = 80
     
     //Viewの幅と表の大きさを渡すと余白の幅が返ってくる
     func calculateMarginWidth(viewWidth: CGFloat, contentSize: CGSize) -> CGFloat {
-        let viewWidthExcludingTopLeftCell: CGFloat = viewWidth - self.rowWidth
-        let columnWidthExcludingTopLeftCell: CGFloat = contentSize.width - self.rowWidth
+        let viewWidthExcludingTopLeftCell: CGFloat = viewWidth - self.ekiWidth
+        let columnWidthExcludingTopLeftCell: CGFloat = contentSize.width - self.ekiWidth
         return viewWidthExcludingTopLeftCell - columnWidthExcludingTopLeftCell
     }
     
     //Viewの高さと表の大きさを渡すと余白の高さが返ってくる
     func calculateMarginHeight(viewHeight: CGFloat, contentSize: CGSize) -> CGFloat {
-        let viewHeightExcludingTopLeftCell: CGFloat = viewHeight - self.columnHeight
-        let rowHeightExcludingTopLeftCell: CGFloat = contentSize.height - self.columnHeight
+        let viewHeightExcludingTopLeftCell: CGFloat = viewHeight - self.jikokuHeight
+        let rowHeightExcludingTopLeftCell: CGFloat = contentSize.height - self.jikokuHeight
         return viewHeightExcludingTopLeftCell - rowHeightExcludingTopLeftCell
     }
 }
@@ -46,9 +45,9 @@ struct JikokuhyouView: View {
     //表の大きさ
     var contentSize: CGSize {
         .init(
-            width: (table.columnWidth * CGFloat(columnCount)) + table.rowWidth,
+            width: (table.jikokuWidth * CGFloat(columnCount)) + table.ekiWidth,
             //高さ: (列の高さ * (駅数 + うち時刻形式が発着となっている回数)) + 行の高さ * ( 固定行の分の高さ + 備考の高さ)
-            height: (table.rowHeight * CGFloat(rowCount + hatsuchakuCount)) + table.columnHeight * (8 + 6)
+            height: (table.jikokuHeight * CGFloat(rowCount + hatsuchakuCount)) + table.jikokuHeight * (8 + 6)
         )
     }
     
@@ -109,7 +108,7 @@ struct JikokuhyouView: View {
             }
             .disabled(true)
         }
-        .frame(width: table.rowWidth)
+        .frame(width: table.ekiWidth)
     }
 
     var topLeftCell: some View {
@@ -117,15 +116,15 @@ struct JikokuhyouView: View {
             Text("列車番号")
                 .font(.caption)
                 .frame(
-                    width: table.rowWidth,
-                    height: table.columnHeight
+                    width: table.ekiWidth,
+                    height: table.jikokuHeight
                 )
                 .border(Color.yellow)
             Text("列車種別")
                 .font(.caption)
                 .frame(
-                    width: table.rowWidth,
-                    height: table.columnHeight
+                    width: table.ekiWidth,
+                    height: table.jikokuHeight
                 )
                 .border(Color.yellow)
             VStack {
@@ -135,8 +134,8 @@ struct JikokuhyouView: View {
                 Spacer()
             }
             .frame(
-                width: table.rowWidth,
-                height: table.columnHeight*6
+                width: table.ekiWidth,
+                height: table.jikokuHeight*6
             )
             .border(Color.yellow)
         }
@@ -150,8 +149,8 @@ struct JikokuhyouView: View {
             Spacer()
         }
         .frame(
-            width: table.rowWidth,
-            height: table.columnHeight*6
+            width: table.ekiWidth,
+            height: table.jikokuHeight*6
         )
         .border(Color.yellow)
     }
@@ -166,8 +165,8 @@ struct JikokuhyouView: View {
                             Text(ressya.ressyabangou)
                                 .font(.caption)
                                 .frame(
-                                    width: table.columnWidth,
-                                    height: table.columnHeight
+                                    width: table.jikokuWidth,
+                                    height: table.jikokuHeight
                                 )
                                 .border(Color.red)
                             //column.syubetsuはInt型
@@ -175,8 +174,8 @@ struct JikokuhyouView: View {
                                 Text(ressyasyubetsu[ressya.syubetsu].ryakusyou)
                                     .font(.caption)
                                     .frame(
-                                        width: table.columnWidth,
-                                        height: table.columnHeight
+                                        width: table.jikokuWidth,
+                                        height: table.jikokuHeight
                                     )
                                     .border(Color.red)
                             } else {
@@ -190,14 +189,14 @@ struct JikokuhyouView: View {
                                 Spacer()
                             }
                             .frame(
-                                width: table.columnWidth,
-                                height: table.columnHeight*6
+                                width: table.jikokuWidth,
+                                height: table.jikokuHeight*6
                             )
                             .border(Color.red)
                         }
                     }
                 }
-                .frame(height: table.columnHeight*8)
+                .frame(height: table.jikokuHeight*8)
                 .offset(x: scrollOffset.x)
             }
             .disabled(true)
