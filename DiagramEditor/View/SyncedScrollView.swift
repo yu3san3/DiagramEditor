@@ -9,22 +9,24 @@ import SwiftUI
 
 struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: View, TopLeftCell: View>: View {
 
+    let contentSize: CGSize
     let content: Content
     let verticallySyncedContent: VSyncedContent
     let horizontallySyncedContent: HSyncedContent
     let topLeftCell: TopLeftCell
 
-    init(@ViewBuilder content: () -> Content,
+    init(contentSize: CGSize,
+         @ViewBuilder content: () -> Content,
          @ViewBuilder vSyncedContent: () -> VSyncedContent,
          @ViewBuilder hSyncedContent: () -> HSyncedContent,
-         @ViewBuilder topLeftCell: () -> TopLeftCell) {
+         @ViewBuilder topLeftCell: () -> TopLeftCell
+    ) {
+        self.contentSize = contentSize
         self.content = content()
         self.verticallySyncedContent = vSyncedContent()
         self.horizontallySyncedContent = hSyncedContent()
         self.topLeftCell = topLeftCell()
     }
-
-    @State private var contentViewSize: CGSize = .zero
 
     @State private var offset = CGPoint(x: 0, y: 0)
 
@@ -39,7 +41,6 @@ struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: Vie
 private extension SyncedScrollView {
     var contentView: some View {
         VStack(alignment: .leading, spacing: 0){
-            Spacer()
             HStack(spacing: 0) {
                 topLeftCell
 
@@ -69,14 +70,14 @@ private extension SyncedScrollView {
     var observableScrollView: some View {
         ScrollView([.vertical, .horizontal]) {
             Color.clear
-            //FIXME: - frameをViewのsizeにしよう
-                .frame(width: 1500, height: 1500)
+                .frame(width: contentSize.width, height: contentSize.height)
                 .background(GeometryReader { geometry in
                     Color.clear
                         .preference(key: ObservableViewOffsetKey.self,
                                     value: CGPoint(x: -geometry.frame(in: .named("scroll")).origin.x, y: -geometry.frame(in: .named("scroll")).origin.y))
                 })
                 .onPreferenceChange(ObservableViewOffsetKey.self) { value in
+                    print(value)
                     offset = value
                 }
         }

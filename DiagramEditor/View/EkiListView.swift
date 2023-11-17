@@ -19,6 +19,7 @@ struct EkiListView: View {
             ForEach(document.oudData.rosen.eki) { eki in
                 makeEkiListItem(eki: eki)
             }
+            bikouCell
         }
     }
 
@@ -74,6 +75,20 @@ struct EkiListView: View {
             height: table.jikokuHeight
         )
         .border(Color.blue)
+    }
+
+    var bikouCell: some View {
+        VStack {
+            VText("備考")
+                .font(.caption)
+                .padding(3)
+            Spacer()
+        }
+        .frame(
+            width: table.ekiWidth,
+            height: table.bikouHeight
+        )
+        .border(Color.yellow)
     }
 }
 

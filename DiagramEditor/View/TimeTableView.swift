@@ -8,15 +8,13 @@
 import SwiftUI
 
 struct TimeTableView: View {
-    @EnvironmentObject var document: DiagramEditorDocument
-
     let houkou: Houkou
     let diaNum: Int
 
     let table = Table()
 
     var body: some View {
-        SyncedScrollView {
+        SyncedScrollView(contentSize: table.calculateTimeTableViewSize(houkou: houkou, diaNum: diaNum)) {
             JikokuView(houkou: houkou, diaNum: diaNum)
         } vSyncedContent: {
             EkiListView(houkou: houkou)
