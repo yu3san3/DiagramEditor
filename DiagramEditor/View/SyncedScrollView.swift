@@ -95,14 +95,18 @@ struct ObservableViewOffsetKey: PreferenceKey {
 }
 
 struct SyncedScrollView_Previews: PreviewProvider {
+    static let tableWidth: CGFloat = 20
+    static let tableHeight: CGFloat = 20
+    static let cellCount: Int = 20
+
     static var previews: some View {
-        SyncedScrollView {
+        SyncedScrollView(contentSize: CGSize(width: Int(tableWidth)*cellCount, height: Int(tableHeight)*cellCount)) {
             LazyHStack(spacing: 0) {
-                ForEach(1..<100) { column in
+                ForEach(1..<cellCount, id: \.self) { column in
                     LazyVStack(spacing: 0) {
-                        ForEach(1..<100) { row in
+                        ForEach(1..<cellCount, id: \.self) { row in
                             Text("R:\(row)\nC:\(column)")
-                                .frame(width: 80, height: 80)
+                                .frame(width: tableWidth, height: tableHeight)
                         }
                         .background(.green)
                     }
@@ -110,25 +114,25 @@ struct SyncedScrollView_Previews: PreviewProvider {
             }
         } vSyncedContent: {
             LazyVStack(spacing: 0) {
-                ForEach(1..<100) { row in
+                ForEach(1..<cellCount, id: \.self) { row in
                     Text("R:\(row)\nC:\(0)")
-                        .frame(width: 80, height: 80)
+                        .frame(width: tableWidth, height: tableHeight)
                 }
                 .background(.pink)
             }
-            .frame(width: 80)
+            .frame(width: tableWidth)
         } hSyncedContent: {
             LazyHStack(spacing: 0) {
-                ForEach(1..<100) { column in
+                ForEach(1..<cellCount, id: \.self) { column in
                     Text("R:\(0)\nC:\(column)")
-                        .frame(width: 80, height: 80)
+                        .frame(width: tableWidth, height: tableHeight)
                 }
                 .background(.yellow)
             }
-            .frame(height: 80)
+            .frame(height: tableHeight)
         } topLeftCell: {
             Text("R:\(0)\nC:\(0)")
-                .frame(width: 80, height: 80)
+                .frame(width: tableWidth, height: tableHeight)
                 .background(.blue)
         }
     }
