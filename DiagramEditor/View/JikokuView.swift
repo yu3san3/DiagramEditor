@@ -119,7 +119,7 @@ struct JikokuView: View {
         }
         .frame(
             width: table.jikokuWidth,
-            height: table.jikokuHeight*6
+            height: table.bikouHeight
         )
         .border(Color.yellow)
     }

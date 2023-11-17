@@ -53,7 +53,7 @@ struct RessyaInfoList: View {
             }
             .frame(
                 width: table.jikokuWidth,
-                height: table.jikokuHeight*6
+                height: table.ressyameiHeight
             )
             .border(Color.red)
         }

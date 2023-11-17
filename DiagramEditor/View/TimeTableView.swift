@@ -20,10 +20,13 @@ struct TimeTableView: View {
             JikokuView(houkou: houkou, diaNum: diaNum)
         } vSyncedContent: {
             EkiListView(houkou: houkou)
+                .frame(width: table.ekiWidth)
         } hSyncedContent: {
             RessyaInfoList(houkou: houkou, diaNum: diaNum)
+                .frame(height: table.jikokuHeight*2 + table.ressyameiHeight)
         } topLeftCell: {
             topLeftCell
+                .frame(width: table.ekiWidth)
         }
     }
 }
