@@ -24,14 +24,25 @@ struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: Vie
         self.topLeftCell = topLeftCell()
     }
 
+    @State private var contentViewSize: CGSize = .zero
+
     @State private var offset = CGPoint(x: 0, y: 0)
 
     var body: some View {
+        ZStack {
+            contentView
+            observableScrollView
+        }
+    }
+}
+
+private extension SyncedScrollView {
+    var contentView: some View {
         VStack(alignment: .leading, spacing: 0){
             Spacer()
             HStack(spacing: 0) {
                 topLeftCell
-                // Synchronised with main ScrollView
+
                 ScrollView(.horizontal) {
                     horizontallySyncedContent
                         .offset(x: -offset.x)
@@ -40,32 +51,40 @@ struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: Vie
             }
 
             HStack(alignment: .top, spacing: 0) {
-                // Synchronised with main ScrollView
                 ScrollView {
                     verticallySyncedContent
                         .offset(y: -offset.y)
                 }
                 .disabled(true)
 
-                // MainScrollView
                 ScrollView([.vertical, .horizontal]) {
                     content
-                        .background(GeometryReader {
-                            Color.clear.preference(key: ViewOffsetKey.self,
-                                                   value: CGPoint(x:-$0.frame(in: .named("scroll")).origin.x,y:-$0.frame(in: .named("scroll")).origin.y) )
-                        })
-                        .onPreferenceChange(ViewOffsetKey.self) { value in
-                            print("offset >> \(value)")
-                            offset = value
-                        }
+                        .offset(x: -offset.x, y: -offset.y)
                 }
-                .coordinateSpace(name: "scroll")
+                .disabled(true)
             }
         }
     }
+
+    var observableScrollView: some View {
+        ScrollView([.vertical, .horizontal]) {
+            Color.clear
+            //FIXME: - frameをViewのsizeにしよう
+                .frame(width: 1500, height: 1500)
+                .background(GeometryReader { geometry in
+                    Color.clear
+                        .preference(key: ObservableViewOffsetKey.self,
+                                    value: CGPoint(x: -geometry.frame(in: .named("scroll")).origin.x, y: -geometry.frame(in: .named("scroll")).origin.y))
+                })
+                .onPreferenceChange(ObservableViewOffsetKey.self) { value in
+                    offset = value
+                }
+        }
+        .coordinateSpace(name: "scroll")
+    }
 }
 
-struct ViewOffsetKey: PreferenceKey {
+struct ObservableViewOffsetKey: PreferenceKey {
     static var defaultValue = CGPoint.zero
 
     typealias Value = CGPoint
@@ -74,8 +93,6 @@ struct ViewOffsetKey: PreferenceKey {
         value.y += nextValue().y
     }
 }
-
-
 
 struct SyncedScrollView_Previews: PreviewProvider {
     static var previews: some View {
