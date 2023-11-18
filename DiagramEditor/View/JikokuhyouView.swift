@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Table {
-    @ObservedObject var document: DiagramEditorDocument = DiagramEditorDocument()
+    @ObservedObject var document = DiagramEditorDocument()
 
     //表の属性を決める
     let jikokuWidth: CGFloat = 40
@@ -38,8 +38,10 @@ struct Table {
             return ekis.count + hatsuchakuCount
         }
 
-        return CGSize(width: Int(jikokuWidth) * ressyaCellCount + Int(ekiWidth),
-                      height: Int(jikokuHeight)*ekiCellCount + Int(jikokuHeight)*2 + Int(ressyameiHeight) + Int(bikouHeight))
+        return CGSize(
+            width: Int(jikokuWidth) * ressyaCellCount + Int(ekiWidth),
+            height: Int(jikokuHeight)*ekiCellCount + Int(jikokuHeight)*2 + Int(ressyameiHeight) + Int(bikouHeight)
+        )
     }
 
     //Viewの幅と表の大きさを渡すと余白の幅が返ってくる
@@ -48,7 +50,7 @@ struct Table {
         let columnWidthExcludingTopLeftCell: CGFloat = contentSize.width - self.ekiWidth
         return viewWidthExcludingTopLeftCell - columnWidthExcludingTopLeftCell
     }
-    
+
     //Viewの高さと表の大きさを渡すと余白の高さが返ってくる
     func calculateMarginHeight(viewHeight: CGFloat, contentSize: CGSize) -> CGFloat {
         let viewHeightExcludingTopLeftCell: CGFloat = viewHeight - self.jikokuHeight
