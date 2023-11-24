@@ -116,7 +116,7 @@ struct JikokuhyouView: View {
                     geometry: geometry,
                     contentSize: contentSize
                 ) { proxy in
-                    Color.clear
+                    Color.gray.opacity(0.5)
                         .frame(
                             width: contentSize.width,
                             height: contentSize.height
@@ -133,7 +133,6 @@ struct JikokuhyouView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 LazyVStack(spacing: 0) {
                     EkiListView(houkou: houkou)
-                    bottomLeftCell
                 }
                 .offset(y: scrollOffset.y)
             }
@@ -170,20 +169,6 @@ struct JikokuhyouView: View {
             )
             .border(Color.yellow)
         }
-    }
-
-    var bottomLeftCell: some View {
-        VStack {
-            VText("備考")
-                .font(.caption)
-                .padding(3)
-            Spacer()
-        }
-        .frame(
-            width: table.ekiWidth,
-            height: table.jikokuHeight*6
-        )
-        .border(Color.yellow)
     }
 
     func rightContentView(_ geometry: GeometryProxy) -> some View {

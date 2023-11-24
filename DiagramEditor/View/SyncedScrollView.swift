@@ -69,7 +69,7 @@ private extension SyncedScrollView {
 
     var observableScrollView: some View {
         ScrollView([.vertical, .horizontal]) {
-            Color.clear
+            Color.gray.opacity(0.5)
                 .frame(width: contentSize.width, height: contentSize.height)
                 .background(GeometryReader { geometry in
                     Color.clear
