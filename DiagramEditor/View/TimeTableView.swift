@@ -14,7 +14,7 @@ struct TimeTableView: View {
     let table = Table()
 
     var body: some View {
-        SyncedScrollView(contentSize: table.calculateTimeTableViewSize(houkou: houkou, diaNum: diaNum)) {
+        SyncedScrollView(viewSize: table.calculateTimeTableViewSize(houkou: houkou, diaNum: diaNum)) {
             JikokuView(houkou: houkou, diaNum: diaNum)
         } vSyncedContent: {
             EkiListView(houkou: houkou)
@@ -54,7 +54,7 @@ extension TimeTableView {
             }
             .frame(
                 width: table.ekiWidth,
-                height: table.jikokuHeight*6
+                height: table.ressyameiHeight
             )
             .border(Color.yellow)
         }

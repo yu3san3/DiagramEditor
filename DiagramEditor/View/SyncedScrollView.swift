@@ -9,19 +9,19 @@ import SwiftUI
 
 struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: View, TopLeftCell: View>: View {
 
-    let contentSize: CGSize
+    var viewSize: CGSize
     let content: Content
     let verticallySyncedContent: VSyncedContent
     let horizontallySyncedContent: HSyncedContent
     let topLeftCell: TopLeftCell
 
-    init(contentSize: CGSize,
+    init(viewSize: CGSize,
          @ViewBuilder content: () -> Content,
          @ViewBuilder vSyncedContent: () -> VSyncedContent,
          @ViewBuilder hSyncedContent: () -> HSyncedContent,
          @ViewBuilder topLeftCell: () -> TopLeftCell
     ) {
-        self.contentSize = contentSize
+        self.viewSize = viewSize
         self.content = content()
         self.verticallySyncedContent = vSyncedContent()
         self.horizontallySyncedContent = hSyncedContent()
@@ -30,8 +30,10 @@ struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: Vie
 
     @State private var offset = CGPoint(x: 0, y: 0)
 
+    @State private var contentSize: CGSize = .zero
+
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topLeading) {
             contentView
             observableScrollView
         }
@@ -60,9 +62,18 @@ private extension SyncedScrollView {
 
                 ScrollView([.vertical, .horizontal]) {
                     content
+                        .overlay(
+                            GeometryReader { geometry in
+                                Color.clear.preference(key: ContentSizeKey.self, value: geometry.size)
+                            }
+                        )
                         .offset(x: -offset.x, y: -offset.y)
                 }
+                .frame(maxWidth: contentSize.width, maxHeight: contentSize.height) //contentのサイズを制限する
                 .disabled(true)
+                .onPreferenceChange(ContentSizeKey.self) { value in
+                    contentSize = value
+                }
             }
         }
     }
@@ -70,7 +81,7 @@ private extension SyncedScrollView {
     var observableScrollView: some View {
         ScrollView([.vertical, .horizontal]) {
             Color.gray.opacity(0.5)
-                .frame(width: contentSize.width, height: contentSize.height)
+                .frame(width: viewSize.width, height: viewSize.height)
                 .background(GeometryReader { geometry in
                     Color.clear
                         .preference(key: ObservableViewOffsetKey.self,
@@ -81,6 +92,7 @@ private extension SyncedScrollView {
                     offset = value
                 }
         }
+        .frame(maxWidth: viewSize.width, maxHeight: viewSize.height) //observableScrollViewのサイズを制限する
         .coordinateSpace(name: "scroll")
     }
 }
@@ -95,13 +107,22 @@ struct ObservableViewOffsetKey: PreferenceKey {
     }
 }
 
+struct ContentSizeKey: PreferenceKey {
+    static var defaultValue: CGSize = .zero
+
+    typealias Value = CGSize
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
+    }
+}
+
 struct SyncedScrollView_Previews: PreviewProvider {
     static let tableWidth: CGFloat = 20
     static let tableHeight: CGFloat = 20
     static let cellCount: Int = 20
 
     static var previews: some View {
-        SyncedScrollView(contentSize: CGSize(width: Int(tableWidth)*cellCount, height: Int(tableHeight)*cellCount)) {
+        SyncedScrollView(viewSize: CGSize(width: Int(tableWidth)*cellCount, height: Int(tableHeight)*cellCount)) {
             LazyHStack(spacing: 0) {
                 ForEach(1..<cellCount, id: \.self) { column in
                     LazyVStack(spacing: 0) {

@@ -61,6 +61,8 @@ struct RessyaInfoList: View {
 }
 
 #Preview {
-    RessyaInfoList(houkou: .kudari, diaNum: 0)
-        .environmentObject(DiagramEditorDocument())
+    ScrollView(.horizontal) {
+        RessyaInfoList(houkou: .kudari, diaNum: 0)
+            .environmentObject(DiagramEditorDocument())
+    }
 }
