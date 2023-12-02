@@ -88,7 +88,6 @@ private extension SyncedScrollView {
                                     value: CGPoint(x: -geometry.frame(in: .named("scroll")).origin.x, y: -geometry.frame(in: .named("scroll")).origin.y))
                 })
                 .onPreferenceChange(ObservableViewOffsetKey.self) { value in
-                    print(value)
                     offset = value
                 }
         }

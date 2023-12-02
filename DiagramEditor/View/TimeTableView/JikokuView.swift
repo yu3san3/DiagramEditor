@@ -47,6 +47,7 @@ struct JikokuView: View {
     }
 
     @ViewBuilder
+    //MARK: - 上り、下りの両方できちんと表示されるようにしよう
     func makeJikokuCell(eki: Eki?, jikoku: Jikoku?, ressya: Ressya) -> some View {
         switch eki?.ekijikokukeisiki {
         case .hatsuchaku:
