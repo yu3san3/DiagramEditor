@@ -9,19 +9,16 @@ import SwiftUI
 
 struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: View, TopLeftCell: View>: View {
 
-    var viewSize: CGSize
     let content: Content
     let verticallySyncedContent: VSyncedContent
     let horizontallySyncedContent: HSyncedContent
     let topLeftCell: TopLeftCell
 
-    init(viewSize: CGSize,
-         @ViewBuilder content: () -> Content,
+    init(@ViewBuilder content: () -> Content,
          @ViewBuilder vSyncedContent: () -> VSyncedContent,
          @ViewBuilder hSyncedContent: () -> HSyncedContent,
          @ViewBuilder topLeftCell: () -> TopLeftCell
     ) {
-        self.viewSize = viewSize
         self.content = content()
         self.verticallySyncedContent = vSyncedContent()
         self.horizontallySyncedContent = hSyncedContent()
@@ -30,7 +27,9 @@ struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: Vie
 
     @State private var offset = CGPoint(x: 0, y: 0)
 
+    @State private var viewSize: CGSize = .zero
     @State private var contentSize: CGSize = .zero
+    @State private var topLeftCellSize: CGSize = .zero
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -45,6 +44,13 @@ private extension SyncedScrollView {
         VStack(alignment: .leading, spacing: 0){
             HStack(spacing: 0) {
                 topLeftCell
+                    .overlay(
+                        GeometryReader { geometry in
+                            Color.clear.onAppear {
+                                topLeftCellSize = geometry.size
+                            }
+                        }
+                    )
 
                 ScrollView(.horizontal) {
                     horizontallySyncedContent
@@ -73,6 +79,7 @@ private extension SyncedScrollView {
                 .disabled(true)
                 .onPreferenceChange(ContentSizeKey.self) { value in
                     contentSize = value
+                    viewSize = value + topLeftCellSize
                 }
             }
         }
@@ -115,13 +122,23 @@ struct ContentSizeKey: PreferenceKey {
     }
 }
 
+//CGSizeに+演算子を定義
+private extension CGSize {
+    static func + (lhs: Self, rhs: Self) -> Self {
+        CGSize(
+            width: lhs.width + rhs.width,
+            height: lhs.height + rhs.height
+        )
+    }
+}
+
 struct SyncedScrollView_Previews: PreviewProvider {
     static let tableWidth: CGFloat = 20
     static let tableHeight: CGFloat = 20
     static let cellCount: Int = 20
 
     static var previews: some View {
-        SyncedScrollView(viewSize: CGSize(width: Int(tableWidth)*cellCount, height: Int(tableHeight)*cellCount)) {
+        SyncedScrollView {
             LazyHStack(spacing: 0) {
                 ForEach(1..<cellCount, id: \.self) { column in
                     LazyVStack(spacing: 0) {
