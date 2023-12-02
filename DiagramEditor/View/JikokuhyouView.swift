@@ -8,41 +8,12 @@
 import SwiftUI
 
 struct Table {
-    @ObservedObject var document = DiagramEditorDocument()
-
     //表の属性を決める
     let jikokuWidth: CGFloat = 40
     let jikokuHeight: CGFloat = 20
     let ekiWidth: CGFloat = 80
     let ressyameiHeight: CGFloat = 120
     let bikouHeight: CGFloat = 120
-
-    func calculateTimeTableViewSize(houkou: Houkou, diaNum: Int) -> CGSize {
-        var ressyaCellCount: Int {
-            var ressyas: [Ressya] {
-                switch houkou {
-                case .kudari:
-                    document.oudData.rosen.dia[diaNum].kudari.ressya
-                case .nobori:
-                    document.oudData.rosen.dia[diaNum].nobori.ressya
-                }
-            }
-            return ressyas.count
-        }
-
-        var ekiCellCount: Int {
-            let ekis: [Eki] = document.oudData.rosen.eki
-            var hatsuchakuCount: Int {
-                ekis.filter { $0.ekijikokukeisiki == .hatsuchaku }.count
-            }
-            return ekis.count + hatsuchakuCount
-        }
-
-        return CGSize(
-            width: Int(jikokuWidth) * ressyaCellCount + Int(ekiWidth),
-            height: Int(jikokuHeight)*ekiCellCount + Int(jikokuHeight)*2 + Int(ressyameiHeight) + Int(bikouHeight)
-        )
-    }
 
     //Viewの幅と表の大きさを渡すと余白の幅が返ってくる
     func calculateMarginWidth(viewWidth: CGFloat, contentSize: CGSize) -> CGFloat {
