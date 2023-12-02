@@ -11,14 +11,7 @@ struct ContentView: View {
     @EnvironmentObject var document: DiagramEditorDocument
 
     var body: some View {
-        if true {
-            TimeTableView(houkou: .kudari, diaNum: 0)
-        } else {
-            JikokuhyouView(houkou: .kudari,
-                           ressya: document.oudData.rosen.dia[0].kudari.ressya,
-                           rosen: document.oudData.rosen
-            )
-        }
+        TimeTableView(houkou: .kudari, diaNum: 0)
     }
 }
 
