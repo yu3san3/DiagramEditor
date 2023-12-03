@@ -60,7 +60,8 @@ struct Ressyasyubetsu: Equatable { //インデント数: 2
     var stopMarkDrawType: String //任意
 }
 
-struct Dia: Equatable { //インデント数: 2
+struct Dia: Identifiable, Equatable { //インデント数: 2
+    let id = UUID()
     var diaName: String
     var kudari: Kudari
     var nobori: Nobori
