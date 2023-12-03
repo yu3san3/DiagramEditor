@@ -131,7 +131,7 @@ class OudDataStringifyer {
     }
 }
 
-class EkiJikokuStringifyer {
+private class EkiJikokuStringifyer {
     static func stringify(_ jikokuArr: [Jikoku]) -> String {
         var result: String = ""
         for jikoku in jikokuArr {

@@ -87,8 +87,7 @@ class OudDataParser {
                                                                bikou: "")
                         )
                         oudData.rosen.dia.lastElement = diaTarget
-                    }
-                    if case .nobori = processingHoukouState {
+                    } else if case .nobori = processingHoukouState {
                         diaTarget.nobori.ressya.append( Ressya(houkou: .kudari,
                                                                syubetsu: 0,
                                                                ressyabangou: "",
@@ -101,11 +100,27 @@ class OudDataParser {
                     }
                 }
             case "Eki.":
-                oudData.rosen.eki.append( Eki(ekimei: "", ekijikokukeisiki: .hatsu, ekikibo: .ippan, kyoukaisen: "", diagramRessyajouhouHyoujiKudari: "", diagramRessyajouhouHyoujiNobori: "") )
+                oudData.rosen.eki.append( Eki(ekimei: "",
+                                              ekijikokukeisiki: .hatsu,
+                                              ekikibo: .ippan,
+                                              kyoukaisen: "",
+                                              diagramRessyajouhouHyoujiKudari: "",
+                                              diagramRessyajouhouHyoujiNobori: "")
+                )
             case "Ressyasyubetsu.":
-                oudData.rosen.ressyasyubetsu.append( Ressyasyubetsu(syubetsumei: "", ryakusyou: "", jikokuhyouMojiColor: "", jikokuhyouFontIndex: 0, diagramSenColor: "", diagramSenStyle: .jissen, diagramSenIsBold: "", stopMarkDrawType: "") )
+                oudData.rosen.ressyasyubetsu.append( Ressyasyubetsu(syubetsumei: "",
+                                                                    ryakusyou: "", jikokuhyouMojiColor: "",
+                                                                    jikokuhyouFontIndex: 0,
+                                                                    diagramSenColor: "",
+                                                                    diagramSenStyle: .jissen,
+                                                                    diagramSenIsBold: "",
+                                                                    stopMarkDrawType: "")
+                )
             case "Dia.":
-                oudData.rosen.dia.append( Dia(diaName: "", kudari: Kudari(ressya: []), nobori: Nobori(ressya: [])) )
+                oudData.rosen.dia.append( Dia(diaName: "",
+                                              kudari: Kudari(ressya: []),
+                                              nobori: Nobori(ressya: []))
+                )
             default:
                 break
             }
@@ -120,10 +135,12 @@ class OudDataParser {
             return
 
             func updateElement() {
-                if case .kudari = processingHoukouState, var kudariRessyaTarget = oudData.rosen.dia.lastElement?.kudari.ressya.lastElement {
+                if case .kudari = processingHoukouState,
+                   var kudariRessyaTarget = oudData.rosen.dia.lastElement?.kudari.ressya.lastElement {
                     updateRessya(in: &kudariRessyaTarget, withKey: key, value: value)
                     oudData.rosen.dia.lastElement?.kudari.ressya.lastElement = kudariRessyaTarget
-                } else if case .nobori = processingHoukouState, var noboriRessyaTarget = oudData.rosen.dia.lastElement?.nobori.ressya.lastElement {
+                } else if case .nobori = processingHoukouState,
+                          var noboriRessyaTarget = oudData.rosen.dia.lastElement?.nobori.ressya.lastElement {
                     updateRessya(in: &noboriRessyaTarget, withKey: key, value: value)
                     oudData.rosen.dia.lastElement?.nobori.ressya.lastElement = noboriRessyaTarget
                 }
@@ -299,7 +316,7 @@ class OudDataParser {
     }
 }
 
-class EkiJikokuParser {
+private class EkiJikokuParser {
     static func parse(_ text: String, ekiCount: Int) -> [Jikoku] {
         var result: [Jikoku] = []
         let jikokuArray = text.components(separatedBy: ",")
@@ -343,7 +360,7 @@ class EkiJikokuParser {
             fatalError("ekiCount - result.countの差が0未満です。")
         }
         var additionalJikoku: [Jikoku] = []
-        for _ in 0..<diffBetweenEkiAndResultCount { //一意のUUIDを振るためにforで回してる
+        for _ in 0..<diffBetweenEkiAndResultCount { //一意のUUIDを振るためにforで回している
             additionalJikoku.append( Jikoku(arrivalStatus: .notOperate, chaku: "", hatsu: "") )
         }
         return additionalJikoku
