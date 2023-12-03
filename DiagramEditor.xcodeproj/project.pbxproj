@@ -29,6 +29,7 @@
 		EBD863E1293B6E9B002D835D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBD863E0293B6E9B002D835D /* Preview Assets.xcassets */; };
 		EBF334A72A6913A20099EE4E /* DiagramEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */; };
 		EBF334AE2A699D3C0099EE4E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF334AD2A699D3C0099EE4E /* Extensions.swift */; };
+		EFDE5D802B1C6322006CF9FB /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		EBF334A42A6913A10099EE4E /* DiagramEditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiagramEditorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorTests.swift; sourceTree = "<group>"; };
 		EBF334AD2A699D3C0099EE4E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				EBD863D9293B6E97002D835D /* ContentView.swift */,
+				EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */,
 				EF48B1362B1B632A00E012E2 /* TimeTableView */,
 				EB8E1E3A2AFE065B00707DC6 /* SyncedScrollView.swift */,
 				EBA540432A278F56004AC49A /* VTextView.swift */,
@@ -309,6 +312,7 @@
 				EBD863DA293B6E97002D835D /* ContentView.swift in Sources */,
 				EB275C592AAAFE1B00D8994A /* Houkou.swift in Sources */,
 				EB55FD372AECF76E00FCCAF9 /* ArrivalStatus.swift in Sources */,
+				EFDE5D802B1C6322006CF9FB /* SidebarView.swift in Sources */,
 				EBA540442A278F56004AC49A /* VTextView.swift in Sources */,
 				EB55FD352AECF70300FCCAF9 /* Ekijikokukeisiki.swift in Sources */,
 			);

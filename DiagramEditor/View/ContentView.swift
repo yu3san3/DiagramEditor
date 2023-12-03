@@ -11,7 +11,11 @@ struct ContentView: View {
     @EnvironmentObject var document: DiagramEditorDocument
 
     var body: some View {
-        TimeTableView(houkou: .kudari, diaNum: 0)
+        NavigationSplitView {
+            SidebarView()
+        } detail: {
+            TimeTableView(houkou: .nobori, diaNum: 0)
+        }
     }
 }
 
