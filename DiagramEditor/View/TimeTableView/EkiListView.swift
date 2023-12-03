@@ -16,8 +16,15 @@ struct EkiListView: View {
 
     var body: some View {
         LazyVStack(spacing: 0) {
-            ForEach(document.oudData.rosen.eki) { eki in
-                makeEkiListItem(eki: eki)
+            switch houkou {
+            case .kudari:
+                ForEach(document.oudData.rosen.eki) { eki in
+                    makeEkiListItem(eki: eki)
+                }
+            case .nobori:
+                ForEach( document.oudData.rosen.eki.reversed() ) { eki in
+                    makeEkiListItem(eki: eki)
+                }
             }
             bikouCell
         }
