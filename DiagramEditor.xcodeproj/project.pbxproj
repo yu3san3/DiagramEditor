@@ -30,6 +30,7 @@
 		EBF334A72A6913A20099EE4E /* DiagramEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */; };
 		EBF334AE2A699D3C0099EE4E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF334AD2A699D3C0099EE4E /* Extensions.swift */; };
 		EFDE5D802B1C6322006CF9FB /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */; };
+		EFDE5D822B1CA2E4006CF9FB /* DetailViewStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE5D812B1CA2E4006CF9FB /* DetailViewStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorTests.swift; sourceTree = "<group>"; };
 		EBF334AD2A699D3C0099EE4E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		EFDE5D812B1CA2E4006CF9FB /* DetailViewStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				EBD863D9293B6E97002D835D /* ContentView.swift */,
+				EFDE5D812B1CA2E4006CF9FB /* DetailViewStatus.swift */,
 				EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */,
 				EF48B1362B1B632A00E012E2 /* TimeTableView */,
 				EB8E1E3A2AFE065B00707DC6 /* SyncedScrollView.swift */,
@@ -301,6 +304,7 @@
 				EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */,
 				EBA540462A278FBE004AC49A /* EkiListView.swift in Sources */,
 				EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */,
+				EFDE5D822B1CA2E4006CF9FB /* DetailViewStatus.swift in Sources */,
 				EB8E1E3B2AFE065B00707DC6 /* SyncedScrollView.swift in Sources */,
 				EB55FD3B2AECF88C00FCCAF9 /* Ekikibo.swift in Sources */,
 				EB8E1E3D2AFE1CC500707DC6 /* TimeTableView.swift in Sources */,

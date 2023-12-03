@@ -10,11 +10,24 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var document: DiagramEditorDocument
 
+    @State private var detailViewStatus: DetailViewStatus = .none
+
     var body: some View {
         NavigationSplitView {
-            SidebarView()
+            SidebarView(detailViewStatus: $detailViewStatus)
         } detail: {
-            TimeTableView(houkou: .nobori, diaNum: 0)
+            switch detailViewStatus {
+            case .none:
+                Text("none")
+            case .eki:
+                Text("駅")
+            case .ressyasyubetsu:
+                Text("列車種別")
+            case .jikokuhyou(let houkou, let diaNum):
+                TimeTableView(houkou: houkou, diaNum: diaNum)
+            case .diagram:
+                Text("ダイヤグラム")
+            }
         }
     }
 }
