@@ -13,46 +13,38 @@ struct SidebarView: View {
     @Binding var detailViewStatus: DetailViewStatus
 
     var body: some View {
-        List {
+        List(selection: $detailViewStatus) {
             DisclosureGroup("路線") {
-                Text("駅")
-                    .onTapGesture {
-                        detailViewStatus = .eki
-                    }
-                Text("列車種別")
-                    .onTapGesture {
-                        detailViewStatus = .ressyasyubetsu
-                    }
+                NavigationLink(value: DetailViewStatus.eki) {
+                    Text("駅")
+                }
+                NavigationLink(value: DetailViewStatus.ressyasyubetsu) {
+                    Text("列車種別")
+                }
                 DisclosureGroup("ダイヤ") {
-                    ForEach(Array(document.oudData.rosen.dia.enumerated()),
+                    ForEach( Array(document.oudData.rosen.dia.enumerated() ),
                             id: \.1.id
                     ) { index, dia in
                         DisclosureGroup(dia.diaName) {
-                            makeDiaListElement(diaNum: index)
+                            NavigationLink(
+                                value: DetailViewStatus.kudariJikokuhyou(diaNum: index)
+                            ) {
+                                Text("下り時刻表")
+                            }
+                            NavigationLink(
+                                value: DetailViewStatus.noboriJikokuhyou(diaNum: index)
+                            ) {
+                                Text("上り時刻表")
+                            }
+                            NavigationLink(value: DetailViewStatus.diagram) {
+                                Text("ダイヤグラム")
+                            }
                         }
                     }
                 }
             }
         }
         .listStyle(.sidebar)
-    }
-}
-
-private extension SidebarView {
-    @ViewBuilder
-    func makeDiaListElement(diaNum: Int) -> some View {
-        Text("下り時刻表")
-            .onTapGesture {
-                detailViewStatus = .jikokuhyou(houkou: .kudari, diaNum: diaNum)
-            }
-        Text("上り時刻表")
-            .onTapGesture {
-                detailViewStatus = .jikokuhyou(houkou: .nobori, diaNum: diaNum)
-            }
-        Text("ダイヤグラム")
-            .onTapGesture {
-                detailViewStatus = .diagram
-            }
     }
 }
 

@@ -23,8 +23,10 @@ struct ContentView: View {
                 Text("駅")
             case .ressyasyubetsu:
                 Text("列車種別")
-            case .jikokuhyou(let houkou, let diaNum):
-                TimeTableView(houkou: houkou, diaNum: diaNum)
+            case .kudariJikokuhyou(let diaNum):
+                TimeTableView(houkou: .kudari, diaNum: diaNum)
+            case .noboriJikokuhyou(let diaNum):
+                TimeTableView(houkou: .nobori, diaNum: diaNum)
             case .diagram:
                 Text("ダイヤグラム")
             }

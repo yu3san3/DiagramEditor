@@ -7,10 +7,11 @@
 
 import Foundation
 
-enum DetailViewStatus {
+enum DetailViewStatus: Hashable {
     case none
     case eki
     case ressyasyubetsu
-    case jikokuhyou(houkou: Houkou, diaNum: Int)
+    case kudariJikokuhyou(diaNum: Int)
+    case noboriJikokuhyou(diaNum: Int)
     case diagram
 }
