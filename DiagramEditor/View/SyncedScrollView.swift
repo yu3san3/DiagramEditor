@@ -132,46 +132,44 @@ private extension CGSize {
     }
 }
 
-struct SyncedScrollView_Previews: PreviewProvider {
-    static let tableWidth: CGFloat = 20
-    static let tableHeight: CGFloat = 20
-    static let cellCount: Int = 20
+#Preview {
+    let tableWidth: CGFloat = 20
+    let tableHeight: CGFloat = 20
+    let cellCount: Int = 20
 
-    static var previews: some View {
-        SyncedScrollView {
-            LazyHStack(spacing: 0) {
-                ForEach(1..<cellCount, id: \.self) { column in
-                    LazyVStack(spacing: 0) {
-                        ForEach(1..<cellCount, id: \.self) { row in
-                            Text("R:\(row)\nC:\(column)")
-                                .frame(width: tableWidth, height: tableHeight)
-                        }
-                        .background(.green)
+    return SyncedScrollView {
+        LazyHStack(spacing: 0) {
+            ForEach(1..<cellCount, id: \.self) { column in
+                LazyVStack(spacing: 0) {
+                    ForEach(1..<cellCount, id: \.self) { row in
+                        Text("R:\(row)\nC:\(column)")
+                            .frame(width: tableWidth, height: tableHeight)
                     }
+                    .background(.green)
                 }
             }
-        } vSyncedContent: {
-            LazyVStack(spacing: 0) {
-                ForEach(1..<cellCount, id: \.self) { row in
-                    Text("R:\(row)\nC:\(0)")
-                        .frame(width: tableWidth, height: tableHeight)
-                }
-                .background(.pink)
-            }
-            .frame(width: tableWidth)
-        } hSyncedContent: {
-            LazyHStack(spacing: 0) {
-                ForEach(1..<cellCount, id: \.self) { column in
-                    Text("R:\(0)\nC:\(column)")
-                        .frame(width: tableWidth, height: tableHeight)
-                }
-                .background(.yellow)
-            }
-            .frame(height: tableHeight)
-        } topLeftCell: {
-            Text("R:\(0)\nC:\(0)")
-                .frame(width: tableWidth, height: tableHeight)
-                .background(.blue)
         }
+    } vSyncedContent: {
+        LazyVStack(spacing: 0) {
+            ForEach(1..<cellCount, id: \.self) { row in
+                Text("R:\(row)\nC:\(0)")
+                    .frame(width: tableWidth, height: tableHeight)
+            }
+            .background(.pink)
+        }
+        .frame(width: tableWidth)
+    } hSyncedContent: {
+        LazyHStack(spacing: 0) {
+            ForEach(1..<cellCount, id: \.self) { column in
+                Text("R:\(0)\nC:\(column)")
+                    .frame(width: tableWidth, height: tableHeight)
+            }
+            .background(.yellow)
+        }
+        .frame(height: tableHeight)
+    } topLeftCell: {
+        Text("R:\(0)\nC:\(0)")
+            .frame(width: tableWidth, height: tableHeight)
+            .background(.blue)
     }
 }

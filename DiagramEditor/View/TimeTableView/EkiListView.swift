@@ -99,11 +99,9 @@ struct EkiListView: View {
     }
 }
 
-struct StationListView_Previews: PreviewProvider {
-    static var previews: some View {
-        ScrollView {
-            EkiListView(houkou: .kudari)
-                .environmentObject(DiagramEditorDocument())
-        }
+#Preview {
+    ScrollView {
+        EkiListView(houkou: .kudari)
+            .environmentObject(DiagramEditorDocument())
     }
 }

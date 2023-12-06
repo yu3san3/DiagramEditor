@@ -148,15 +148,16 @@ private func zipLongest<T, U>(_ first: [T], _ second: [U]) -> AnyIterator<(T?, U
     }
 }
 
-struct JikokuView_Previews: PreviewProvider {
-    static var previews: some View {
-        ScrollView([.vertical, .horizontal]) {
-            JikokuView(houkou: .kudari, diaNum: 0)
-                .environmentObject(DiagramEditorDocument())
-        }
-        ScrollView([.vertical, .horizontal]) {
-            JikokuView(houkou: .nobori, diaNum: 0)
-                .environmentObject(DiagramEditorDocument())
-        }
+#Preview("下り") {
+    ScrollView([.vertical, .horizontal]) {
+        JikokuView(houkou: .kudari, diaNum: 0)
+            .environmentObject(DiagramEditorDocument())
+    }
+}
+
+#Preview("上り") {
+    ScrollView([.vertical, .horizontal]) {
+        JikokuView(houkou: .nobori, diaNum: 0)
+            .environmentObject(DiagramEditorDocument())
     }
 }
