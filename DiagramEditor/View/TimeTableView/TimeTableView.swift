@@ -24,7 +24,7 @@ struct TimeTableView: View {
         } hSyncedContent: {
             RessyaInfoList(houkou: houkou, diaNum: diaNum)
                 .frame(height: table.jikokuHeight*2 + table.ressyameiHeight)
-        } topLeftCell: {
+        } topLeftContent: {
             topLeftCell
                 .frame(width: table.ekiWidth)
         }
