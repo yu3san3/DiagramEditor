@@ -25,8 +25,10 @@ struct ContentView: View {
                 Text("列車種別")
             case .kudariJikokuhyou(let diaNum):
                 TimeTableView(houkou: .kudari, diaNum: diaNum)
+                    .padding(3)
             case .noboriJikokuhyou(let diaNum):
                 TimeTableView(houkou: .nobori, diaNum: diaNum)
+                    .padding(3)
             case .diagram:
                 Text("ダイヤグラム")
             }

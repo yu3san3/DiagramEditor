@@ -95,7 +95,7 @@ struct EkiListView: View {
             width: table.ekiWidth,
             height: table.bikouHeight
         )
-        .border(Color.yellow)
+        .border(Color.brown)
     }
 }
 

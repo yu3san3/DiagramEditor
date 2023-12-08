@@ -87,16 +87,22 @@ private extension SyncedScrollView {
 
     var observableScrollView: some View {
         ScrollView([.vertical, .horizontal]) {
-            Color.gray.opacity(0.5)
-                .frame(width: viewSize.width, height: viewSize.height)
-                .background(GeometryReader { geometry in
-                    Color.clear
-                        .preference(key: ObservableViewOffsetKey.self,
-                                    value: CGPoint(x: -geometry.frame(in: .named("scroll")).origin.x, y: -geometry.frame(in: .named("scroll")).origin.y))
-                })
-                .onPreferenceChange(ObservableViewOffsetKey.self) { value in
-                    offset = value
-                }
+            Group {
+#if DEBUG
+                Color.gray.opacity(0.5)
+#else
+                Color.clear
+#endif
+            }
+            .frame(width: viewSize.width, height: viewSize.height)
+            .background(GeometryReader { geometry in
+                Color.clear
+                    .preference(key: ObservableViewOffsetKey.self,
+                                value: CGPoint(x: -geometry.frame(in: .named("scroll")).origin.x, y: -geometry.frame(in: .named("scroll")).origin.y))
+            })
+            .onPreferenceChange(ObservableViewOffsetKey.self) { value in
+                offset = value
+            }
         }
         .frame(maxWidth: viewSize.width, maxHeight: viewSize.height) //observableScrollViewのサイズを制限する
         .coordinateSpace(name: "scroll")
