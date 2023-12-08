@@ -17,8 +17,15 @@ struct RessyaInfoList: View {
 
     var body: some View {
         LazyHStack(spacing: 0) {
-            ForEach(document.oudData.rosen.dia[diaNum].kudari.ressya) { ressya in
-                makeRessyaInfoListItem(ressya: ressya)
+            switch houkou {
+            case .kudari:
+                ForEach(document.oudData.rosen.dia[diaNum].kudari.ressya) { ressya in
+                    makeRessyaInfoListItem(ressya: ressya)
+                }
+            case .nobori:
+                ForEach(document.oudData.rosen.dia[diaNum].nobori.ressya) { ressya in
+                    makeRessyaInfoListItem(ressya: ressya)
+                }
             }
         }
     }
