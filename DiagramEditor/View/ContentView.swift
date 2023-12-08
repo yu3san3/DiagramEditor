@@ -28,7 +28,7 @@ struct ContentView: View {
             case .noboriJikokuhyou(let diaNum):
                 TimeTableView(houkou: .nobori, diaNum: diaNum)
             case .diagram:
-                Text("ダイヤグラム")
+                DiagramView()
             }
         }
     }
