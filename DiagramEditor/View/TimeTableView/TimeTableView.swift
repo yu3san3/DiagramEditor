@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct TimeTableView: View {
-    @EnvironmentObject var document: DiagramEditorDocument
-
     let houkou: Houkou
     let diaNum: Int
 
