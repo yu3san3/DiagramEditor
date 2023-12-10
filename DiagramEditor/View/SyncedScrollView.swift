@@ -7,22 +7,22 @@
 
 import SwiftUI
 
-struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: View, TopLeftCell: View>: View {
+struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: View, TopLeftContent: View>: View {
 
     let content: Content
     let verticallySyncedContent: VSyncedContent
     let horizontallySyncedContent: HSyncedContent
-    let topLeftCell: TopLeftCell
+    let topLeftContent: TopLeftContent
 
     init(@ViewBuilder content: () -> Content,
          @ViewBuilder vSyncedContent: () -> VSyncedContent,
          @ViewBuilder hSyncedContent: () -> HSyncedContent,
-         @ViewBuilder topLeftCell: () -> TopLeftCell
+         @ViewBuilder topLeftContent: () -> TopLeftContent
     ) {
         self.content = content()
         self.verticallySyncedContent = vSyncedContent()
         self.horizontallySyncedContent = hSyncedContent()
-        self.topLeftCell = topLeftCell()
+        self.topLeftContent = topLeftContent()
     }
 
     @State private var offset = CGPoint(x: 0, y: 0)
@@ -43,7 +43,7 @@ private extension SyncedScrollView {
     var contentView: some View {
         VStack(alignment: .leading, spacing: 0){
             HStack(spacing: 0) {
-                topLeftCell
+                topLeftContent
                     .overlay(
                         GeometryReader { geometry in
                             Color.clear.onAppear {
@@ -87,16 +87,22 @@ private extension SyncedScrollView {
 
     var observableScrollView: some View {
         ScrollView([.vertical, .horizontal]) {
-            Color.gray.opacity(0.5)
-                .frame(width: viewSize.width, height: viewSize.height)
-                .background(GeometryReader { geometry in
-                    Color.clear
-                        .preference(key: ObservableViewOffsetKey.self,
-                                    value: CGPoint(x: -geometry.frame(in: .named("scroll")).origin.x, y: -geometry.frame(in: .named("scroll")).origin.y))
-                })
-                .onPreferenceChange(ObservableViewOffsetKey.self) { value in
-                    offset = value
-                }
+            Group {
+#if DEBUG
+                Color.gray.opacity(0.5)
+#else
+                Color.clear
+#endif
+            }
+            .frame(width: viewSize.width, height: viewSize.height)
+            .background(GeometryReader { geometry in
+                Color.clear
+                    .preference(key: ObservableViewOffsetKey.self,
+                                value: CGPoint(x: -geometry.frame(in: .named("scroll")).origin.x, y: -geometry.frame(in: .named("scroll")).origin.y))
+            })
+            .onPreferenceChange(ObservableViewOffsetKey.self) { value in
+                offset = value
+            }
         }
         .frame(maxWidth: viewSize.width, maxHeight: viewSize.height) //observableScrollViewのサイズを制限する
         .coordinateSpace(name: "scroll")
@@ -167,7 +173,7 @@ private extension CGSize {
             .background(.yellow)
         }
         .frame(height: tableHeight)
-    } topLeftCell: {
+    } topLeftContent: {
         Text("R:\(0)\nC:\(0)")
             .frame(width: tableWidth, height: tableHeight)
             .background(.blue)
