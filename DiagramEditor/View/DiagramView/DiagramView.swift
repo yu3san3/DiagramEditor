@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DiagramView: View {
-    @State var viewSize = CGSize(width: 1000, height: 500)
+    @Binding var viewSize: CGSize
 
     var body: some View {
         ScrollView([.vertical, .horizontal]) {
@@ -18,6 +18,7 @@ struct DiagramView: View {
 }
 
 #Preview {
-    DiagramView()
+    @State var viewSize = CGSize(width: 1000, height: 500)
+    return DiagramView(viewSize: $viewSize)
         .environmentObject(DiagramEditorDocument())
 }

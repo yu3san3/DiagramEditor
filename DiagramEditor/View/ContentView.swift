@@ -11,6 +11,7 @@ struct ContentView: View {
     @EnvironmentObject var document: DiagramEditorDocument
 
     @State private var detailViewStatus: DetailViewStatus = .none
+    @State var viewSize = CGSize(width: 1000, height: 500)
 
     var body: some View {
         NavigationSplitView {
@@ -30,8 +31,41 @@ struct ContentView: View {
                 TimeTableView(houkou: .nobori, diaNum: diaNum)
                     .padding(3)
             case .diagram:
-                DiagramView()
+                DiagramView(viewSize: $viewSize)
                     .padding(3)
+            }
+        }
+        .toolbar {
+            ToolbarItemGroup {
+                let easeOut: Animation = .easeOut(duration: 0.3)
+                Button {
+                    withAnimation(easeOut) {
+                        self.viewSize.width += 100
+                    }
+                } label: {
+                    Label("横幅増", systemImage: "arrow.left.and.line.vertical.and.arrow.right")
+                }
+                Button {
+                    withAnimation(easeOut) {
+                        self.viewSize.width -= 100
+                    }
+                } label: {
+                    Label("横幅減", systemImage: "arrow.right.and.line.vertical.and.arrow.left")
+                }
+                Button {
+                    withAnimation(easeOut) {
+                        self.viewSize.height += 100
+                    }
+                } label: {
+                    Label("縦幅増", systemImage: "arrow.up.and.line.horizontal.and.arrow.down")
+                }
+                Button {
+                    withAnimation(easeOut) {
+                        self.viewSize.height -= 100
+                    }
+                } label: {
+                    Label("縦幅減", systemImage: "arrow.down.and.line.horizontal.and.arrow.up")
+                }
             }
         }
     }
