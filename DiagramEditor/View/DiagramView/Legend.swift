@@ -10,10 +10,17 @@ import SwiftUI
 struct Legend: View {
     @EnvironmentObject var document: DiagramEditorDocument
 
+    @Binding var viewSize: CGSize
+    let times = 24
+
     var body: some View {
         ZStack(alignment: .topLeading) {
-            drawVLines(lineWidth: 1, times: 24, intervalWidth: 60)
-            drawHLines(lineWidth: 1, runTimes: getMinimumRunTime() )
+            drawVLines(lineWidth: 1,
+                       times: times,
+                       intervalWidth: self.viewSize.width / CGFloat(times - 1) )
+            drawHLines(lineWidth: 1,
+                       runTimes: getMinimumRunTime(),
+                       scale: self.viewSize.height)
         }
     }
 
@@ -30,12 +37,27 @@ struct Legend: View {
     }
 
     @ViewBuilder
-    private func drawHLines(lineWidth: CGFloat, runTimes: [Int]) -> some View {
+    private func drawHLines(lineWidth: CGFloat, runTimes: [Int], scale height: CGFloat) -> some View {
+        //走行時間の合計を計算
+        let runTimeSum = CGFloat( runTimes.reduce(0) {
+            //オーバーフロー対策
+            if $1 == Int.max {
+                return $0
+            }
+            return $0 + $1
+        })
         VStack(spacing: 0) {
             ForEach(runTimes, id: \.self) { runTime in
-                drawLine(.horizontal, lineWidth: lineWidth)
-                Spacer()
-                    .frame(height: CGFloat(runTime * 18))
+                //オーバーフロー対策
+                if runTime == Int.max {
+                    let _ = print("Int.max")
+                    drawLine(.horizontal, lineWidth: lineWidth)
+                } else {
+                    let intervalHeight = (height / runTimeSum) * CGFloat(runTime)
+                    drawLine(.horizontal, lineWidth: lineWidth)
+                    Spacer()
+                        .frame(height: intervalHeight - lineWidth)
+                }
             }
             drawLine(.horizontal, lineWidth: lineWidth)
         }
@@ -47,11 +69,11 @@ struct Legend: View {
         case .vertical: //縦線
             VLine()
                 .stroke(Color.gray.opacity(0.5), lineWidth: lineWidth)
-                .frame(width: lineWidth, height: 500)
+                .frame(width: lineWidth, height: self.viewSize.height)
         case .horizontal: //横線
             HLine()
                 .stroke(Color.gray.opacity(0.5), lineWidth: lineWidth)
-                .frame(width: 500, height: lineWidth)
+                .frame(width: self.viewSize.width, height: lineWidth)
         default:
             EmptyView()
         }
@@ -74,10 +96,10 @@ struct Legend: View {
                 //前の駅に停車している、かつ着時刻か発時刻のデータあり
                 if let prevHatsu = previousHatsu,
                     !jikoku.chaku.isEmpty || !jikoku.hatsu.isEmpty {
-                    //着時刻のデータがあればそれを使い、そうでなければ発時刻を使う
+                    //着時刻のデータがあればそれを使い、なければ発時刻を使う
                     let relevantTime = !jikoku.chaku.isEmpty ? jikoku.chaku : jikoku.hatsu
-                    let diff: Int! = getTimeDiff(from: prevHatsu, to: relevantTime)
-                    result[i-1] = max(minimumValue, min(diff, result[i-1]) )
+                    let diff = getTimeDiff(from: prevHatsu, to: relevantTime)
+                    result[i-1] = max(minimumValue, min(diff ?? Int.max, result[i-1]) )
                 }
                 //発車時刻を保持
                 previousHatsu = jikoku.hatsu
@@ -86,8 +108,7 @@ struct Legend: View {
         return result
     }
 
-    private func getTimeDiff(from firstTime: String,
-                             to secondTime: String) -> Int? {
+    private func getTimeDiff(from firstTime: String, to secondTime: String) -> Int? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HHmm"
 
@@ -122,8 +143,9 @@ struct HLine: Shape {
 }
 
 #Preview {
-    ScrollView([.horizontal, .vertical]) {
-        Legend()
+    @State var viewSize = CGSize(width: 1000, height: 500)
+    return ScrollView([.horizontal, .vertical]) {
+        Legend(viewSize: $viewSize)
             .environmentObject(DiagramEditorDocument())
-    }.frame(width: 320, height: 200)
+    }
 }

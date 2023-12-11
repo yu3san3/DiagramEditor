@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct DiagramView: View {
+    @State var viewSize = CGSize(width: 1000, height: 500)
+
     var body: some View {
         ScrollView([.vertical, .horizontal]) {
-            Legend()
+            Legend(viewSize: $viewSize)
         }
     }
 }
