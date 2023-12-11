@@ -17,4 +17,5 @@ struct DiagramView: View {
 
 #Preview {
     DiagramView()
+        .environmentObject(DiagramEditorDocument())
 }
