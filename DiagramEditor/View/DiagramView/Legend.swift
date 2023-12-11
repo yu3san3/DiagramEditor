@@ -19,7 +19,7 @@ struct Legend: View {
                        times: times,
                        intervalWidth: self.viewSize.width / CGFloat(times - 1) )
             drawHLines(lineWidth: 1,
-                       runTimes: getMinimumRunTime(),
+                       distances: getDistanceBetweenEkis(),
                        scale: self.viewSize.height)
         }
     }
@@ -37,19 +37,19 @@ struct Legend: View {
     }
 
     @ViewBuilder
-    private func drawHLines(lineWidth: CGFloat, runTimes: [Int], scale height: CGFloat) -> some View {
+    private func drawHLines(lineWidth: CGFloat, distances: [Int], scale height: CGFloat) -> some View {
         //Int.maxの際に使用するrunTime
         let maxIntRunTime = 3
         //走行時間の合計を計算
-        let runTimeSum = CGFloat( runTimes.reduce(0) {
+        let runTimeSum = CGFloat( distances.reduce(0) {
             //$1がInt.maxだった場合を考慮。そのまま足すとオーバーフローする。
             $0 + ($1 == Int.max ? maxIntRunTime : $1)
         })
         VStack(spacing: 0) {
-            ForEach(runTimes, id: \.self) { runTime in
+            ForEach(distances, id: \.self) { distance in
                 // (Viewの高さ / 走行時間の合計) * 走行距離
                 //Int.maxの場合は、走行距離にmaxIntRunTimeを使用
-                let intervalHeight = (height / runTimeSum) * CGFloat( runTime == Int.max ? maxIntRunTime : runTime )
+                let intervalHeight = (height / runTimeSum) * CGFloat( distance == Int.max ? maxIntRunTime : distance )
                 drawLine(.horizontal, lineWidth: lineWidth)
                 Spacer()
                     .frame(height: max( intervalHeight - lineWidth, 0) )
@@ -74,10 +74,29 @@ struct Legend: View {
         }
     }
 
-    private func getMinimumRunTime() -> [Int] {
+    private func getDistanceBetweenEkis() -> [Int] {
+        let dias = self.document.oudData.rosen.dia
+        var tempRunTime: [[Int]] = []
+        for dia in dias {
+            let kudariRunTime = getMinimumRunTime(ressyas: dia.kudari.ressya)
+            let noboriRunTime = getMinimumRunTime(ressyas: dia.nobori.ressya).reversed()
+            //下りと上りの走行時間を比較し、より小さい方を採用
+            tempRunTime.append(
+                zip(kudariRunTime, noboriRunTime)
+                    .map( { min($0, $1) } )
+            )
+        }
+        //現在の配列(resultArray)と次の配列(nextArray)を取り、それぞれの配列を比較して最小値を取り続ける。
+        let result = tempRunTime.reduce(tempRunTime[0]) { resultArray, nextArray in
+            zip(resultArray, nextArray).map(min)
+        }
+        print(result)
+        return result
+    }
+
+    private func getMinimumRunTime(ressyas: [Ressya]) -> [Int] {
         let ekiCount = self.document.oudData.rosen.eki.count
         var result = Array(repeating: Int.max, count: ekiCount - 1)
-        let ressyas = self.document.oudData.rosen.dia[0].kudari.ressya
         //駅間0分を防ぐための最小値
         let minimumValue = 1
         for ressya in ressyas {
