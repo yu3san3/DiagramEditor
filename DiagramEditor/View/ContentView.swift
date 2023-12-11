@@ -31,6 +31,7 @@ struct ContentView: View {
                     .padding(3)
             case .diagram:
                 DiagramView()
+                    .padding(3)
             }
         }
     }

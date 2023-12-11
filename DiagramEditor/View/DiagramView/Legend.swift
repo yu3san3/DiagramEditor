@@ -30,7 +30,7 @@ struct Legend: View {
             ForEach(0..<times-1, id: \.self) { _ in
                 drawLine(.vertical ,lineWidth: lineWidth)
                 Spacer()
-                    .frame(width: intervalWidth - lineWidth )
+                    .frame(width: max(intervalWidth - lineWidth, 0) )
             }
             drawLine(.vertical, lineWidth: lineWidth)
         }
@@ -38,26 +38,21 @@ struct Legend: View {
 
     @ViewBuilder
     private func drawHLines(lineWidth: CGFloat, runTimes: [Int], scale height: CGFloat) -> some View {
+        //Int.maxの際に使用するrunTime
+        let maxIntRunTime = 3
         //走行時間の合計を計算
         let runTimeSum = CGFloat( runTimes.reduce(0) {
-            //オーバーフロー対策
-            if $1 == Int.max {
-                return $0
-            }
-            return $0 + $1
+            //$1がInt.maxだった場合を考慮。そのまま足すとオーバーフローする。
+            $0 + ($1 == Int.max ? maxIntRunTime : $1)
         })
         VStack(spacing: 0) {
             ForEach(runTimes, id: \.self) { runTime in
-                //オーバーフロー対策
-                if runTime == Int.max {
-                    let _ = print("Int.max")
-                    drawLine(.horizontal, lineWidth: lineWidth)
-                } else {
-                    let intervalHeight = (height / runTimeSum) * CGFloat(runTime)
-                    drawLine(.horizontal, lineWidth: lineWidth)
-                    Spacer()
-                        .frame(height: intervalHeight - lineWidth)
-                }
+                // (Viewの高さ / 走行時間の合計) * 走行距離
+                //Int.maxの場合は、走行距離にmaxIntRunTimeを使用
+                let intervalHeight = (height / runTimeSum) * CGFloat( runTime == Int.max ? maxIntRunTime : runTime )
+                drawLine(.horizontal, lineWidth: lineWidth)
+                Spacer()
+                    .frame(height: max( intervalHeight - lineWidth, 0) )
             }
             drawLine(.horizontal, lineWidth: lineWidth)
         }
@@ -99,7 +94,8 @@ struct Legend: View {
                     //着時刻のデータがあればそれを使い、なければ発時刻を使う
                     let relevantTime = !jikoku.chaku.isEmpty ? jikoku.chaku : jikoku.hatsu
                     let diff = getTimeDiff(from: prevHatsu, to: relevantTime)
-                    result[i-1] = max(minimumValue, min(diff ?? Int.max, result[i-1]) )
+                    //FIXME: - ⚠️diffがnilだとアプリごと落ちる
+                    result[i-1] = max(minimumValue, min(diff!, result[i-1]) )
                 }
                 //発車時刻を保持
                 previousHatsu = jikoku.hatsu
@@ -109,11 +105,17 @@ struct Legend: View {
     }
 
     private func getTimeDiff(from firstTime: String, to secondTime: String) -> Int? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HHmm"
+        func getRelevantFormatter(for time: String) -> DateFormatter {
+            let formatter = DateFormatter()
+            // "123"の場合と"1234"の場合でformatterを使い分ける
+            formatter.dateFormat = time.count == 3 ? "Hmm" : "HHmm"
+            return formatter
+        }
 
-        guard let date1 = dateFormatter.date(from: firstTime),
-              let date2 = dateFormatter.date(from: secondTime) else {
+        guard 
+            let date1 = getRelevantFormatter(for: firstTime).date(from: firstTime),
+            let date2 = getRelevantFormatter(for: secondTime).date(from: secondTime)
+        else {
             return nil
         }
 
