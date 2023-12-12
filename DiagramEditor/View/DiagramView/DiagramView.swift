@@ -19,8 +19,7 @@ struct DiagramView: View {
         } hSyncedContent: {
             Text("times")
         } topLeftContent: {
-            Text("topLeft")
-                .frame(width: 50, height: 50)
+            EmptyView()
         }
     }
 }
