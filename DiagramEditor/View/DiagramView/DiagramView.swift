@@ -14,7 +14,7 @@ struct DiagramView: View {
         SyncedScrollView {
             Legend(viewSize: $viewSize)
         } vSyncedContent: {
-            DrawStations()
+            DrawStations(viewSize: $viewSize)
                 .frame(width: 50)
         } hSyncedContent: {
             Text("times")
