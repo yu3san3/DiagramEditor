@@ -19,7 +19,7 @@ struct DiagramView: View {
             DrawStations(viewSize: $viewSize)
                 .frame(width: diagram.ekiWidth)
         } hSyncedContent: {
-            Text("times")
+            DrawTimes(viewSize: $viewSize)
         } topLeftContent: {
             EmptyView()
         }

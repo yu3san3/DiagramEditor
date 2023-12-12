@@ -44,6 +44,7 @@ final class DiagramEditorDocument: ReferenceFileDocument {
             throw CocoaError(.fileReadCorruptFile)
         }
         self.oudData = OudDataParser.parse(string)
+        self.distanceBetweenEkis = getDistanceBetweenEkis()
     }
     
     //ファイルの保存を担当
