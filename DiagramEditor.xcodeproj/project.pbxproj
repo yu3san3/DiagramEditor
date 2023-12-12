@@ -32,6 +32,7 @@
 		EF102EA72B21985A00B8D94D /* Legend.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF102EA62B21985A00B8D94D /* Legend.swift */; };
 		EF112AED2B2839DD00880995 /* DrawStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF112AEC2B2839DD00880995 /* DrawStations.swift */; };
 		EF487DED2B230C3D00BBCEC5 /* DiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF487DEC2B230C3D00BBCEC5 /* DiagramView.swift */; };
+		EFACF4032B28A5610032C148 /* Diagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFACF4022B28A5610032C148 /* Diagram.swift */; };
 		EFDE5D802B1C6322006CF9FB /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */; };
 		EFDE5D822B1CA2E4006CF9FB /* DetailViewStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE5D812B1CA2E4006CF9FB /* DetailViewStatus.swift */; };
 /* End PBXBuildFile section */
@@ -76,6 +77,7 @@
 		EF102EA62B21985A00B8D94D /* Legend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Legend.swift; sourceTree = "<group>"; };
 		EF112AEC2B2839DD00880995 /* DrawStations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawStations.swift; sourceTree = "<group>"; };
 		EF487DEC2B230C3D00BBCEC5 /* DiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramView.swift; sourceTree = "<group>"; };
+		EFACF4022B28A5610032C148 /* Diagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagram.swift; sourceTree = "<group>"; };
 		EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		EFDE5D812B1CA2E4006CF9FB /* DetailViewStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -199,6 +201,7 @@
 				EF487DEC2B230C3D00BBCEC5 /* DiagramView.swift */,
 				EF102EA62B21985A00B8D94D /* Legend.swift */,
 				EF112AEC2B2839DD00880995 /* DrawStations.swift */,
+				EFACF4022B28A5610032C148 /* Diagram.swift */,
 			);
 			path = DiagramView;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 				EBA540462A278FBE004AC49A /* EkiListView.swift in Sources */,
 				EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */,
 				EFDE5D822B1CA2E4006CF9FB /* DetailViewStatus.swift in Sources */,
+				EFACF4032B28A5610032C148 /* Diagram.swift in Sources */,
 				EB8E1E3B2AFE065B00707DC6 /* SyncedScrollView.swift in Sources */,
 				EB55FD3B2AECF88C00FCCAF9 /* Ekikibo.swift in Sources */,
 				EB8E1E3D2AFE1CC500707DC6 /* TimeTableView.swift in Sources */,

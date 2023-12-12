@@ -10,12 +10,14 @@ import SwiftUI
 struct DiagramView: View {
     @Binding var viewSize: CGSize
 
+    let diagram = Diagram()
+
     var body: some View {
         SyncedScrollView {
             Legend(viewSize: $viewSize)
         } vSyncedContent: {
             DrawStations(viewSize: $viewSize)
-                .frame(width: 50)
+                .frame(width: diagram.ekiWidth)
         } hSyncedContent: {
             Text("times")
         } topLeftContent: {
