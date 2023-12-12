@@ -37,31 +37,33 @@ struct ContentView: View {
         }
         .toolbar {
             ToolbarItemGroup {
-                let easeOut: Animation = .easeOut(duration: 0.3)
+                let easeOutAnimation: Animation = .easeOut(duration: 0.3)
                 Button {
-                    withAnimation(easeOut) {
+                    withAnimation(easeOutAnimation) {
                         self.viewSize.width += 100
                     }
                 } label: {
                     Label("横幅増", systemImage: "arrow.left.and.line.vertical.and.arrow.right")
                 }
                 Button {
-                    withAnimation(easeOut) {
-                        self.viewSize.width -= 100
+                    withAnimation(easeOutAnimation) {
+                        //0以下にならないように三項演算子で制限
+                        self.viewSize.width -= self.viewSize.width <= 0 ? 0 : 100
                     }
                 } label: {
                     Label("横幅減", systemImage: "arrow.right.and.line.vertical.and.arrow.left")
                 }
                 Button {
-                    withAnimation(easeOut) {
+                    withAnimation(easeOutAnimation) {
                         self.viewSize.height += 100
                     }
                 } label: {
                     Label("縦幅増", systemImage: "arrow.up.and.line.horizontal.and.arrow.down")
                 }
                 Button {
-                    withAnimation(easeOut) {
-                        self.viewSize.height -= 100
+                    withAnimation(easeOutAnimation) {
+                        //0以下にならないように三項演算子で制限
+                        self.viewSize.height -= self.viewSize.height <= 0 ? 0 : 100
                     }
                 } label: {
                     Label("縦幅減", systemImage: "arrow.down.and.line.horizontal.and.arrow.up")

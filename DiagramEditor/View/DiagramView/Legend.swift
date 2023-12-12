@@ -17,7 +17,7 @@ struct Legend: View {
         ZStack(alignment: .topLeading) {
             drawVLines(lineWidth: 1,
                        times: times,
-                       intervalWidth: self.viewSize.width / CGFloat(times - 1) )
+                       intervalWidth: self.viewSize.width / CGFloat(times) )
             drawHLines(lineWidth: 1,
                        distances: getDistanceBetweenEkis(),
                        scale: self.viewSize.height)
@@ -27,7 +27,7 @@ struct Legend: View {
     @ViewBuilder
     private func drawVLines(lineWidth: CGFloat, times: Int, intervalWidth: CGFloat) -> some View {
         HStack(spacing: 0) {
-            ForEach(0..<times-1, id: \.self) { _ in
+            ForEach(0..<times, id: \.self) { _ in
                 drawLine(.vertical ,lineWidth: lineWidth)
                 Spacer()
                     .frame(width: max(intervalWidth - lineWidth, 0) )
