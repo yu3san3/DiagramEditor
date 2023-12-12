@@ -11,8 +11,16 @@ struct DiagramView: View {
     @Binding var viewSize: CGSize
 
     var body: some View {
-        ScrollView([.vertical, .horizontal]) {
+        SyncedScrollView {
             Legend(viewSize: $viewSize)
+        } vSyncedContent: {
+            DrawStations()
+                .frame(width: 50)
+        } hSyncedContent: {
+            Text("times")
+        } topLeftContent: {
+            Text("topLeft")
+                .frame(width: 50, height: 50)
         }
     }
 }
