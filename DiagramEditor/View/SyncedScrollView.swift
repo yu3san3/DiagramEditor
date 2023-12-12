@@ -27,7 +27,7 @@ struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: Vie
 
     @State private var offset = CGPoint(x: 0, y: 0)
 
-    @State private var viewSize: CGSize = .zero
+    var viewSize: CGSize { topLeftCellSize + contentSize }
     @State private var contentSize: CGSize = .zero
     @State private var topLeftCellSize: CGSize = .zero
 
@@ -46,11 +46,12 @@ private extension SyncedScrollView {
                 topLeftContent
                     .overlay(
                         GeometryReader { geometry in
-                            Color.clear.onAppear {
-                                topLeftCellSize = geometry.size
-                            }
+                            Color.clear.preference(key: TopLeftCellSizeKey.self, value: geometry.size)
                         }
                     )
+                    .onPreferenceChange(TopLeftCellSizeKey.self) { value in
+                        self.topLeftCellSize = value
+                    }
 
                 ScrollView(.horizontal) {
                     horizontallySyncedContent
@@ -79,7 +80,6 @@ private extension SyncedScrollView {
                 .disabled(true)
                 .onPreferenceChange(ContentSizeKey.self) { value in
                     contentSize = value
-                    viewSize = value + topLeftCellSize
                 }
             }
         }
@@ -120,6 +120,15 @@ struct ObservableViewOffsetKey: PreferenceKey {
 }
 
 struct ContentSizeKey: PreferenceKey {
+    static var defaultValue: CGSize = .zero
+
+    typealias Value = CGSize
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
+    }
+}
+
+struct TopLeftCellSizeKey: PreferenceKey {
     static var defaultValue: CGSize = .zero
 
     typealias Value = CGSize
