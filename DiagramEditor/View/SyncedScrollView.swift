@@ -27,9 +27,15 @@ struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: Vie
 
     @State private var offset = CGPoint(x: 0, y: 0)
 
-    var viewSize: CGSize { topLeftCellSize + contentSize }
+    var viewSize: CGSize {
+        CGSize(
+            width: vSyncedContentSize.width + contentSize.width,
+            height: hSyncedContentSize.height + contentSize.height
+        )
+    }
     @State private var contentSize: CGSize = .zero
-    @State private var topLeftCellSize: CGSize = .zero
+    @State private var vSyncedContentSize: CGSize = .zero
+    @State private var hSyncedContentSize: CGSize = .zero
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -41,31 +47,39 @@ struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: Vie
 
 private extension SyncedScrollView {
     var contentView: some View {
-        VStack(alignment: .leading, spacing: 0){
-            HStack(spacing: 0) {
+        HStack(alignment: .top, spacing: 0){
+            VStack(spacing: 0) {
                 topLeftContent
-                    .overlay(
-                        GeometryReader { geometry in
-                            Color.clear.preference(key: TopLeftCellSizeKey.self, value: geometry.size)
-                        }
-                    )
-                    .onPreferenceChange(TopLeftCellSizeKey.self) { value in
-                        self.topLeftCellSize = value
-                    }
 
-                ScrollView(.horizontal) {
-                    horizontallySyncedContent
-                        .offset(x: -offset.x)
-                }
-                .disabled(true)
-            }
-
-            HStack(alignment: .top, spacing: 0) {
                 ScrollView {
                     verticallySyncedContent
+                        .overlay(
+                            GeometryReader { geometry in
+                                Color.clear.preference(key: VSyncedContentKey.self, value: geometry.size)
+                            }
+                        )
                         .offset(y: -offset.y)
                 }
                 .disabled(true)
+                .onPreferenceChange(VSyncedContentKey.self) { value in
+                    self.vSyncedContentSize = value
+                }
+            }
+
+            VStack(alignment: .leading, spacing: 0) {
+                ScrollView(.horizontal) {
+                    horizontallySyncedContent
+                        .overlay(
+                            GeometryReader { geometry in
+                                Color.clear.preference(key: HSyncedContentKey.self, value: geometry.size)
+                            }
+                        )
+                        .offset(x: -offset.x)
+                }
+                .disabled(true)
+                .onPreferenceChange(HSyncedContentKey.self) { value in
+                    self.hSyncedContentSize = value
+                }
 
                 ScrollView([.vertical, .horizontal]) {
                     content
@@ -128,7 +142,16 @@ struct ContentSizeKey: PreferenceKey {
     }
 }
 
-struct TopLeftCellSizeKey: PreferenceKey {
+struct VSyncedContentKey: PreferenceKey {
+    static var defaultValue: CGSize = .zero
+
+    typealias Value = CGSize
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
+    }
+}
+
+struct HSyncedContentKey: PreferenceKey {
     static var defaultValue: CGSize = .zero
 
     typealias Value = CGSize
@@ -147,7 +170,7 @@ private extension CGSize {
     }
 }
 
-#Preview {
+#Preview("with topLeftCell") {
     let tableWidth: CGFloat = 20
     let tableHeight: CGFloat = 20
     let cellCount: Int = 20
@@ -186,5 +209,45 @@ private extension CGSize {
         Text("R:\(0)\nC:\(0)")
             .frame(width: tableWidth, height: tableHeight)
             .background(.blue)
+    }
+}
+
+#Preview("without topLeftCell") {
+    let tableWidth: CGFloat = 20
+    let tableHeight: CGFloat = 20
+    let cellCount: Int = 20
+
+    return SyncedScrollView {
+        LazyHStack(spacing: 0) {
+            ForEach(1..<cellCount, id: \.self) { column in
+                LazyVStack(spacing: 0) {
+                    ForEach(1..<cellCount, id: \.self) { row in
+                        Text("R:\(row)\nC:\(column)")
+                            .frame(width: tableWidth, height: tableHeight)
+                    }
+                    .background(.green)
+                }
+            }
+        }
+    } vSyncedContent: {
+        LazyVStack(spacing: 0) {
+            ForEach(1..<cellCount, id: \.self) { row in
+                Text("R:\(row)\nC:\(0)")
+                    .frame(width: tableWidth, height: tableHeight)
+            }
+            .background(.pink)
+        }
+        .frame(width: tableWidth)
+    } hSyncedContent: {
+        LazyHStack(spacing: 0) {
+            ForEach(1..<cellCount, id: \.self) { column in
+                Text("R:\(0)\nC:\(column)")
+                    .frame(width: tableWidth, height: tableHeight)
+            }
+            .background(.yellow)
+        }
+        .frame(height: tableHeight)
+    } topLeftContent: {
+        EmptyView()
     }
 }
