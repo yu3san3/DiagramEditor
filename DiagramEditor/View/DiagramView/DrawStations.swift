@@ -12,16 +12,19 @@ struct DrawStations: View {
 
     @Binding var viewSize: CGSize
 
+    let diagram = Diagram()
+
     var body: some View {
         HStack(spacing: 0) {
+            Spacer()
             locateEkis(scale: viewSize.height)
             Divider()
         }
+        .frame(width: diagram.ekiWidth)
     }
 
     @ViewBuilder
     private func locateEkis(scale height: CGFloat) -> some View {
-        let textHeight: CGFloat = 20
         //Int.maxの際に使用するrunTime
         let maxIntRunTime = 3
         let distances = self.document.distanceBetweenEkis
@@ -41,10 +44,11 @@ struct DrawStations: View {
                 //Int.maxの場合は、走行距離にmaxIntRunTimeを使用
                 let intervalHeight = (height / runTimeSum) * CGFloat( distance == Int.max ? maxIntRunTime : distance )
                 Text(eki.ekimei)
-                    .frame(height: textHeight)
-                    .border(Color.blue)
+                    .frame(height: diagram.ekiHeight)
+//                    .border(Color.blue)
+                Divider()
                 Spacer()
-                    .frame(height: max(intervalHeight - textHeight, 0) )
+                    .frame(height: max(intervalHeight - diagram.ekiHeight, 0) )
             }
         }
     }

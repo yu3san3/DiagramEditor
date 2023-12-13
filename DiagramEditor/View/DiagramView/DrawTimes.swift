@@ -23,10 +23,10 @@ struct DrawTimes: View {
     @ViewBuilder
     func locateTimes() -> some View {
         let intervalWidth = max( ( viewSize.width / CGFloat(times) ) - diagram.timeWidth, 0)
-        HStack(spacing: intervalWidth) {
+        HStack(alignment: .bottom, spacing: intervalWidth) {
             ForEach(0..<times+1, id: \.self) { index in
                 Text("\(index)")
-                    .frame(width: diagram.timeWidth)
+                    .frame(width: diagram.timeWidth, height: diagram.ekiHeight)
             }
         }
         .offset(x: -diagram.timeWidth/2 )

@@ -9,7 +9,7 @@ import Foundation
 
 struct Diagram {
     //ダイヤグラムの属性を決める
-    let ekiWidth: CGFloat = 50
+    let ekiWidth: CGFloat = 70
+    let ekiHeight: CGFloat = 20
     let timeWidth: CGFloat = 20
-    let timeHeight: CGFloat = 20
 }
