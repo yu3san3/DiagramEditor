@@ -28,11 +28,15 @@ struct Legend: View {
     private func drawVLines(lineWidth: CGFloat, times: Int, intervalWidth: CGFloat) -> some View {
         HStack(spacing: 0) {
             ForEach(0..<times, id: \.self) { _ in
-                drawLine(.vertical ,lineWidth: lineWidth)
+                Line(direction: .vertical ,
+                     lineWidth: lineWidth,
+                     length: self.$viewSize.height)
                 Spacer()
                     .frame(width: max(intervalWidth - lineWidth, 0) )
             }
-            drawLine(.vertical, lineWidth: lineWidth)
+            Line(direction: .vertical,
+                 lineWidth: lineWidth,
+                 length: self.$viewSize.height)
         }
     }
 
@@ -50,47 +54,19 @@ struct Legend: View {
                 // (Viewの高さ / 走行時間の合計) * 走行距離
                 //Int.maxの場合は、走行距離にmaxIntRunTimeを使用
                 let intervalHeight = (height / runTimeSum) * CGFloat( distance == Int.max ? maxIntRunTime : distance )
-                drawLine(.horizontal, lineWidth: lineWidth)
+                Line(direction: .horizontal,
+                     lineWidth: lineWidth,
+                     length: self.$viewSize.width)
                 Spacer()
                     .frame(height: max( intervalHeight - lineWidth, 0) )
             }
-            drawLine(.horizontal, lineWidth: lineWidth)
+            Line(direction: .horizontal,
+                 lineWidth: lineWidth,
+                 length: self.$viewSize.width)
         }
     }
 
-    @ViewBuilder
-    private func drawLine(_ direction: Axis.Set, lineWidth: CGFloat) -> some View {
-        switch direction {
-        case .vertical: //縦線
-            VLine()
-                .stroke(Color.gray.opacity(0.5), lineWidth: lineWidth)
-                .frame(width: lineWidth, height: self.viewSize.height)
-        case .horizontal: //横線
-            HLine()
-                .stroke(Color.gray.opacity(0.5), lineWidth: lineWidth)
-                .frame(width: self.viewSize.width, height: lineWidth)
-        default:
-            EmptyView()
-        }
-    }
-}
-
-struct VLine: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY))
-        return path
-    }
-}
-
-struct HLine: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: rect.minX, y: rect.midY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
-        return path
-    }
+    
 }
 
 #Preview {
