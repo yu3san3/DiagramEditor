@@ -17,7 +17,6 @@ struct DiagramView: View {
             Legend(viewSize: $viewSize)
         } vSyncedContent: {
             DrawStations(viewSize: $viewSize)
-                .frame(width: diagram.ekiWidth)
         } hSyncedContent: {
             DrawTimes(viewSize: $viewSize)
         } topLeftContent: {

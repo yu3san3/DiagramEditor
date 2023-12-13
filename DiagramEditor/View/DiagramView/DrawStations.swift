@@ -13,7 +13,10 @@ struct DrawStations: View {
     @Binding var viewSize: CGSize
 
     var body: some View {
-        locateEkis(scale: viewSize.height)
+        HStack(spacing: 0) {
+            locateEkis(scale: viewSize.height)
+            Divider()
+        }
     }
 
     @ViewBuilder
@@ -27,7 +30,7 @@ struct DrawStations: View {
             //$1がInt.maxだった場合を考慮。そのまま足すとオーバーフローする。
             $0 + ($1 == Int.max ? maxIntRunTime : $1)
         })
-        VStack(spacing: 0) {
+        VStack(alignment: .trailing, spacing: 0) {
             ForEach(
                 Array(self.document.oudData.rosen.eki.enumerated()),
                 id: \.element.id

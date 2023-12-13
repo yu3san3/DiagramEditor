@@ -14,6 +14,14 @@ struct DrawTimes: View {
     let diagram = Diagram()
 
     var body: some View {
+        VStack(spacing: 0) {
+            locateTimes()
+            Divider()
+        }
+    }
+
+    @ViewBuilder
+    func locateTimes() -> some View {
         let intervalWidth = max( ( viewSize.width / CGFloat(times) ) - diagram.timeWidth, 0)
         HStack(spacing: intervalWidth) {
             ForEach(0..<times+1, id: \.self) { index in
