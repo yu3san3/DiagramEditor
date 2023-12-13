@@ -46,7 +46,7 @@ struct Legend: View {
             $0 + ($1 == Int.max ? maxIntRunTime : $1)
         })
         VStack(spacing: 0) {
-            ForEach(distances, id: \.self) { distance in
+            ForEach(Array(distances.enumerated()), id: \.offset) { _, distance in
                 // (Viewの高さ / 走行時間の合計) * 走行距離
                 //Int.maxの場合は、走行距離にmaxIntRunTimeを使用
                 let intervalHeight = (height / runTimeSum) * CGFloat( distance == Int.max ? maxIntRunTime : distance )
