@@ -16,7 +16,6 @@ struct DrawStations: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            Spacer()
             locateEkis(scale: viewSize.height)
             Divider()
         }
@@ -25,6 +24,7 @@ struct DrawStations: View {
 
     @ViewBuilder
     private func locateEkis(scale height: CGFloat) -> some View {
+        let underlineWidth: CGFloat = 1
         //Int.maxの際に使用するrunTime
         let maxIntRunTime = 3
         let distances = self.document.distanceBetweenEkis
@@ -34,6 +34,9 @@ struct DrawStations: View {
             $0 + ($1 == Int.max ? maxIntRunTime : $1)
         })
         VStack(alignment: .trailing, spacing: 0) {
+            //DrawTimesの下部のDividerの分だけ、DrawStationsの始点を下げる
+            Spacer()
+                .frame(height: 1)
             ForEach(
                 Array(self.document.oudData.rosen.eki.enumerated()),
                 id: \.element.id
@@ -43,12 +46,20 @@ struct DrawStations: View {
                 // (Viewの高さ / 走行時間の合計) * 走行距離
                 //Int.maxの場合は、走行距離にmaxIntRunTimeを使用
                 let intervalHeight = (height / runTimeSum) * CGFloat( distance == Int.max ? maxIntRunTime : distance )
-                Text(eki.ekimei)
-                    .frame(height: diagram.ekiHeight)
-//                    .border(Color.blue)
-                Divider()
+                //駅名のテキスト
+                HStack {
+                    //???: このSpacerがないとTextの幅が小さくなってしまう
+                    Spacer()
+                    Text(eki.ekimei)
+                        .frame(height: diagram.ekiHeight)
+                }
+                //区切り線
+                Line(direction: .horizontal,
+                     lineWidth: underlineWidth,
+                     length: .constant(diagram.ekiWidth))
+                //次駅との間の幅
                 Spacer()
-                    .frame(height: max(intervalHeight - diagram.ekiHeight, 0) )
+                    .frame(height: max( intervalHeight - (diagram.ekiHeight + underlineWidth), 0) )
             }
         }
     }
