@@ -47,6 +47,6 @@ struct HLine: Shape {
 }
 
 #Preview {
-    @State var length: CGFloat = 50
-    return Line(direction: .horizontal, lineWidth: 1, length: $length)
+    Line(direction: .horizontal, lineWidth: 1, length: .constant(50) )
+        .frame(width: 300, height: 200)
 }

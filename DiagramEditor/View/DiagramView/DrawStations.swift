@@ -55,9 +55,9 @@ struct DrawStations: View {
 }
 
 #Preview {
-    @State var viewSize = CGSize(width: 500, height: 500)
+    let viewSize = Binding.constant( CGSize(width: 500, height: 500) )
     return ScrollView(.vertical) {
-        DrawStations(viewSize: $viewSize)
+        DrawStations(viewSize: viewSize)
             .environmentObject(DiagramEditorDocument())
     }
 }

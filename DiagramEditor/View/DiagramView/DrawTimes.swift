@@ -34,8 +34,8 @@ struct DrawTimes: View {
 }
 
 #Preview {
-    @State var viewSize = CGSize(width: 100, height: 20)
+    let viewSize = Binding.constant( CGSize(width: 500, height: 500) )
     return ScrollView(.horizontal) {
-        DrawTimes(viewSize: $viewSize)
+        DrawTimes(viewSize: viewSize)
     }
 }

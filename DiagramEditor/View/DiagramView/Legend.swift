@@ -70,9 +70,9 @@ struct Legend: View {
 }
 
 #Preview {
-    @State var viewSize = CGSize(width: 500, height: 500)
+    let viewSize = Binding.constant( CGSize(width: 500, height: 500) )
     return ScrollView([.horizontal, .vertical]) {
-        Legend(viewSize: $viewSize)
+        Legend(viewSize: viewSize)
             .environmentObject(DiagramEditorDocument())
     }
 }
