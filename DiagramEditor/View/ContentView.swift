@@ -19,11 +19,15 @@ struct ContentView: View {
         } detail: {
             switch detailViewStatus {
             case .none:
-                Text("none")
+                VStack {
+                    Text("選択されていません。")
+                    Text("ツールバーから表示する項目を選択")
+                        .font(.caption)
+                }
             case .eki:
-                Text("駅")
+                Text("駅ビュー")
             case .ressyasyubetsu:
-                Text("列車種別")
+                Text("列車種別ビュー")
             case .kudariJikokuhyou(let diaNum):
                 TimeTableView(houkou: .kudari, diaNum: diaNum)
                     .padding(3)
