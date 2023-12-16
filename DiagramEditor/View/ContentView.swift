@@ -11,6 +11,7 @@ struct ContentView: View {
     @EnvironmentObject var document: DiagramEditorDocument
 
     @State private var detailViewStatus: DetailViewStatus = .none
+    @State var viewSize = CGSize(width: 1000, height: 500)
 
     var body: some View {
         NavigationSplitView {
@@ -34,7 +35,45 @@ struct ContentView: View {
                 TimeTableView(houkou: .nobori, diaNum: diaNum)
                     .padding(3)
             case .diagram:
-                Text("ダイヤグラム")
+                DiagramView(viewSize: $viewSize)
+                    .padding(3)
+            }
+        }
+        .toolbar {
+            if detailViewStatus == .diagram {
+                ToolbarItemGroup {
+                    let easeOutAnimation: Animation = .easeOut(duration: 0.3)
+                    Button {
+                        withAnimation(easeOutAnimation) {
+                            self.viewSize.width += 100
+                        }
+                    } label: {
+                        Label("横幅増", systemImage: "arrow.left.and.line.vertical.and.arrow.right")
+                    }
+                    Button {
+                        withAnimation(easeOutAnimation) {
+                            //0以下にならないように三項演算子で制限
+                            self.viewSize.width -= self.viewSize.width <= 0 ? 0 : 100
+                        }
+                    } label: {
+                        Label("横幅減", systemImage: "arrow.right.and.line.vertical.and.arrow.left")
+                    }
+                    Button {
+                        withAnimation(easeOutAnimation) {
+                            self.viewSize.height += 100
+                        }
+                    } label: {
+                        Label("縦幅増", systemImage: "arrow.up.and.line.horizontal.and.arrow.down")
+                    }
+                    Button {
+                        withAnimation(easeOutAnimation) {
+                            //0以下にならないように三項演算子で制限
+                            self.viewSize.height -= self.viewSize.height <= 0 ? 0 : 100
+                        }
+                    } label: {
+                        Label("縦幅減", systemImage: "arrow.down.and.line.horizontal.and.arrow.up")
+                    }
+                }
             }
         }
     }
