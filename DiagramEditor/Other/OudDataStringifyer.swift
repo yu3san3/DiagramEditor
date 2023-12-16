@@ -10,10 +10,12 @@ import Foundation
 class OudDataStringifyer {
     static func stringify(_ data: OudData) -> String {
         var result: String = ""
-        result.append("FileType=\(data.fileType)\n") //OudDataの情報を順番に追加していく
+        //OudDataの情報を順番に追加していく
+        result.append("FileType=\(data.fileType)\n")
         stringifyRosen(rosen: data.rosen)
         stringifyDispProp(dispProp: data.dispProp)
-        result.append("FileTypeAppComment=" + "Diagram Editor Ver. Alpha 1.0.0") //ここは各Appが名付ける要素
+        //FileTypeAppCommentは各Appが名付ける要素
+        result.append("FileTypeAppComment=" + "Diagram Editor Ver. Alpha 1.0.0")
         return result
 
         func stringifyRosen(rosen: Rosen) {

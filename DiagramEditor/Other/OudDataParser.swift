@@ -22,8 +22,7 @@ class OudDataParser {
                                            dia: [],
                                            kitenJikoku: "",
                                            diagramDgrYZahyouKyoriDefault: 60,
-                                           comment: ""
-                                          ),
+                                           comment: ""),
                               dispProp: DispProp(jikokuhyouFont: [],
                                                  jikokuhyouVFont: "",
                                                  diaEkimeiFont: "",
@@ -35,18 +34,18 @@ class OudDataParser {
                                                  diaRessyaColor: "",
                                                  diaJikuColor: "",
                                                  ekimeiLength: "",
-                                                 jikokuhyouRessyaWidth: ""
-                                                ),
-                              fileTypeAppComment: ""
-        )
+                                                 jikokuhyouRessyaWidth: ""),
+                              fileTypeAppComment: "")
 
         var isRessya = false
-        var processingHoukouState: ProcessState = .none //どの構成要素を処理しているかを示す
+        //どの構成要素を処理しているかを示す
+        var processingHoukouState: ProcessState = .none
 
         let lineRowArray = text.components(separatedBy: .newlines)
         let ekiCount = lineRowArray.filter{ $0 == "Eki." }.count
         for lineRow in lineRowArray { //textを1行づつ処理
-            let line: String = lineRow.trimmingCharacters(in: .whitespaces) //行の端にある空白を削除
+            //行の端にある空白を削除
+            let line: String = lineRow.trimmingCharacters(in: .whitespaces)
             if line.isEmpty {
                 continue
             } else if line == "." { //行がピリオドの場合
