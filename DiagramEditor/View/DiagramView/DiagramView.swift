@@ -14,7 +14,10 @@ struct DiagramView: View {
 
     var body: some View {
         SyncedScrollView {
-            Legend(viewSize: $viewSize)
+            ZStack {
+                Legend(viewSize: $viewSize)
+                DrawDiagram(viewSize: $viewSize)
+            }
         } vSyncedContent: {
             DrawStations(viewSize: $viewSize)
         } hSyncedContent: {
