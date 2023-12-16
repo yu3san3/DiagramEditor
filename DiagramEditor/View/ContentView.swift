@@ -20,8 +20,8 @@ struct ContentView: View {
             switch detailViewStatus {
             case .none:
                 VStack {
-                    Text("選択されていません。")
-                    Text("ツールバーから表示する項目を選択")
+                    Text("項目が選択されていません。")
+                    Text("ツールバーから表示する項目を選択してください。")
                         .font(.caption)
                 }
             case .eki:
