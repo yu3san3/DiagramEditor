@@ -15,21 +15,39 @@ struct DrawDiagram: View {
     let coordinateCalc = CoordinateCalculation()
 
     var body: some View {
-        let points = getPoints(ressya: document.oudData.rosen.dia[0].kudari.ressya[0])
-        let _ = print(points)
-        DiagramLine(points: points)
-        .stroke()
+        let ressyas = self.document.oudData.rosen.dia[0].kudari.ressya
+        ForEach(ressyas) { ressya in
+            let points = getPoints(ressya: ressya)
+            let _ = print(points)
+            DiagramLine(points: points)
+                .stroke()
+        }
     }
 
     func getPoints(ressya: Ressya) -> [CGPoint] {
         var result: [CGPoint] = []
+        let originTime = "000"
         for (index, jikoku) in ressya.ekiJikoku.enumerated() {
-            if jikoku.hatsu.isEmpty { continue }
-            let xPoint = getXPoint(from: "000", to: jikoku.hatsu)
-            result.append(
-                CGPoint(x: xPoint,
-                        y: index * 30)
-            )
+            //時刻データがない場合continue
+            if jikoku.chaku.isEmpty && jikoku.hatsu.isEmpty {
+                continue
+            }
+            //着時刻の座標を追加
+            if !jikoku.chaku.isEmpty {
+                let xPoint = getXPoint(from: originTime, to: jikoku.chaku)
+                result.append(
+                    CGPoint(x: xPoint,
+                            y: index * 90)
+                )
+            }
+            //発時刻の座標を追加
+            if !jikoku.hatsu.isEmpty {
+                let xPoint = getXPoint(from: originTime, to: jikoku.hatsu)
+                result.append(
+                    CGPoint(x: xPoint,
+                            y: index * 90)
+                )
+            }
         }
         return result
     }
@@ -44,7 +62,7 @@ struct DrawDiagram: View {
         )
         //(原点からの経過時間/0時からの経過時間(分)) * ビューの幅
         //Intで結果を得ようとすると0になってしまうことがあるので、
-        //いったんCGFloatで計算してからIntに変換
+        //  いったんCGFloatで計算してからIntに変換
         let xPoint = (timeFromOrigin/totalMinutes) * self.viewSize.width
         return Int(xPoint)
     }
@@ -69,7 +87,8 @@ struct DiagramLine: Shape {
 
 
 #Preview {
-    DrawDiagram(viewSize: .constant(CGSize(width: 1500, height: 200)))
-        .environmentObject(DiagramEditorDocument())
-        .frame(width: 300, height: 200)
+    ScrollView([.vertical, .horizontal]) {
+        DrawDiagram(viewSize: .constant(CGSize(width: 1500, height: 200)))
+            .environmentObject(DiagramEditorDocument())
+    }
 }
