@@ -10,58 +10,67 @@ import SwiftUI
 struct DrawDiagram: View {
     @EnvironmentObject var document: DiagramEditorDocument
 
+    let houkou: Houkou
+    let diaNum: Int
+
     @Binding var viewSize: CGSize
 
     let coordinateCalc = CoordinateCalculation()
 
     var body: some View {
-        let ressyas = self.document.oudData.rosen.dia[0].kudari.ressya
-        ForEach(ressyas) { ressya in
-            let points = getPoints(ressya: ressya)
-            DiagramLine(points: points)
-                .stroke()
+        switch houkou {
+        case .kudari:
+            ForEach(self.document.oudData.rosen.dia[diaNum].kudari.ressya) { ressya in
+                let points = getPoints(houkou: houkou, ressya: ressya)
+                DiagramLine(points: points)
+                    .stroke()
+            }
+        case .nobori:
+            ForEach(self.document.oudData.rosen.dia[diaNum].nobori.ressya) { ressya in
+                let points = getPoints(houkou: houkou, ressya: ressya)
+                DiagramLine(points: points)
+                    .stroke()
+            }
         }
+
     }
 
-    func getPoints(ressya: Ressya) -> [CGPoint] {
+    func getPoints(houkou: Houkou, ressya: Ressya) -> [CGPoint] {
         var result: [CGPoint] = []
         let originTime = "000"
-        let legendWidth: CGFloat = 1
-        //Int.maxの際に使用するrunTime
-        let maxIntRunTime = 3
-        let distances = self.document.distanceBetweenEkis
-        //開始駅からの距離
-        var distance = 0
-        let height = self.viewSize.height
-        //走行時間の合計を計算
-        let runTimeSum = CGFloat( distances.reduce(0) {
-            //$1がInt.maxだった場合を考慮。そのまま足すとオーバーフローする。
-            $0 + ($1 == Int.max ? maxIntRunTime : $1)
-        })
+        let distances = getDistances(houkou: houkou)
+        //基点駅からの距離
+        var distanceFromBaseStation = 0
         for (index, jikoku) in ressya.ekiJikoku.enumerated() {
+            //基点駅から現在処理中の駅までの距離を求めるため、駅間距離を足す。
             //!!!: - ⚠️Int.maxの時にオーバーフローする
-            distance += distances.indices.contains(index-1) ? distances[index-1] : 0
-            // (Viewの高さ / 走行時間の合計) * 走行距離
-            //Int.maxの場合は、走行距離にmaxIntRunTimeを使用
-            let yPoint = (height / runTimeSum) * CGFloat( distance == Int.max ? maxIntRunTime : distance ) + legendWidth
+            distanceFromBaseStation += distances.indices.contains(index-1) ? distances[index-1] : 0
             //時刻データがない場合continue
             if jikoku.chaku.isEmpty && jikoku.hatsu.isEmpty {
                 continue
             }
+            //Int.maxの際に使用するrunTime
+            let maxIntRunTime = 3
+            //走行時間の合計を計算
+            let runTimeSum = CGFloat( distances.reduce(0) {
+                //$1がInt.maxだった場合を考慮。そのまま足すとオーバーフローする。
+                $0 + ($1 == Int.max ? maxIntRunTime : $1)
+            })
+            let yPoint = getYPoint(houkou: houkou,
+                                   runTimeSum: runTimeSum,
+                                   distanceFromBaseStation: distanceFromBaseStation)
             //着時刻の座標を追加
             if !jikoku.chaku.isEmpty {
                 let xPoint = getXPoint(from: originTime, to: jikoku.chaku)
                 result.append(
-                    CGPoint(x: xPoint,
-                            y: Int(yPoint))
+                    CGPoint(x: xPoint, y: yPoint)
                 )
             }
             //発時刻の座標を追加
             if !jikoku.hatsu.isEmpty {
                 let xPoint = getXPoint(from: originTime, to: jikoku.hatsu)
                 result.append(
-                    CGPoint(x: xPoint,
-                            y: Int(yPoint))
+                    CGPoint(x: xPoint, y: yPoint)
                 )
             }
         }
@@ -81,6 +90,31 @@ struct DrawDiagram: View {
         //  いったんCGFloatで計算してからIntに変換
         let xPoint = (timeFromOrigin/totalMinutes) * self.viewSize.width
         return Int(xPoint)
+    }
+
+    func getYPoint(houkou: Houkou, runTimeSum: CGFloat, distanceFromBaseStation: Int) -> Int {
+        let height = self.viewSize.height
+        let legendWidth: CGFloat = 1
+        // (Viewの高さ / 走行時間の合計) * 走行距離
+        //Int.maxの場合は、走行距離にmaxIntRunTimeを使用
+        let yPoint = (height / runTimeSum) * CGFloat(distanceFromBaseStation)
+        switch houkou {
+        case .kudari:
+            return Int(yPoint + legendWidth)
+        case .nobori:
+            //(ビューの高さ - 始点からの位置) + 罫線の幅
+            //始点からの位置を終点からの位置に変換するためにheight - yPointをする。
+            return Int((height - yPoint) + legendWidth)
+        }
+    }
+
+    func getDistances(houkou: Houkou) -> [Int] {
+        switch houkou {
+        case .kudari:
+            return self.document.distanceBetweenEkis
+        case .nobori:
+            return self.document.distanceBetweenEkis.reversed()
+        }
     }
 }
 
@@ -104,7 +138,9 @@ struct DiagramLine: Shape {
 
 #Preview {
     ScrollView([.vertical, .horizontal]) {
-        DrawDiagram(viewSize: .constant(CGSize(width: 1500, height: 200)))
+        DrawDiagram(houkou: .kudari,
+                    diaNum: 0,
+                    viewSize: .constant(CGSize(width: 1500, height: 200)))
             .environmentObject(DiagramEditorDocument())
     }
 }

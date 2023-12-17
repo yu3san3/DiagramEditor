@@ -13,5 +13,5 @@ enum DetailViewStatus: Hashable {
     case ressyasyubetsu
     case kudariJikokuhyou(diaNum: Int)
     case noboriJikokuhyou(diaNum: Int)
-    case diagram
+    case diagram(diaNum: Int)
 }

@@ -34,13 +34,13 @@ struct ContentView: View {
             case .noboriJikokuhyou(let diaNum):
                 TimeTableView(houkou: .nobori, diaNum: diaNum)
                     .padding(3)
-            case .diagram:
-                DiagramView(viewSize: $viewSize)
+            case .diagram(let diaNum):
+                DiagramView(diaNum: diaNum, viewSize: $viewSize)
                     .padding(3)
             }
         }
         .toolbar {
-            if detailViewStatus == .diagram {
+            if case .diagram(diaNum: _) = detailViewStatus {
                 ToolbarItemGroup {
                     let easeOutAnimation: Animation = .easeOut(duration: 0.3)
                     Button {
