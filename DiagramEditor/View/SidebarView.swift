@@ -50,7 +50,7 @@ struct SidebarView: View {
                             ) {
                                 Text("上り時刻表")
                             }
-                            NavigationLink(value: DetailViewStatus.diagram) {
+                            NavigationLink(value: DetailViewStatus.diagram(diaNum: index)) {
                                 Text("ダイヤグラム")
                             }
                         }

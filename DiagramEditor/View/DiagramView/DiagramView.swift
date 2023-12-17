@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct DiagramView: View {
+    let diaNum: Int
+
     @Binding var viewSize: CGSize
 
     let diagram = Diagram()
 
     var body: some View {
         SyncedScrollView {
-            Legend(viewSize: $viewSize)
+            ZStack {
+                Legend(viewSize: $viewSize)
+                DrawDiagram(houkou: .kudari, diaNum: diaNum, viewSize: $viewSize)
+                DrawDiagram(houkou: .nobori, diaNum: diaNum, viewSize: $viewSize)
+            }
         } vSyncedContent: {
             DrawStations(viewSize: $viewSize)
         } hSyncedContent: {
@@ -27,6 +33,6 @@ struct DiagramView: View {
 
 #Preview {
     let viewSize = Binding.constant( CGSize(width: 500, height: 500) )
-    return DiagramView(viewSize: viewSize)
+    return DiagramView(diaNum: 0, viewSize: viewSize)
         .environmentObject(DiagramEditorDocument())
 }
