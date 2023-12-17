@@ -12,8 +12,6 @@ struct DiagramView: View {
 
     @Binding var viewSize: CGSize
 
-    let diagram = Diagram()
-
     var body: some View {
         SyncedScrollView {
             ZStack {
