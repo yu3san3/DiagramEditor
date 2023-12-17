@@ -18,7 +18,6 @@ struct DrawDiagram: View {
         let ressyas = self.document.oudData.rosen.dia[0].kudari.ressya
         ForEach(ressyas) { ressya in
             let points = getPoints(ressya: ressya)
-            let _ = print(points)
             DiagramLine(points: points)
                 .stroke()
         }
@@ -27,7 +26,24 @@ struct DrawDiagram: View {
     func getPoints(ressya: Ressya) -> [CGPoint] {
         var result: [CGPoint] = []
         let originTime = "000"
+        let legendWidth: CGFloat = 1
+        //Int.maxの際に使用するrunTime
+        let maxIntRunTime = 3
+        let distances = self.document.distanceBetweenEkis
+        //開始駅からの距離
+        var distance = 0
+        let height = self.viewSize.height
+        //走行時間の合計を計算
+        let runTimeSum = CGFloat( distances.reduce(0) {
+            //$1がInt.maxだった場合を考慮。そのまま足すとオーバーフローする。
+            $0 + ($1 == Int.max ? maxIntRunTime : $1)
+        })
         for (index, jikoku) in ressya.ekiJikoku.enumerated() {
+            //!!!: - ⚠️Int.maxの時にオーバーフローする
+            distance += distances.indices.contains(index-1) ? distances[index-1] : 0
+            // (Viewの高さ / 走行時間の合計) * 走行距離
+            //Int.maxの場合は、走行距離にmaxIntRunTimeを使用
+            let yPoint = (height / runTimeSum) * CGFloat( distance == Int.max ? maxIntRunTime : distance ) + legendWidth
             //時刻データがない場合continue
             if jikoku.chaku.isEmpty && jikoku.hatsu.isEmpty {
                 continue
@@ -37,7 +53,7 @@ struct DrawDiagram: View {
                 let xPoint = getXPoint(from: originTime, to: jikoku.chaku)
                 result.append(
                     CGPoint(x: xPoint,
-                            y: index * 90)
+                            y: Int(yPoint))
                 )
             }
             //発時刻の座標を追加
@@ -45,7 +61,7 @@ struct DrawDiagram: View {
                 let xPoint = getXPoint(from: originTime, to: jikoku.hatsu)
                 result.append(
                     CGPoint(x: xPoint,
-                            y: index * 90)
+                            y: Int(yPoint))
                 )
             }
         }
