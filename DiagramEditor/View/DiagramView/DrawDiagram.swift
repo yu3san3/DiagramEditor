@@ -19,21 +19,21 @@ struct DrawDiagram: View {
     var body: some View {
         switch houkou {
         case .kudari:
-            ForEach(self.document.oudData.rosen.dia[diaNum].kudari.ressya) { ressya in
-                let points = getPoints(houkou: houkou, ressya: ressya)
-                DiagramLine(points: points)
-                    .stroke()
-            }
+            drawDiagram(ressyas: self.document.oudData.rosen.dia[diaNum].kudari.ressya)
         case .nobori:
-            ForEach(self.document.oudData.rosen.dia[diaNum].nobori.ressya) { ressya in
-                let points = getPoints(houkou: houkou, ressya: ressya)
-                DiagramLine(points: points)
-                    .stroke()
-            }
+            drawDiagram(ressyas: self.document.oudData.rosen.dia[diaNum].nobori.ressya)
         }
     }
 
-    func getPoints(houkou: Houkou, ressya: Ressya) -> [CGPoint] {
+    func drawDiagram(ressyas: [Ressya]) -> some View {
+        ForEach(ressyas) { ressya in
+            let points = getPoints(ressya: ressya)
+            DiagramLine(points: points)
+                .stroke()
+        }
+    }
+
+    func getPoints(ressya: Ressya) -> [CGPoint] {
         var result: [CGPoint] = []
         let originTime = "000"
         let distances = getDistances(houkou: houkou)
@@ -56,7 +56,7 @@ struct DrawDiagram: View {
                 //$1がInt.maxだった場合を考慮。そのまま足すとオーバーフローする。
                 $0 + ($1 == Int.max ? maxIntRunTime : $1)
             })
-            let yPoint = getYPoint(houkou: houkou,
+            let yPoint = getYPoint(houkou: self.houkou,
                                    runTimeSum: runTimeSum,
                                    distanceFromBaseStation: distanceFromBaseStation)
             //着時刻の座標を追加
