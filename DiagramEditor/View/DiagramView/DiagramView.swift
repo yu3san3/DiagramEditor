@@ -30,7 +30,7 @@ struct DiagramView: View {
 }
 
 #Preview {
-    let viewSize = Binding.constant( CGSize(width: 500, height: 500) )
+    let viewSize = Binding.constant( CGSize(width: 3000, height: 500) )
     return DiagramView(diaNum: 0, viewSize: viewSize)
         .environmentObject(DiagramEditorDocument())
 }

@@ -43,8 +43,10 @@ struct DrawDiagram: View {
         var distanceFromBaseStation = 0
         for (index, jikoku) in ressya.ekiJikoku.enumerated() {
             //基点駅から現在処理中の駅までの距離を求めるため、駅間距離を足す。
-            //!!!: - ⚠️Int.maxの時にオーバーフローする
-            distanceFromBaseStation += distances.indices.contains(index-1) ? distances[index-1] : 0
+            if distances.indices.contains(index-1),
+               distances[index-1] != Int.max {
+                distanceFromBaseStation += distances[index-1]
+            }
             //時刻データがない場合continue
             if jikoku.chaku.isEmpty && jikoku.hatsu.isEmpty {
                 continue
