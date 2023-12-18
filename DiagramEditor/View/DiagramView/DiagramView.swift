@@ -9,7 +9,6 @@ import SwiftUI
 
 struct DiagramView: View {
     let diaNum: Int
-
     @Binding var viewSize: CGSize
 
     var body: some View {

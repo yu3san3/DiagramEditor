@@ -12,7 +12,6 @@ struct DrawDiagram: View {
 
     let houkou: Houkou
     let diaNum: Int
-
     @Binding var viewSize: CGSize
 
     let coordinateCalc = CoordinateCalculation()
@@ -32,7 +31,6 @@ struct DrawDiagram: View {
                     .stroke()
             }
         }
-
     }
 
     func getPoints(houkou: Houkou, ressya: Ressya) -> [CGPoint] {
