@@ -14,7 +14,7 @@ struct DrawDiagram: View {
     let diaNum: Int
     @Binding var viewSize: CGSize
 
-    let coordinateCalc = CoordinateCalculation()
+    let timeCalc = TimeCalculation()
 
     var body: some View {
         switch houkou {
@@ -75,7 +75,7 @@ struct DrawDiagram: View {
         //原点からの経過時間(分)
         //FIXME: - ⚠️timeDiffがnilの場合クラッシュする
         let timeFromOrigin = CGFloat(
-            coordinateCalc.getTimeDiff(from: origin, to: time)!
+            timeCalc.getTimeDiff(from: origin, to: time)!
         )
         //(原点からの経過時間/0時からの経過時間(分)) * ビューの幅
         //Intで結果を得ようとすると0になってしまうことがあるので、
