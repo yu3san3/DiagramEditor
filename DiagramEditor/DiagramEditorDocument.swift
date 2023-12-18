@@ -22,10 +22,18 @@ final class DiagramEditorDocument: ReferenceFileDocument {
         }
     }
     var distanceBetweenEkis: [Int] = []
+    //走行時間の合計
+    var runTimeSum: CGFloat {
+        CGFloat( self.distanceBetweenEkis.reduce(0) {
+            //$1がInt.maxだった場合を考慮。そのまま足すとオーバーフローする。
+            $0 + ($1 != Int.max ? $1 : diagram.maxIntRunTime)
+        })
+    }
 
-    //MARK: ここ(DiagramEditorDocumentの中)でCoordinateCalculationのインスタンスを作るのはマズいのでは？
-    //      つまり、distanceBetweenEkisをここで持っておくのはマズいのでは？
+    //MARK: ここで以下のインスタンスを作るのはマズいのでは？
+    //      つまり、distanceBetweenEkis諸々をここで持っておくのはマズいかも？
     let coordinateCalc = CoordinateCalculation()
+    let diagram = Diagram()
 
     init(oudData: OudData = OudData.mockOudData) {
         self.oudData = oudData

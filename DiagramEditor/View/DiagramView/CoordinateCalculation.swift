@@ -23,7 +23,6 @@ class CoordinateCalculation {
         let result = tempRunTime.reduce(tempRunTime[0]) { resultArray, nextArray in
             zip(resultArray, nextArray).map(min)
         }
-        print(result)
         return result
     }
 
