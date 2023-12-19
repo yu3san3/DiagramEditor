@@ -13,6 +13,8 @@ struct Legend: View {
     @Binding var viewSize: CGSize
     let times = 24
 
+    let diagram = Diagram()
+
     var body: some View {
         ZStack(alignment: .topLeading) {
             drawVLines(lineWidth: 1,
@@ -42,18 +44,11 @@ struct Legend: View {
 
     @ViewBuilder
     private func drawHLines(lineWidth: CGFloat, distances: [Int], scale height: CGFloat) -> some View {
-        //Int.maxの際に使用するrunTime
-        let maxIntRunTime = 3
-        //走行時間の合計を計算
-        let runTimeSum = CGFloat( distances.reduce(0) {
-            //$1がInt.maxだった場合を考慮。そのまま足すとオーバーフローする。
-            $0 + ($1 == Int.max ? maxIntRunTime : $1)
-        })
         VStack(spacing: 0) {
             ForEach(Array(distances.enumerated()), id: \.offset) { _, distance in
                 // (Viewの高さ / 走行時間の合計) * 走行距離
                 //Int.maxの場合は、走行距離にmaxIntRunTimeを使用
-                let intervalHeight = (height / runTimeSum) * CGFloat( distance == Int.max ? maxIntRunTime : distance )
+                let intervalHeight = (height / self.document.runTimeSum) * CGFloat( distance == Int.max ? self.diagram.maxIntRunTime : distance )
                 Line(direction: .horizontal,
                      lineWidth: lineWidth,
                      length: self.$viewSize.width)

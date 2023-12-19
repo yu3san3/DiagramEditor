@@ -12,4 +12,7 @@ struct Diagram {
     let ekiWidth: CGFloat = 70
     let ekiHeight: CGFloat = 20
     let timeWidth: CGFloat = 20
+
+    //Int.maxの際に使用するrunTime
+    let maxIntRunTime = 3
 }
