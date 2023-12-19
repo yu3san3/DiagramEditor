@@ -17,14 +17,15 @@ extension UTType {
 final class DiagramEditorDocument: ReferenceFileDocument {
     @Published var oudData: OudData {
         didSet {
-            self.distanceBetweenEkis = getDistanceBetweenEkis(dias: oudData.rosen.dia,
-                                                              ekiCount: oudData.rosen.eki.count)
+            self.runTimes = getRunTimes(dias: oudData.rosen.dia,
+                                        ekiCount: oudData.rosen.eki.count)
         }
     }
-    var distanceBetweenEkis: [Int] = []
+    //各駅間の走行時間(≈走行距離)
+    var runTimes: [Int] = []
     //走行時間の合計
     var runTimeSum: CGFloat {
-        CGFloat( self.distanceBetweenEkis.reduce(0) {
+        CGFloat( self.runTimes.reduce(0) {
             //$1がInt.maxだった場合を考慮。そのまま足すとオーバーフローする。
             $0 + ($1 != Int.max ? $1 : diagram.maxIntRunTime)
         })
@@ -37,7 +38,7 @@ final class DiagramEditorDocument: ReferenceFileDocument {
 
     init(oudData: OudData = OudData.mockOudData) {
         self.oudData = oudData
-        self.distanceBetweenEkis = getDistanceBetweenEkis(dias: oudData.rosen.dia,
+        self.runTimes = getRunTimes(dias: oudData.rosen.dia,
                                                           ekiCount: oudData.rosen.eki.count)
     }
 
@@ -58,7 +59,7 @@ final class DiagramEditorDocument: ReferenceFileDocument {
             throw CocoaError(.fileReadCorruptFile)
         }
         self.oudData = OudDataParser.parse(string)
-        self.distanceBetweenEkis = getDistanceBetweenEkis(dias: oudData.rosen.dia,
+        self.runTimes = getRunTimes(dias: oudData.rosen.dia,
                                                           ekiCount: oudData.rosen.eki.count)
     }
     
@@ -71,25 +72,23 @@ final class DiagramEditorDocument: ReferenceFileDocument {
 }
 
 extension DiagramEditorDocument {
-    func getDistanceBetweenEkis(dias: [Dia], ekiCount: Int) -> [Int] {
-        var tempRunTime: [[Int]] = []
+    func getRunTimes(dias: [Dia], ekiCount: Int) -> [Int] {
+        var tempResult: [[Int]] = []
         for dia in dias {
-            let kudariRunTime = getMinimumRunTime(ressyas: dia.kudari.ressya, ekiCount: ekiCount)
-            let noboriRunTime = getMinimumRunTime(ressyas: dia.nobori.ressya, ekiCount: ekiCount).reversed()
+            let kudariRunTimes = getMinimumRunTimes(ressyas: dia.kudari.ressya, ekiCount: ekiCount)
+            let noboriRunTimes = getMinimumRunTimes(ressyas: dia.nobori.ressya, ekiCount: ekiCount).reversed()
             //下りと上りの走行時間を比較し、より小さい方を採用
-            tempRunTime.append(
-                zip(kudariRunTime, noboriRunTime)
-                    .map( { min($0, $1) } )
-            )
+            let tempRunTimes = zip(kudariRunTimes, noboriRunTimes).map(min)
+            tempResult.append(tempRunTimes)
         }
-        //現在の配列(resultArray)と次の配列(nextArray)を取り、それぞれの配列を比較して最小値を取り続ける。
-        let result = tempRunTime.reduce(tempRunTime[0]) { resultArray, nextArray in
-            zip(resultArray, nextArray).map(min)
+        //現在の最小値の配列(currentMinimums)と次の配列(nextArray)を比較
+        let result = tempResult.reduce(tempResult[0]) { currentMinimums, nextArray in
+            zip(currentMinimums, nextArray).map(min)
         }
         return result
     }
 
-    private func getMinimumRunTime(ressyas: [Ressya], ekiCount: Int) -> [Int] {
+    private func getMinimumRunTimes(ressyas: [Ressya], ekiCount: Int) -> [Int] {
         var result = Array(repeating: Int.max, count: ekiCount - 1)
         //駅間0分を防ぐための最小値
         let minimumValue = 1
@@ -102,11 +101,11 @@ extension DiagramEditorDocument {
                     continue
                 }
                 //前の駅に停車している、かつ着時刻か発時刻のデータあり
-                if let prevHatsu = previousHatsu,
+                if let previousHatsu = previousHatsu,
                    !jikoku.chaku.isEmpty || !jikoku.hatsu.isEmpty {
                     //着時刻のデータがあればそれを使い、なければ発時刻を使う
                     let relevantTime = !jikoku.chaku.isEmpty ? jikoku.chaku : jikoku.hatsu
-                    let diff = timeCalc.getTimeDiff(from: prevHatsu, to: relevantTime)
+                    let diff = timeCalc.getTimeDiff(from: previousHatsu, to: relevantTime)
                     //FIXME: - ⚠️diffがnilだとアプリごと落ちる
                     result[i-1] = max(minimumValue, min(diff!, result[i-1]) )
                 }

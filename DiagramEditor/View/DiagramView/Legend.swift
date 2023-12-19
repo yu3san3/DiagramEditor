@@ -21,7 +21,7 @@ struct Legend: View {
                        times: times,
                        intervalWidth: self.viewSize.width / CGFloat(times) )
             drawHLines(lineWidth: 1,
-                       distances: document.distanceBetweenEkis,
+                       runTimesForInterval: document.runTimes,
                        scale: self.viewSize.height)
         }
     }
@@ -43,12 +43,13 @@ struct Legend: View {
     }
 
     @ViewBuilder
-    private func drawHLines(lineWidth: CGFloat, distances: [Int], scale height: CGFloat) -> some View {
+    private func drawHLines(lineWidth: CGFloat, runTimesForInterval runTimes: [Int], scale height: CGFloat) -> some View {
         VStack(spacing: 0) {
-            ForEach(Array(distances.enumerated()), id: \.offset) { _, distance in
-                // (Viewの高さ / 走行時間の合計) * 走行距離
-                //Int.maxの場合は、走行距離にmaxIntRunTimeを使用
-                let intervalHeight = (height / self.document.runTimeSum) * CGFloat( distance == Int.max ? self.diagram.maxIntRunTime : distance )
+            //idをきちんと指定するためにenumeratedを使ってる
+            ForEach(Array(runTimes.enumerated()), id: \.offset) { _, runTime in
+                // (Viewの高さ / 走行時間の合計) * 走行時間
+                //Int.maxの場合は、走行時間にmaxIntRunTimeを使用
+                let intervalHeight = (height / self.document.runTimeSum) * CGFloat( runTime == Int.max ? diagram.maxIntRunTime : runTime )
                 Line(direction: .horizontal,
                      lineWidth: lineWidth,
                      length: self.$viewSize.width)

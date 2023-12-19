@@ -15,6 +15,7 @@ struct DrawDiagram: View {
     @Binding var viewSize: CGSize
 
     let timeCalc = TimeCalculation()
+    let diagram = Diagram()
 
     var body: some View {
         switch houkou {
@@ -27,7 +28,7 @@ struct DrawDiagram: View {
 
     func drawDiagram(ressyas: [Ressya]) -> some View {
         ForEach(ressyas) { ressya in
-            let points = getPoints(ressya: ressya)
+            let points = self.getPoints(ressya: ressya)
             DiagramLine(points: points)
                 .stroke()
         }
@@ -36,34 +37,29 @@ struct DrawDiagram: View {
     func getPoints(ressya: Ressya) -> [CGPoint] {
         var result: [CGPoint] = []
         let originTime = "000"
-        let distances = getDistances(houkou: houkou)
-        //基点駅からの距離
-        var distanceFromBaseStation = 0
+        let runTimes = self.getRunTimes(for: houkou)
+        //基点駅からの走行時間
+        var runTimeFromBaseStation = 0
         for (index, jikoku) in ressya.ekiJikoku.enumerated() {
+            let runTime = runTimes.indices.contains(index-1) ? runTimes[index-1] : 0
             //基点駅から現在処理中の駅までの距離を求めるため、駅間距離を足す。
-            if distances.indices.contains(index-1),
-               distances[index-1] != Int.max {
-                distanceFromBaseStation += distances[index-1]
-            }
+            //Int.maxの場合は、走行距離にmaxIntRunTimeを使用
+            runTimeFromBaseStation += runTime != Int.max ? runTime : diagram.maxIntRunTime
             //時刻データがない場合continue
             if jikoku.chaku.isEmpty && jikoku.hatsu.isEmpty {
                 continue
             }
-            let yPoint = getYPoint(houkou: self.houkou,
-                                   distanceFromBaseStation: distanceFromBaseStation)
+            let yPoint = getYPoint(for: houkou,
+                                   runTime: runTimeFromBaseStation)
             //着時刻の座標を追加
             if !jikoku.chaku.isEmpty {
                 let xPoint = getXPoint(from: originTime, to: jikoku.chaku)
-                result.append(
-                    CGPoint(x: xPoint, y: yPoint)
-                )
+                result.append( CGPoint(x: xPoint, y: yPoint) )
             }
             //発時刻の座標を追加
             if !jikoku.hatsu.isEmpty {
                 let xPoint = getXPoint(from: originTime, to: jikoku.hatsu)
-                result.append(
-                    CGPoint(x: xPoint, y: yPoint)
-                )
+                result.append( CGPoint(x: xPoint, y: yPoint) )
             }
         }
         return result
@@ -73,7 +69,7 @@ struct DrawDiagram: View {
         //24時間の分表記
         let totalMinutes: CGFloat = 1440
         //原点からの経過時間(分)
-        //FIXME: - ⚠️timeDiffがnilの場合クラッシュする
+        //!!!: - ⚠️timeDiffがnilの場合クラッシュする
         let timeFromOrigin = CGFloat(
             timeCalc.getTimeDiff(from: origin, to: time)!
         )
@@ -84,12 +80,11 @@ struct DrawDiagram: View {
         return Int(xPoint)
     }
 
-    func getYPoint(houkou: Houkou, distanceFromBaseStation: Int) -> Int {
+    func getYPoint(for houkou: Houkou, runTime: Int) -> Int {
         let height = self.viewSize.height
         let legendWidth: CGFloat = 1
         // (Viewの高さ / 走行時間の合計) * 走行距離
-        //Int.maxの場合は、走行距離にmaxIntRunTimeを使用
-        let yPoint = (height / self.document.runTimeSum) * CGFloat(distanceFromBaseStation)
+        let yPoint = (height / self.document.runTimeSum) * CGFloat(runTime)
         switch houkou {
         case .kudari:
             return Int(yPoint + legendWidth)
@@ -100,12 +95,12 @@ struct DrawDiagram: View {
         }
     }
 
-    func getDistances(houkou: Houkou) -> [Int] {
+    private func getRunTimes(for houkou: Houkou) -> [Int] {
         switch houkou {
         case .kudari:
-            return self.document.distanceBetweenEkis
+            return self.document.runTimes
         case .nobori:
-            return self.document.distanceBetweenEkis.reversed()
+            return self.document.runTimes.reversed()
         }
     }
 }
