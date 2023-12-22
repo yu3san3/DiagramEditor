@@ -18,11 +18,35 @@ struct JikokuView: View {
     var body: some View {
         switch houkou {
         case .kudari:
-            makeJikokuView(ressyas: document.oudData.rosen.dia[diaNum].kudari.ressya,
-                           ekis: document.oudData.rosen.eki)
+            LazyVStack(spacing: 0) {
+                jikoku(ressyas: document.oudData.rosen.dia[diaNum].kudari.ressya,
+                       ekis: document.oudData.rosen.eki)
+                makeBikouCell(text: "hoge")
+            }
         case .nobori:
             makeJikokuView(ressyas: document.oudData.rosen.dia[diaNum].nobori.ressya,
                            ekis: document.oudData.rosen.eki.reversed() )
+        }
+    }
+
+    @ViewBuilder
+    func jikoku(ressyas: [Ressya], ekis: [Eki]) -> some View {
+        let columnCellCount = document.oudData.rosen.eki.count +  document.oudData.rosen.eki.filter { $0.ekijikokukeisiki == .hatsuchaku }.count
+        let columns = Array(repeating: GridItem(.flexible(), spacing: 0),
+                            count: columnCellCount)
+        LazyHGrid(rows: columns, spacing: 0) {
+            ForEach(ressyas) { ressya in
+                let array = Array( zipLongest(ekis, ressya.ekiJikoku) )
+                ForEach(array, id: \.1?.id) { eki, jikoku in
+                    makeJikokuCell(eki: eki, jikoku: jikoku, ressya: ressya)
+                }
+                .font(.caption)
+                .frame(
+                    width: table.jikokuWidth,
+                    height: table.jikokuHeight
+                )
+                .border(Color.green)
+            }
         }
     }
 
