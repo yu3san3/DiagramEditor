@@ -46,7 +46,12 @@ struct HLine: Shape {
     }
 }
 
-#Preview {
+#Preview("vertical") {
+    Line(direction: .vertical, lineWidth: 1, length: .constant(50) )
+        .frame(width: 300, height: 200)
+}
+
+#Preview("horizontal") {
     Line(direction: .horizontal, lineWidth: 1, length: .constant(50) )
         .frame(width: 300, height: 200)
 }
