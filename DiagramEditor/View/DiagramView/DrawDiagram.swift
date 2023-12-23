@@ -29,7 +29,7 @@ struct DrawDiagram: View {
     func drawDiagram(ressyas: [Ressya]) -> some View {
         ForEach(ressyas) { ressya in
             let points = self.getPoints(ressya: ressya)
-            DiagramLine(points: points)
+            DiagramLine(points: points, viewWidth: self.viewSize.width)
                 .stroke()
         }
     }
@@ -106,7 +106,8 @@ struct DrawDiagram: View {
 }
 
 struct DiagramLine: Shape {
-    var points: [CGPoint]
+    let points: [CGPoint]
+    let viewWidth: CGFloat
 
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -114,8 +115,15 @@ struct DiagramLine: Shape {
         guard !points.isEmpty else { return path }
 
         path.move(to: points[0])
+        var previousPoint = points[0]
         for point in points {
+            //列車がviewSizeの範囲を超えて描かれる場合に
+            if point.x < previousPoint.x {
+                path.addLine(to: CGPoint(x: point.x + viewWidth, y: point.y))
+                path.move(to: CGPoint(x: previousPoint.x - viewWidth, y: previousPoint.y))
+            }
             path.addLine(to: point)
+            previousPoint = point
         }
 
         return path
