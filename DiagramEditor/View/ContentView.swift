@@ -11,7 +11,9 @@ struct ContentView: View {
     @EnvironmentObject var document: DiagramEditorDocument
 
     @State private var detailViewStatus: DetailViewStatus = .none
-    @State var viewSize = CGSize(width: 1000, height: 500)
+    @State private var viewSize = CGSize(width: 1000, height: 500)
+    @State private var isShowKudariDiagram = true
+    @State private var isShowNoboriDiagram = true
 
     var body: some View {
         NavigationSplitView {
@@ -35,12 +37,23 @@ struct ContentView: View {
                 TimeTableView(houkou: .nobori, diaNum: diaNum)
                     .padding(3)
             case .diagram(let diaNum):
-                DiagramView(diaNum: diaNum, viewSize: $viewSize)
+                DiagramView(diaNum: diaNum,
+                            viewSize: $viewSize,
+                            isShowKudariDiagram: $isShowKudariDiagram,
+                            isShowNoboriDiagram: $isShowNoboriDiagram)
                     .padding(3)
             }
         }
         .toolbar {
             if case .diagram(diaNum: _) = detailViewStatus {
+                ToolbarItemGroup {
+                    Toggle(isOn: $isShowNoboriDiagram) {
+                        Image(systemName: "arrow.up.right")
+                    }
+                    Toggle(isOn: $isShowKudariDiagram) {
+                        Image(systemName: "arrow.down.right")
+                    }
+                }
                 ToolbarItemGroup {
                     let easeOutAnimation: Animation = .easeOut(duration: 0.3)
                     Button {
