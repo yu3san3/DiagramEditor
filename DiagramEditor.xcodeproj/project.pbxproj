@@ -37,6 +37,7 @@
 		EFACF4032B28A5610032C148 /* Diagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFACF4022B28A5610032C148 /* Diagram.swift */; };
 		EFACF4052B28A7B20032C148 /* DrawTimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFACF4042B28A7B20032C148 /* DrawTimes.swift */; };
 		EFBF1FC22B3022DB0088BFC7 /* TimeCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBF1FC12B3022DB0088BFC7 /* TimeCalculation.swift */; };
+		EFC7536A2B37309F005E12F1 /* OudColorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC753692B37309F005E12F1 /* OudColorCode.swift */; };
 		EFDE5D802B1C6322006CF9FB /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */; };
 		EFDE5D822B1CA2E4006CF9FB /* DetailViewStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE5D812B1CA2E4006CF9FB /* DetailViewStatus.swift */; };
 /* End PBXBuildFile section */
@@ -86,6 +87,7 @@
 		EFACF4022B28A5610032C148 /* Diagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagram.swift; sourceTree = "<group>"; };
 		EFACF4042B28A7B20032C148 /* DrawTimes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawTimes.swift; sourceTree = "<group>"; };
 		EFBF1FC12B3022DB0088BFC7 /* TimeCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCalculation.swift; sourceTree = "<group>"; };
+		EFC753692B37309F005E12F1 /* OudColorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudColorCode.swift; sourceTree = "<group>"; };
 		EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		EFDE5D812B1CA2E4006CF9FB /* DetailViewStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -189,6 +191,7 @@
 			children = (
 				EB275C572AAAFDF400D8994A /* Enum */,
 				EFBF1FC12B3022DB0088BFC7 /* TimeCalculation.swift */,
+				EFC753692B37309F005E12F1 /* OudColorCode.swift */,
 				EBA5403F2A278E4D004AC49A /* OudDataParser.swift */,
 				EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */,
 				EBF334AD2A699D3C0099EE4E /* Extensions.swift */,
@@ -343,6 +346,7 @@
 				EFACF4032B28A5610032C148 /* Diagram.swift in Sources */,
 				EB8E1E3B2AFE065B00707DC6 /* SyncedScrollView.swift in Sources */,
 				EB55FD3B2AECF88C00FCCAF9 /* Ekikibo.swift in Sources */,
+				EFC7536A2B37309F005E12F1 /* OudColorCode.swift in Sources */,
 				EB8E1E3D2AFE1CC500707DC6 /* TimeTableView.swift in Sources */,
 				EB72D5F42AA479C800779186 /* OudDataStringifyer.swift in Sources */,
 				EBF334AE2A699D3C0099EE4E /* Extensions.swift in Sources */,

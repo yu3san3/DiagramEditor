@@ -29,8 +29,9 @@ struct DrawDiagram: View {
     func drawDiagram(ressyas: [Ressya]) -> some View {
         ForEach(ressyas) { ressya in
             let points = self.getPoints(ressya: ressya)
+            let lineColor = self.document.oudData.rosen.ressyasyubetsu[ressya.syubetsu].diagramSenColor
             DiagramLine(points: points, viewWidth: self.viewSize.width)
-                .stroke()
+                .stroke(Color(oudColorCode: lineColor))
         }
     }
 
