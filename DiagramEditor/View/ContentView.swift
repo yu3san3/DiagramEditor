@@ -45,7 +45,7 @@ struct ContentView: View {
                     let easeOutAnimation: Animation = .easeOut(duration: 0.3)
                     Button {
                         withAnimation(easeOutAnimation) {
-                            self.viewSize.width += 100
+                            self.viewSize.width *= 1.5
                         }
                     } label: {
                         Label("横幅増", systemImage: "arrow.left.and.line.vertical.and.arrow.right")
@@ -53,14 +53,14 @@ struct ContentView: View {
                     Button {
                         withAnimation(easeOutAnimation) {
                             //0以下にならないように三項演算子で制限
-                            self.viewSize.width -= self.viewSize.width <= 0 ? 0 : 100
+                            self.viewSize.width /= self.viewSize.width <= 0 ? 1 : 1.5
                         }
                     } label: {
                         Label("横幅減", systemImage: "arrow.right.and.line.vertical.and.arrow.left")
                     }
                     Button {
                         withAnimation(easeOutAnimation) {
-                            self.viewSize.height += 100
+                            self.viewSize.height *= 1.5
                         }
                     } label: {
                         Label("縦幅増", systemImage: "arrow.up.and.line.horizontal.and.arrow.down")
@@ -68,7 +68,7 @@ struct ContentView: View {
                     Button {
                         withAnimation(easeOutAnimation) {
                             //0以下にならないように三項演算子で制限
-                            self.viewSize.height -= self.viewSize.height <= 0 ? 0 : 100
+                            self.viewSize.height /= self.viewSize.height <= 0 ? 1 : 1.5
                         }
                     } label: {
                         Label("縦幅減", systemImage: "arrow.down.and.line.horizontal.and.arrow.up")
