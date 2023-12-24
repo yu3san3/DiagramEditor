@@ -44,10 +44,9 @@ struct JikokuView: View {
                 ForEach( Array(ressya.ekiJikoku.enumerated() ),
                          id: \.element.id
                 ) { index, jikoku in
-                    let eki = ekis[index]
-                    jikokuCell(ekijikokukeisiki: eki.ekijikokukeisiki,
+                    jikokuText(ekijikokukeisiki: ekis[index].ekijikokukeisiki,
                                jikoku: jikoku,
-                               houkou: ressya.houkou)
+                               houkou: houkou)
                 }
                 .font(.caption)
                 .frame(
@@ -78,87 +77,53 @@ struct JikokuView: View {
     }
 
     @ViewBuilder
-    //MARK: - 上り、下りの両方できちんと表示されるようにしよう
-    func jikokuCell(ekijikokukeisiki: Ekijikokukeisiki,
-                    jikoku: Jikoku,
-                    houkou: Houkou
+    func jikokuText(ekijikokukeisiki: Ekijikokukeisiki,
+                       jikoku: Jikoku,
+                       houkou: Houkou
     ) -> some View {
-        switch ekijikokukeisiki {
-        case .hatsuchaku:
-            switch jikoku.arrivalStatus {
-            case .stop:
-                Text(jikoku.chaku)
-                Text(jikoku.hatsu)
-            case .pass:
-                Text("ﾚ")
-                Text("ﾚ")
-            case .notOperate:
+        switch jikoku.arrivalStatus {
+        case .notOperate:
+            if ekijikokukeisiki == .hatsuchaku {
                 Text("･･")
                 Text("･･")
-            case .notGoThrough:
-                Text("||")
-                Text("||")
-            }
-        case .hatsu:
-            switch jikoku.arrivalStatus {
-            case .stop:
-                Text(jikoku.hatsu)
-            case .pass:
-                Text("ﾚ")
-            case .notOperate:
+            } else {
                 Text("･･")
-            case .notGoThrough:
+            }
+        case .notGoThrough:
+            if ekijikokukeisiki == .hatsuchaku {
+                Text("||")
+                Text("||")
+            } else {
                 Text("||")
             }
-        case .kudariChaku:
-            switch houkou {
-            case .kudari:
-                switch jikoku.arrivalStatus {
-                case .stop:
-                    Text(jikoku.chaku)
-                case .pass:
-                    Text("ﾚ")
-                case .notOperate:
-                    Text("･･")
-                case .notGoThrough:
-                    Text("||")
-                }
-            case .nobori:
-                switch jikoku.arrivalStatus {
-                case .stop:
-                    Text(jikoku.hatsu)
-                case .pass:
-                    Text("ﾚ")
-                case .notOperate:
-                    Text("･･")
-                case .notGoThrough:
-                    Text("||")
-                }
+        case .stop:
+            switch ekijikokukeisiki {
+            case .hatsu:
+                Text(jikoku.hatsu.isEmpty ? "⚪︎" : jikoku.hatsu)
+            case .hatsuchaku:
+                    Text(jikoku.chaku.isEmpty ? "⚪︎" : jikoku.chaku)
+                    Text(jikoku.hatsu.isEmpty ? "⚪︎" : jikoku.hatsu)
+            case .kudariChaku:
+                //方向によって場合分け
+                let result = houkou == .kudari ? jikoku.chaku : jikoku.hatsu
+                Text(result.isEmpty ? "⚪︎" : result)
+            case .noboriChaku:
+                let result = houkou == .kudari ? jikoku.hatsu : jikoku.chaku
+                Text(result.isEmpty ? "⚪︎" : result)
             }
-        case .noboriChaku:
-            switch houkou {
-            case .kudari:
-                switch jikoku.arrivalStatus {
-                case .stop:
-                    Text(jikoku.hatsu)
-                case .pass:
-                    Text("ﾚ")
-                case .notOperate:
-                    Text("･･")
-                case .notGoThrough:
-                    Text("||")
-                }
-            case .nobori:
-                switch jikoku.arrivalStatus {
-                case .stop:
-                    Text(jikoku.chaku)
-                case .pass:
-                    Text("ﾚ")
-                case .notOperate:
-                    Text("･･")
-                case .notGoThrough:
-                    Text("||")
-                }
+        case .pass:
+            switch ekijikokukeisiki {
+            case .hatsu:
+                Text(jikoku.hatsu.isEmpty ? "ﾚ" : jikoku.hatsu)
+            case .hatsuchaku:
+                Text(jikoku.chaku.isEmpty ? "ﾚ" : jikoku.chaku)
+                Text(jikoku.hatsu.isEmpty ? "ﾚ" : jikoku.hatsu)
+            case .kudariChaku:
+                let result = houkou == .kudari ? jikoku.chaku : jikoku.hatsu
+                Text(result.isEmpty ? "ﾚ" : result)
+            case .noboriChaku:
+                let result = houkou == .kudari ? jikoku.hatsu : jikoku.chaku
+                Text(result.isEmpty ? "ﾚ" : result)
             }
         }
     }
