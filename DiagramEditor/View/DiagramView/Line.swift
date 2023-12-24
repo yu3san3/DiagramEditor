@@ -10,17 +10,20 @@ import SwiftUI
 struct Line: View {
     let direction: Axis.Set
     let lineWidth: CGFloat
+    var lineStyle: DiagramSenStyle = .jissen
     @Binding var length: CGFloat
 
     var body: some View {
         switch direction {
         case .vertical: //縦線
             VLine()
-                .stroke(Color.gray.opacity(0.5), lineWidth: lineWidth)
+                .stroke(Color.gray.opacity(0.5),
+                        style: StrokeStyle(lineWidth: lineWidth, dash: lineStyle.value))
                 .frame(width: lineWidth, height: length)
         case .horizontal: //横線
             HLine()
-                .stroke(Color.gray.opacity(0.5), lineWidth: lineWidth)
+                .stroke(Color.gray.opacity(0.5),
+                        style: StrokeStyle(lineWidth: lineWidth, dash: lineStyle.value))
                 .frame(width: length, height: lineWidth)
         default:
             EmptyView()
@@ -46,7 +49,12 @@ struct HLine: Shape {
     }
 }
 
-#Preview {
+#Preview("vertical") {
+    Line(direction: .vertical, lineWidth: 1, lineStyle: .hasen, length: .constant(50))
+        .frame(width: 300, height: 200)
+}
+
+#Preview("horizontal") {
     Line(direction: .horizontal, lineWidth: 1, length: .constant(50) )
         .frame(width: 300, height: 200)
 }
