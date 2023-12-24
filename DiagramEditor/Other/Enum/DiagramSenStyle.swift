@@ -12,4 +12,17 @@ enum DiagramSenStyle: String {
     case hasen = "SenStyle_Hasen"
     case tensen = "SenStyle_Tensen"
     case ittensasen = "SenStyle_Ittensasen"
+
+    var value: [CGFloat] {
+        switch self {
+        case .jissen:
+            return []
+        case .hasen:
+            return [5, 2]
+        case .tensen:
+            return [2, 2]
+        case .ittensasen:
+            return [5, 2, 2, 2]
+        }
+    }
 }
