@@ -17,8 +17,8 @@ struct Legend: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            drawVLines(thickLineWidth: 1,
-                       normalLineWidth: 0.5,
+            drawVLines(thickLineWidth: 1.5,
+                       normalLineWidth: 1,
                        thinLineWidth: 0.5,
                        times: times,
                        intervalWidth: self.viewSize.width / CGFloat(times) )
@@ -36,63 +36,56 @@ struct Legend: View {
                             intervalWidth: CGFloat
     ) -> some View {
         HStack(spacing: 0) {
-            //(間隔の全幅 - 太い線の幅)/2 - 普通の線の幅/2
-            let normalInterval = (intervalWidth - thickLineWidth)/2
-            let thinInterval = (normalInterval - normalLineWidth)/3 - thinLineWidth/2
+            let thickInterval = intervalWidth - thickLineWidth
+            let normalInterval = (thickInterval - normalLineWidth)/2
+            let thinInterval = (normalInterval - thinLineWidth*2)/3
             ForEach(0..<times, id: \.self) { _ in
                 Line(direction: .vertical ,
                      lineWidth: thickLineWidth,
                      length: self.$viewSize.height)
                 switch intervalWidth {
-                case 20..<40:
-                    let interval = normalInterval - normalLineWidth/2
-                    Spacer()
-                        .frame(width: max(interval, 0) )
+                case 0..<20:
+                    //30分おきに区切り線
+                    generateSpacer(width: normalInterval)
                     Line(direction: .vertical ,
                          lineWidth: normalLineWidth,
                          lineStyle: .jissen,
                          length: self.$viewSize.height)
-                    Spacer()
-                        .frame(width: max(interval, 0) )
+                    generateSpacer(width: normalInterval)
                 default:
-                    Spacer()
-                        .frame(width: max(thinInterval, 0) )
-                    Line(direction: .vertical ,
-                         lineWidth: thinLineWidth,
-                         lineStyle: .hasen,
-                         length: self.$viewSize.height)
-                    Spacer()
-                        .frame(width: max(thinInterval, 0) )
-                    Line(direction: .vertical ,
-                         lineWidth: thinLineWidth,
-                         lineStyle: .hasen,
-                         length: self.$viewSize.height)
-                    Spacer()
-                        .frame(width: max(thinInterval, 0) )
+                    //10分おきに区切り線
+                    generateSpacer(width: thinInterval)
+                    ForEach(0..<2) { _ in
+                        Line(direction: .vertical ,
+                             lineWidth: thinLineWidth,
+                             lineStyle: .hasen,
+                             length: self.$viewSize.height)
+                        generateSpacer(width: thinInterval)
+                    }
                     Line(direction: .vertical ,
                          lineWidth: normalLineWidth,
                          lineStyle: .jissen,
                          length: self.$viewSize.height)
                     Spacer()
                         .frame(width: max(thinInterval, 0) )
-                    Line(direction: .vertical ,
-                         lineWidth: thinLineWidth,
-                         lineStyle: .hasen,
-                         length: self.$viewSize.height)
-                    Spacer()
-                        .frame(width: max(thinInterval, 0) )
-                    Line(direction: .vertical ,
-                         lineWidth: thinLineWidth,
-                         lineStyle: .hasen,
-                         length: self.$viewSize.height)
-                    Spacer()
-                        .frame(width: max(thinInterval, 0) )
+                    ForEach(0..<2) { _ in
+                        Line(direction: .vertical ,
+                             lineWidth: thinLineWidth,
+                             lineStyle: .hasen,
+                             length: self.$viewSize.height)
+                        generateSpacer(width: thinInterval)
+                    }
                 }
             }
             Line(direction: .vertical,
                  lineWidth: thickLineWidth,
                  length: self.$viewSize.height)
         }
+    }
+
+    private func generateSpacer(width: CGFloat) -> some View {
+        Spacer()
+            .frame(width: max(width, 0))
     }
 
     @ViewBuilder
