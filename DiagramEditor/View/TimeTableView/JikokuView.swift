@@ -44,10 +44,9 @@ struct JikokuView: View {
                 ForEach( Array(ressya.ekiJikoku.enumerated() ),
                          id: \.element.id
                 ) { index, jikoku in
-                    let eki = ekis[index]
-                    jikokuCell(ekijikokukeisiki: eki.ekijikokukeisiki,
+                    jikokuText(ekijikokukeisiki: ekis[index].ekijikokukeisiki,
                                jikoku: jikoku,
-                               houkou: ressya.houkou)
+                               houkou: houkou)
                 }
                 .font(.caption)
                 .frame(
@@ -73,6 +72,74 @@ struct JikokuView: View {
                     height: table.bikouHeight
                 )
                 .border(Color.yellow)
+            }
+        }
+    }
+
+    func jikokuText(ekijikokukeisiki: Ekijikokukeisiki,
+                       jikoku: Jikoku,
+                       houkou: Houkou
+    ) -> AnyView {
+        switch jikoku.arrivalStatus {
+        case .notOperate:
+            if ekijikokukeisiki == .hatsuchaku {
+                return AnyView(Group {
+                    Text("･･")
+                    Text("･･")
+                })
+            }
+            return AnyView(Text("･･"))
+        case .notGoThrough:
+            if ekijikokukeisiki == .hatsuchaku {
+                return AnyView(Group {
+                    Text("||")
+                    Text("||")
+                })
+            }
+            return AnyView(Text("||"))
+        case .stop:
+            switch ekijikokukeisiki {
+            case .hatsu:
+                if jikoku.hatsu.isEmpty {
+                    return AnyView(Text("⚪︎"))
+                }
+                return AnyView(Text(jikoku.hatsu))
+            case .hatsuchaku:
+                return AnyView(Group {
+                    Text(jikoku.chaku.isEmpty ? "⚪︎" : jikoku.chaku)
+                    Text(jikoku.hatsu.isEmpty ? "⚪︎" : jikoku.hatsu)
+                })
+            case .kudariChaku:
+                var result: String
+                //方向によって場合分け
+                result = houkou == .kudari ? jikoku.chaku : jikoku.hatsu
+                return AnyView(Text(result.isEmpty ? "⚪︎" : result))
+            case .noboriChaku:
+                var result: String
+                result = houkou == .kudari ? jikoku.hatsu : jikoku.chaku
+                return AnyView(Text(result.isEmpty ? "⚪︎" : result))
+            }
+        case .pass:
+            switch ekijikokukeisiki {
+            case .hatsu:
+                if jikoku.hatsu.isEmpty {
+                    return AnyView(Text("ﾚ"))
+                }
+                return AnyView(Text(jikoku.hatsu))
+            case .hatsuchaku:
+                return AnyView(Group {
+                    Text(jikoku.chaku.isEmpty ? "ﾚ" : jikoku.chaku)
+                    Text(jikoku.hatsu.isEmpty ? "ﾚ" : jikoku.hatsu)
+                })
+            case .kudariChaku:
+                var result: String
+                //方向によって場合分け
+                result = houkou == .kudari ? jikoku.chaku : jikoku.hatsu
+                return AnyView(Text(result.isEmpty ? "ﾚ" : result))
+            case .noboriChaku:
+                var result: String
+                result = houkou == .kudari ? jikoku.hatsu : jikoku.chaku
+                return AnyView(Text(result.isEmpty ? "ﾚ" : result))
             }
         }
     }
