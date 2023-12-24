@@ -100,7 +100,16 @@ struct JikokuView: View {
                 Text("||")
             }
         case .hatsu:
-            Text(jikoku.hatsu)
+            switch jikoku.arrivalStatus {
+            case .stop:
+                Text(jikoku.hatsu)
+            case .pass:
+                Text("ﾚ")
+            case .notOperate:
+                Text("･･")
+            case .notGoThrough:
+                Text("||")
+            }
         case .kudariChaku:
             switch houkou {
             case .kudari:
@@ -115,7 +124,16 @@ struct JikokuView: View {
                     Text("||")
                 }
             case .nobori:
-                Text(jikoku.hatsu)
+                switch jikoku.arrivalStatus {
+                case .stop:
+                    Text(jikoku.hatsu)
+                case .pass:
+                    Text("ﾚ")
+                case .notOperate:
+                    Text("･･")
+                case .notGoThrough:
+                    Text("||")
+                }
             }
         case .noboriChaku:
             switch houkou {
@@ -131,7 +149,16 @@ struct JikokuView: View {
                     Text("||")
                 }
             case .nobori:
-                Text(jikoku.chaku)
+                switch jikoku.arrivalStatus {
+                case .stop:
+                    Text(jikoku.chaku)
+                case .pass:
+                    Text("ﾚ")
+                case .notOperate:
+                    Text("･･")
+                case .notGoThrough:
+                    Text("||")
+                }
             }
         }
     }
