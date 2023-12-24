@@ -67,18 +67,19 @@ struct DrawDiagram: View {
     }
 
     func getXPoint(from origin: String, to time: String) -> Int {
-        //24時間の分表記
-        let totalMinutes: CGFloat = 1440
         //原点からの経過時間(分)
         //!!!: - ⚠️timeDiffがnilの場合クラッシュする
         let timeFromOrigin = CGFloat(
             timeCalc.getTimeDiff(from: origin, to: time)!
         )
-        //(原点からの経過時間/0時からの経過時間(分)) * ビューの幅
-        //Intで結果を得ようとすると0になってしまうことがあるので、
+        //24時間は1440分
+        let totalMinutes: CGFloat = 1440
+        //(原点からの経過時間/0時からの合計時分) * ビューの幅
         //  いったんCGFloatで計算してからIntに変換
         let xPoint = (timeFromOrigin/totalMinutes) * self.viewSize.width
-        return Int(xPoint)
+        //???: 1を足すと、なぜかダイヤグラムがきちんと描画される
+        //     足さないと、正時発でも中途半端な位置に描画される
+        return Int(xPoint + 1)
     }
 
     func getYPoint(for houkou: Houkou, runTime: Int) -> Int {
