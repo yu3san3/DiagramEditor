@@ -17,7 +17,9 @@ struct Legend: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            drawVLines(lineWidth: 1,
+            drawVLines(thickLineWidth: 1,
+                       normalLineWidth: 0.5,
+                       thinLineWidth: 0.5,
                        times: times,
                        intervalWidth: self.viewSize.width / CGFloat(times) )
             drawHLines(lineWidth: 1,
@@ -27,17 +29,68 @@ struct Legend: View {
     }
 
     @ViewBuilder
-    private func drawVLines(lineWidth: CGFloat, times: Int, intervalWidth: CGFloat) -> some View {
+    private func drawVLines(thickLineWidth: CGFloat,
+                            normalLineWidth: CGFloat,
+                            thinLineWidth: CGFloat,
+                            times: Int,
+                            intervalWidth: CGFloat
+    ) -> some View {
         HStack(spacing: 0) {
+            //(間隔の全幅 - 太い線の幅)/2 - 普通の線の幅/2
+            let normalInterval = (intervalWidth - thickLineWidth)/2
+            let thinInterval = (normalInterval - normalLineWidth)/3 - thinLineWidth/2
             ForEach(0..<times, id: \.self) { _ in
                 Line(direction: .vertical ,
-                     lineWidth: lineWidth,
+                     lineWidth: thickLineWidth,
                      length: self.$viewSize.height)
-                Spacer()
-                    .frame(width: max(intervalWidth - lineWidth, 0) )
+                switch intervalWidth {
+                case 20..<40:
+                    let interval = normalInterval - normalLineWidth/2
+                    Spacer()
+                        .frame(width: max(interval, 0) )
+                    Line(direction: .vertical ,
+                         lineWidth: normalLineWidth,
+                         lineStyle: .jissen,
+                         length: self.$viewSize.height)
+                    Spacer()
+                        .frame(width: max(interval, 0) )
+                default:
+                    Spacer()
+                        .frame(width: max(thinInterval, 0) )
+                    Line(direction: .vertical ,
+                         lineWidth: thinLineWidth,
+                         lineStyle: .hasen,
+                         length: self.$viewSize.height)
+                    Spacer()
+                        .frame(width: max(thinInterval, 0) )
+                    Line(direction: .vertical ,
+                         lineWidth: thinLineWidth,
+                         lineStyle: .hasen,
+                         length: self.$viewSize.height)
+                    Spacer()
+                        .frame(width: max(thinInterval, 0) )
+                    Line(direction: .vertical ,
+                         lineWidth: normalLineWidth,
+                         lineStyle: .jissen,
+                         length: self.$viewSize.height)
+                    Spacer()
+                        .frame(width: max(thinInterval, 0) )
+                    Line(direction: .vertical ,
+                         lineWidth: thinLineWidth,
+                         lineStyle: .hasen,
+                         length: self.$viewSize.height)
+                    Spacer()
+                        .frame(width: max(thinInterval, 0) )
+                    Line(direction: .vertical ,
+                         lineWidth: thinLineWidth,
+                         lineStyle: .hasen,
+                         length: self.$viewSize.height)
+                    Spacer()
+                        .frame(width: max(thinInterval, 0) )
+                }
             }
             Line(direction: .vertical,
-                 lineWidth: lineWidth,
+                 lineWidth: thickLineWidth,
                  length: self.$viewSize.height)
         }
     }
@@ -66,7 +119,7 @@ struct Legend: View {
 }
 
 #Preview {
-    let viewSize = Binding.constant( CGSize(width: 500, height: 500) )
+    let viewSize = Binding.constant( CGSize(width: 5000, height: 500) )
     return ScrollView([.horizontal, .vertical]) {
         Legend(viewSize: viewSize)
             .environmentObject(DiagramEditorDocument())
