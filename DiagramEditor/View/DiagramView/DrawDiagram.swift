@@ -86,7 +86,7 @@ struct DrawDiagram: View {
         let height = self.viewSize.height
         let legendWidth: CGFloat = 1
         // (Viewの高さ / 走行時間の合計) * 走行距離
-        let yPoint = (height / self.document.runTimeSum) * CGFloat(runTime)
+        let yPoint = (height / self.document.runTimeManager.runTimeSum) * CGFloat(runTime)
         switch houkou {
         case .kudari:
             return Int(yPoint + legendWidth)
@@ -100,9 +100,9 @@ struct DrawDiagram: View {
     private func getRunTimes(for houkou: Houkou) -> [Int] {
         switch houkou {
         case .kudari:
-            return self.document.runTimes
+            return self.document.runTimeManager.runTimes
         case .nobori:
-            return self.document.runTimes.reversed()
+            return self.document.runTimeManager.runTimes.reversed()
         }
     }
 }

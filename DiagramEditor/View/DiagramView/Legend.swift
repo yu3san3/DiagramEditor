@@ -24,7 +24,7 @@ struct Legend: View {
                        times: times,
                        intervalWidth: self.viewSize.width / CGFloat(times) )
             drawHLines(lineWidth: 1,
-                       runTimesForInterval: document.runTimes,
+                       runTimesForInterval: document.runTimeManager.runTimes,
                        scale: self.viewSize.height)
         }
     }
@@ -117,7 +117,7 @@ struct Legend: View {
             ForEach(Array(runTimes.enumerated()), id: \.offset) { _, runTime in
                 // (Viewの高さ / 走行時間の合計) * 走行時間
                 //Int.maxの場合は、走行時間にmaxIntRunTimeを使用
-                let intervalHeight = (height / self.document.runTimeSum) * CGFloat( runTime == Int.max ? diagram.maxIntRunTime : runTime )
+                let intervalHeight = (height / self.document.runTimeManager.runTimeSum) * CGFloat( runTime == Int.max ? diagram.maxIntRunTime : runTime )
                 Line(direction: .horizontal,
                      lineWidth: lineWidth,
                      length: self.$viewSize.width)
