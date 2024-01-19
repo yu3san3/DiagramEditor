@@ -52,7 +52,7 @@ struct EkiListView: View {
                 width: table.ekiWidth,
                 height: table.jikokuHeight*2
             )
-            .border(Color.blue)
+            .border(table.ekiListColor)
         case .kudariChaku:
             if houkou == .kudari {
                 makeEkiListTemplateView(eki: eki, hatsuOrChaku: "着")
@@ -81,7 +81,7 @@ struct EkiListView: View {
             width: table.ekiWidth,
             height: table.jikokuHeight
         )
-        .border(Color.blue)
+        .border(table.ekiListColor)
     }
 
     var bikouCell: some View {
@@ -95,7 +95,7 @@ struct EkiListView: View {
             width: table.ekiWidth,
             height: table.bikouHeight
         )
-        .border(Color.brown)
+        .border(table.bikouInEkiListColor)
     }
 }
 

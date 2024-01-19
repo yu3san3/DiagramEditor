@@ -38,7 +38,7 @@ struct RessyaInfoList: View {
                     width: table.jikokuWidth,
                     height: table.jikokuHeight
                 )
-                .border(Color.red)
+                .border(table.ressyaInfoListColor)
             //column.syubetsuはInt型
             if document.oudData.rosen.ressyasyubetsu.indices.contains(ressya.syubetsu) {
                 Text(document.oudData.rosen.ressyasyubetsu[ressya.syubetsu].ryakusyou)
@@ -47,7 +47,7 @@ struct RessyaInfoList: View {
                         width: table.jikokuWidth,
                         height: table.jikokuHeight
                     )
-                    .border(Color.red)
+                    .border(table.ressyaInfoListColor)
             } else {
                 Text("Index Overflow")
                     .font(.caption)
@@ -62,7 +62,7 @@ struct RessyaInfoList: View {
                 width: table.jikokuWidth,
                 height: table.ressyameiHeight
             )
-            .border(Color.red)
+            .border(table.ressyaInfoListColor)
         }
     }
 }

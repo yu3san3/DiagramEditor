@@ -53,7 +53,7 @@ struct JikokuView: View {
                     width: table.jikokuWidth,
                     height: table.jikokuHeight
                 )
-                .border(Color.green)
+                .border(table.jikokuColor)
             }
         }
     }
@@ -71,7 +71,7 @@ struct JikokuView: View {
                     width: table.jikokuWidth,
                     height: table.bikouHeight
                 )
-                .border(Color.yellow)
+                .border(table.bikouColor)
             }
         }
     }

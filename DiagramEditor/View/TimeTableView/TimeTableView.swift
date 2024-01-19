@@ -38,14 +38,14 @@ private extension TimeTableView {
                     width: table.ekiWidth,
                     height: table.jikokuHeight
                 )
-                .border(Color.orange)
+                .border(table.topLeftCellColor)
             Text("列車種別")
                 .font(.caption)
                 .frame(
                     width: table.ekiWidth,
                     height: table.jikokuHeight
                 )
-                .border(Color.orange)
+                .border(table.topLeftCellColor)
             VStack {
                 VText("列車名")
                     .font(.caption)
@@ -56,7 +56,7 @@ private extension TimeTableView {
                 width: table.ekiWidth,
                 height: table.ressyameiHeight
             )
-            .border(Color.orange)
+            .border(table.topLeftCellColor)
         }
     }
 }
