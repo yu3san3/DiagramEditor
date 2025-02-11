@@ -10,7 +10,7 @@ import UniformTypeIdentifiers
 
 extension UTType {
     static var oudiaEditDocument: UTType {
-        UTType(exportedAs: "com.oudiaEdit.oud")
+        UTType(importedAs: "com.takeokm.oudia.text")
     }
 }
 
