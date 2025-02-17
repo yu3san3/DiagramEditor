@@ -31,6 +31,7 @@
 		EBF334AE2A699D3C0099EE4E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF334AD2A699D3C0099EE4E /* Extensions.swift */; };
 		EF102EA72B21985A00B8D94D /* Legend.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF102EA62B21985A00B8D94D /* Legend.swift */; };
 		EF112AED2B2839DD00880995 /* DrawStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF112AEC2B2839DD00880995 /* DrawStations.swift */; };
+		EF38A2A12D637130001A6C9B /* OuDiaKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF38A2A02D637130001A6C9B /* OuDiaKit */; };
 		EF487DED2B230C3D00BBCEC5 /* DiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF487DEC2B230C3D00BBCEC5 /* DiagramView.swift */; };
 		EF537E752B2A13BB00BE24B3 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF537E742B2A13BB00BE24B3 /* Line.swift */; };
 		EF8E87342B2DE5F300ECEF86 /* DrawDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8E87332B2DE5F300ECEF86 /* DrawDiagram.swift */; };
@@ -99,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF38A2A12D637130001A6C9B /* OuDiaKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +304,9 @@
 				Base,
 			);
 			mainGroup = EBD863C9293B6E97002D835D;
+			packageReferences = (
+				EF38A29F2D637130001A6C9B /* XCRemoteSwiftPackageReference "OuDiaKit" */,
+			);
 			productRefGroup = EBD863D3293B6E97002D835D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -663,6 +668,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EF38A29F2D637130001A6C9B /* XCRemoteSwiftPackageReference "OuDiaKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yu3san3/OuDiaKit.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EF38A2A02D637130001A6C9B /* OuDiaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EF38A29F2D637130001A6C9B /* XCRemoteSwiftPackageReference "OuDiaKit" */;
+			productName = OuDiaKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EBD863CA293B6E97002D835D /* Project object */;
 }
