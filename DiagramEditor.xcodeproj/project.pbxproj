@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -95,6 +95,11 @@
 		EFDE5D812B1CA2E4006CF9FB /* DetailViewStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		EF38A2BC2D63788D001A6C9B /* Utils */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utils; sourceTree = "<group>"; };
+		EF38A2BD2D6378BA001A6C9B /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		EBD863CF293B6E97002D835D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -147,6 +152,8 @@
 		EBD863D4293B6E97002D835D /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
+				EF38A2BD2D6378BA001A6C9B /* Extensions */,
+				EF38A2BC2D63788D001A6C9B /* Utils */,
 				EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */,
 				EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */,
 				EF90487B2B3F1854000349DE /* RunTimeManager.swift */,
@@ -252,6 +259,10 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				EF38A2BC2D63788D001A6C9B /* Utils */,
+				EF38A2BD2D6378BA001A6C9B /* Extensions */,
 			);
 			name = DiagramEditor;
 			productName = DiagramEditor;
