@@ -5,54 +5,61 @@
 //  Created by 丹羽雄一朗 on 2022/12/03.
 //
 
-import SwiftUI
+import OuDiaKit
 import UniformTypeIdentifiers
+import SwiftUI
 
 extension UTType {
-    static var oudiaEditDocument: UTType {
+    static var oudiaDocument: UTType {
         UTType(importedAs: "com.takeokm.oudia.text")
     }
 }
 
-final class DiagramEditorDocument: ReferenceFileDocument {
+@Observable
+final class DiagramEditorDocument {
+    var diagram: OuDiaDiagram
 
-    private(set) var runTimeManager: RunTimeManager!
-
-    @Published var oudData: OudData {
-        didSet {
-            runTimeManager.updateRunTime()
-        }
+    init(oudiaDiagram diagram: OuDiaDiagram = .sample) {
+        self.diagram = diagram
     }
+}
 
-    init(oudData: OudData = OudData.mockOudData) {
-        self.oudData = oudData
-        self.runTimeManager = RunTimeManager(document: self)
-    }
+extension DiagramEditorDocument: ReferenceFileDocument {
+    // 開くことができるドキュメントのタイプを設定
+    static var readableContentTypes: [UTType] { [.oudiaDocument] }
 
-    //開くことができるドキュメントのタイプを設定
-    static var readableContentTypes: [UTType] { [.oudiaEditDocument] }
-
-    func snapshot(contentType: UTType) throws -> OudData {
-        return oudData
-    }
-
-    //ファイルの読み込みを担当
-    init(configuration: ReadConfiguration) throws {
-        //読み込んだファイル(Shift-JIS Data)をShift-JISでエンコーディング
-        guard let data = configuration.file.regularFileContents,
-              let string = String(data: data, encoding: .shiftJIS) //stringはUTF-8 String
+    // ファイルの読み込み
+    convenience init(configuration: ReadConfiguration) throws {
+        guard
+            let data = configuration.file.regularFileContents,
+            let string = String(data: data, encoding: .shiftJIS)
         else {
-            //UTF-8など、Shift-JIS以外の形式で保存されているファイルではエラーとなり開けない
+            // Shift-JIS以外の形式で保存されているファイルではエラーとなり開けない。
             throw CocoaError(.fileReadCorruptFile)
         }
-        self.oudData = OudDataParser.parse(string)
-        self.runTimeManager = RunTimeManager(document: self)
+
+        let diagram = try OuDiaDiagramParser().parse(from: string)
+
+        self.init(oudiaDiagram: diagram)
     }
-    
-    //ファイルの保存を担当
-    func fileWrapper(snapshot: OudData, configuration: WriteConfiguration) throws -> FileWrapper {
-        let text = OudDataStringifyer.stringify(oudData)
-        let data = text.data(using: .shiftJIS)! //UTF-8 StringをShift-JIS Dataに変換
+
+    // ドキュメントの現在の状態を表すスナップショットを作成
+    func snapshot(contentType: UTType) throws -> OuDiaDiagram {
+        diagram
+    }
+
+    // ファイルの保存
+    func fileWrapper(
+        snapshot: OuDiaDiagram,
+        configuration: WriteConfiguration
+    ) throws -> FileWrapper {
+        let stringifier = OuDiaDiagramStringifier(fileTypeAppComment: "DiagramEditor v1.0.0-alpha")
+        let string = stringifier.stringify(snapshot)
+
+        guard let data = string.data(using: .shiftJIS) else {
+            throw CocoaError(.fileWriteFileExists)
+        }
+
         return .init(regularFileWithContents: data)
     }
 }
