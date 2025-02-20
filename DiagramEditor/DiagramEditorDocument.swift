@@ -31,12 +31,6 @@ extension Sequence {
     }
 }
 
-extension Array {
-    func reversed(shouldReverse: Bool) -> [Element] {
-        shouldReverse ? self.reversed() : self
-    }
-}
-
 extension ArrivalStatus {
     var timetableText: String {
         switch self {
