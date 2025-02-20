@@ -77,6 +77,41 @@ extension Train {
                 }
             }
     }
+
+    /// ダイヤグラムで点を打つべき座標を得る。
+    ///
+    /// - Parameter travelTimes: 各駅間の最短走行時間の配列
+    /// - Returns: ダイヤグラムで点を打つべき座標の配列
+    func diagramPoints(travelTimes: [Int]) -> [CGPoint] {
+        let distanceFromBaseStation = TravelTimeCalculator
+            .convertTravelTimesToDistanceFromBaseStation(
+                travelTimes: travelTimes,
+                direction: .down
+            )
+
+        return distanceFromBaseStation
+            .zipLongest(schedule)
+            .compactMap { distance, scheduleEntry -> [CGPoint]? in
+                guard let distance else { fatalError("distanceは仕様上nilになってはならない。") }
+
+                guard
+                    scheduleEntry?.arrivalStatus == .pass || scheduleEntry?.arrivalStatus == .stop
+                else {
+                    return nil
+                }
+
+                let arrivalFromMidnight = scheduleEntry?.$arrival.minutesFromMidnight
+                let departureFromMidnight = scheduleEntry?.$departure.minutesFromMidnight
+
+                let points = [
+                    arrivalFromMidnight.map { CGPoint(x: distance, y: $0) },
+                    departureFromMidnight.map { CGPoint(x: distance, y: $0) },
+                ].compactMap { $0 }
+
+                return points.isEmpty ? nil : points
+            }
+            .flatMap { $0 }
+    }
 }
 
 extension UTType {
