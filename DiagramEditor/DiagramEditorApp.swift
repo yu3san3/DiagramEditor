@@ -12,7 +12,7 @@ struct DiagramEditorApp: App {
     var body: some Scene {
         DocumentGroup(newDocument: { DiagramEditorDocument() }) { file in
             ContentView()
-                .environmentObject(file.document)
+                .environment(\.document, file.document)
         }
     }
 }

@@ -114,6 +114,17 @@ extension Train {
     }
 }
 
+extension EnvironmentValues {
+    var document: DiagramEditorDocument {
+        get { self[DocumentKey.self] }
+        set { self[DocumentKey.self] = newValue }
+    }
+}
+
+private struct DocumentKey: EnvironmentKey {
+    static var defaultValue = DiagramEditorDocument()
+}
+
 extension UTType {
     static var oudiaDocument: UTType {
         UTType(importedAs: "com.takeokm.oudia.text")
