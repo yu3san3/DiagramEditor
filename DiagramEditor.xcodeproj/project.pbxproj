@@ -17,7 +17,6 @@
 		EB8E1E3D2AFE1CC500707DC6 /* TimeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8E1E3C2AFE1CC500707DC6 /* TimeTableView.swift */; };
 		EBA5403E2A278D73004AC49A /* OudData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403D2A278D73004AC49A /* OudData.swift */; };
 		EBA540402A278E4D004AC49A /* OudDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403F2A278E4D004AC49A /* OudDataParser.swift */; };
-		EBA540422A278EFE004AC49A /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540412A278EFE004AC49A /* Table.swift */; };
 		EBA540442A278F56004AC49A /* VTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540432A278F56004AC49A /* VTextView.swift */; };
 		EBA540462A278FBE004AC49A /* EkiListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540452A278FBE004AC49A /* EkiListView.swift */; };
 		EBA540482A278FEF004AC49A /* JikokuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540472A278FEF004AC49A /* JikokuView.swift */; };
@@ -35,7 +34,6 @@
 		EF537E752B2A13BB00BE24B3 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF537E742B2A13BB00BE24B3 /* Line.swift */; };
 		EF8E87342B2DE5F300ECEF86 /* DrawDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8E87332B2DE5F300ECEF86 /* DrawDiagram.swift */; };
 		EF90487C2B3F1854000349DE /* RunTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90487B2B3F1854000349DE /* RunTimeManager.swift */; };
-		EFACF4032B28A5610032C148 /* Diagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFACF4022B28A5610032C148 /* Diagram.swift */; };
 		EFACF4052B28A7B20032C148 /* DrawTimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFACF4042B28A7B20032C148 /* DrawTimes.swift */; };
 		EFBF1FC22B3022DB0088BFC7 /* TimeCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBF1FC12B3022DB0088BFC7 /* TimeCalculation.swift */; };
 		EFC7536A2B37309F005E12F1 /* OudColorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC753692B37309F005E12F1 /* OudColorCode.swift */; };
@@ -64,7 +62,6 @@
 		EB8E1E3C2AFE1CC500707DC6 /* TimeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableView.swift; sourceTree = "<group>"; };
 		EBA5403D2A278D73004AC49A /* OudData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudData.swift; sourceTree = "<group>"; };
 		EBA5403F2A278E4D004AC49A /* OudDataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudDataParser.swift; sourceTree = "<group>"; };
-		EBA540412A278EFE004AC49A /* Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
 		EBA540432A278F56004AC49A /* VTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VTextView.swift; sourceTree = "<group>"; };
 		EBA540452A278FBE004AC49A /* EkiListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EkiListView.swift; sourceTree = "<group>"; };
 		EBA540472A278FEF004AC49A /* JikokuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JikokuView.swift; sourceTree = "<group>"; };
@@ -85,7 +82,6 @@
 		EF537E742B2A13BB00BE24B3 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		EF8E87332B2DE5F300ECEF86 /* DrawDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawDiagram.swift; sourceTree = "<group>"; };
 		EF90487B2B3F1854000349DE /* RunTimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTimeManager.swift; sourceTree = "<group>"; };
-		EFACF4022B28A5610032C148 /* Diagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagram.swift; sourceTree = "<group>"; };
 		EFACF4042B28A7B20032C148 /* DrawTimes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawTimes.swift; sourceTree = "<group>"; };
 		EFBF1FC12B3022DB0088BFC7 /* TimeCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCalculation.swift; sourceTree = "<group>"; };
 		EFC753692B37309F005E12F1 /* OudColorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudColorCode.swift; sourceTree = "<group>"; };
@@ -225,7 +221,6 @@
 				EF102EA62B21985A00B8D94D /* Legend.swift */,
 				EFACF4042B28A7B20032C148 /* DrawTimes.swift */,
 				EF112AEC2B2839DD00880995 /* DrawStations.swift */,
-				EFACF4022B28A5610032C148 /* Diagram.swift */,
 			);
 			path = DiagramView;
 			sourceTree = "<group>";
@@ -237,7 +232,6 @@
 				EB1D0CC42AFE7AA300994C3E /* RessyaInfoList.swift */,
 				EBA540452A278FBE004AC49A /* EkiListView.swift */,
 				EBA540472A278FEF004AC49A /* JikokuView.swift */,
-				EBA540412A278EFE004AC49A /* Table.swift */,
 			);
 			path = TimeTableView;
 			sourceTree = "<group>";
@@ -352,14 +346,12 @@
 				EF102EA72B21985A00B8D94D /* Legend.swift in Sources */,
 				EB55FD392AECF87200FCCAF9 /* DiagramSenStyle.swift in Sources */,
 				EBA540402A278E4D004AC49A /* OudDataParser.swift in Sources */,
-				EBA540422A278EFE004AC49A /* Table.swift in Sources */,
 				EFBF1FC22B3022DB0088BFC7 /* TimeCalculation.swift in Sources */,
 				EF8E87342B2DE5F300ECEF86 /* DrawDiagram.swift in Sources */,
 				EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */,
 				EBA540462A278FBE004AC49A /* EkiListView.swift in Sources */,
 				EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */,
 				EFDE5D822B1CA2E4006CF9FB /* DetailViewStatus.swift in Sources */,
-				EFACF4032B28A5610032C148 /* Diagram.swift in Sources */,
 				EB8E1E3B2AFE065B00707DC6 /* SyncedScrollView.swift in Sources */,
 				EB55FD3B2AECF88C00FCCAF9 /* Ekikibo.swift in Sources */,
 				EFC7536A2B37309F005E12F1 /* OudColorCode.swift in Sources */,
