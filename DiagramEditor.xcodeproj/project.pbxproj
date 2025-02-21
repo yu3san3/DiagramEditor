@@ -18,7 +18,7 @@
 		EBA5403E2A278D73004AC49A /* OudData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403D2A278D73004AC49A /* OudData.swift */; };
 		EBA540402A278E4D004AC49A /* OudDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403F2A278E4D004AC49A /* OudDataParser.swift */; };
 		EBA540442A278F56004AC49A /* VTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540432A278F56004AC49A /* VTextView.swift */; };
-		EBA540462A278FBE004AC49A /* EkiListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540452A278FBE004AC49A /* EkiListView.swift */; };
+		EBA540462A278FBE004AC49A /* StationsTimetableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540452A278FBE004AC49A /* StationsTimetableView.swift */; };
 		EBA540482A278FEF004AC49A /* JikokuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540472A278FEF004AC49A /* JikokuView.swift */; };
 		EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */; };
 		EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */; };
@@ -63,7 +63,7 @@
 		EBA5403D2A278D73004AC49A /* OudData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudData.swift; sourceTree = "<group>"; };
 		EBA5403F2A278E4D004AC49A /* OudDataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudDataParser.swift; sourceTree = "<group>"; };
 		EBA540432A278F56004AC49A /* VTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VTextView.swift; sourceTree = "<group>"; };
-		EBA540452A278FBE004AC49A /* EkiListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EkiListView.swift; sourceTree = "<group>"; };
+		EBA540452A278FBE004AC49A /* StationsTimetableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsTimetableView.swift; sourceTree = "<group>"; };
 		EBA540472A278FEF004AC49A /* JikokuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JikokuView.swift; sourceTree = "<group>"; };
 		EBD863D2293B6E97002D835D /* DiagramEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiagramEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorApp.swift; sourceTree = "<group>"; };
@@ -229,9 +229,8 @@
 			isa = PBXGroup;
 			children = (
 				EB8E1E3C2AFE1CC500707DC6 /* TimeTableView.swift */,
-				EB1D0CC42AFE7AA300994C3E /* TrainInfosView.swift */,
-				EBA540452A278FBE004AC49A /* EkiListView.swift */,
 				EB1D0CC42AFE7AA300994C3E /* TrainInfosTimetableView.swift */,
+				EBA540452A278FBE004AC49A /* StationsTimetableView.swift */,
 				EBA540472A278FEF004AC49A /* JikokuView.swift */,
 			);
 			path = TimeTableView;
@@ -350,7 +349,7 @@
 				EFBF1FC22B3022DB0088BFC7 /* TimeCalculation.swift in Sources */,
 				EF8E87342B2DE5F300ECEF86 /* DrawDiagram.swift in Sources */,
 				EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */,
-				EBA540462A278FBE004AC49A /* EkiListView.swift in Sources */,
+				EBA540462A278FBE004AC49A /* StationsTimetableView.swift in Sources */,
 				EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */,
 				EFDE5D822B1CA2E4006CF9FB /* DetailViewStatus.swift in Sources */,
 				EB8E1E3B2AFE065B00707DC6 /* SyncedScrollView.swift in Sources */,
