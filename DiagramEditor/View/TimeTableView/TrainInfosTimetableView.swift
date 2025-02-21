@@ -18,7 +18,7 @@ struct TrainInfosTimetableView: View {
             ForEach(trains) { train in
                 TrainInfoView(
                     train: train,
-                    trainType: document.trainType(at: train.type)
+                    trainType: document.trainType(at: train.typeIndex)
                 )
             }
         }
