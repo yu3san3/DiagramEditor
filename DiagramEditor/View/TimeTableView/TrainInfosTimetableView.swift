@@ -1,0 +1,63 @@
+//
+//  TrainInfosTimetableView.swift
+//  DiagramEditor
+//
+//  Created by 丹羽雄一朗 on 2023/11/10.
+//
+
+import OuDiaKit
+import SwiftUI
+
+struct TrainInfosTimetableView: View {
+    @Environment(DiagramEditorDocument.self) private var document
+
+    let trains: [Train]
+
+    var body: some View {
+        LazyHStack(spacing: 0) {
+            ForEach(trains) { train in
+                TrainInfoView(
+                    train: train,
+                    trainType: document.trainType(at: train.type)
+                )
+            }
+        }
+    }
+}
+
+private struct TrainInfoView: View {
+    let train: Train
+    let trainType: TrainType
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Group {
+                Group {
+                    Text(train.number ?? "")
+                    Text(trainType.shortName ?? "")
+                }
+                .frame(
+                    width: Const.Timetable.timetableWidth,
+                    height: Const.Timetable.timetableHeight
+                )
+
+                VText(train.name ?? "")
+                    .padding(3) //ここに数字入れないとなんか表示がおかしくなる
+                    .frame(
+                        width: Const.Timetable.timetableWidth,
+                        height: Const.Timetable.trainNameHeight
+                    )
+            }
+            .font(.caption)
+            .border(Const.Timetable.trainInfoColor)
+        }
+    }
+}
+
+#Preview {
+    let route = OuDiaDiagram.sample.route
+
+    ScrollView(.horizontal) {
+        TrainInfosTimetableView(trains: route.timetables[0].down.trains)
+    }
+}

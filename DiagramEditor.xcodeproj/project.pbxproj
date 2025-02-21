@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EB1D0CC52AFE7AA300994C3E /* RessyaInfoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D0CC42AFE7AA300994C3E /* RessyaInfoList.swift */; };
+		EB1D0CC52AFE7AA300994C3E /* TrainInfosTimetableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB1D0CC42AFE7AA300994C3E /* TrainInfosTimetableView.swift */; };
 		EB275C592AAAFE1B00D8994A /* Houkou.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB275C582AAAFE1B00D8994A /* Houkou.swift */; };
 		EB55FD352AECF70300FCCAF9 /* Ekijikokukeisiki.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD342AECF70300FCCAF9 /* Ekijikokukeisiki.swift */; };
 		EB55FD392AECF87200FCCAF9 /* DiagramSenStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD382AECF87200FCCAF9 /* DiagramSenStyle.swift */; };
@@ -52,7 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EB1D0CC42AFE7AA300994C3E /* RessyaInfoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RessyaInfoList.swift; sourceTree = "<group>"; };
+		EB1D0CC42AFE7AA300994C3E /* TrainInfosTimetableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainInfosTimetableView.swift; sourceTree = "<group>"; };
 		EB275C582AAAFE1B00D8994A /* Houkou.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Houkou.swift; sourceTree = "<group>"; };
 		EB55FD342AECF70300FCCAF9 /* Ekijikokukeisiki.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ekijikokukeisiki.swift; sourceTree = "<group>"; };
 		EB55FD382AECF87200FCCAF9 /* DiagramSenStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramSenStyle.swift; sourceTree = "<group>"; };
@@ -229,8 +229,9 @@
 			isa = PBXGroup;
 			children = (
 				EB8E1E3C2AFE1CC500707DC6 /* TimeTableView.swift */,
-				EB1D0CC42AFE7AA300994C3E /* RessyaInfoList.swift */,
+				EB1D0CC42AFE7AA300994C3E /* TrainInfosView.swift */,
 				EBA540452A278FBE004AC49A /* EkiListView.swift */,
+				EB1D0CC42AFE7AA300994C3E /* TrainInfosTimetableView.swift */,
 				EBA540472A278FEF004AC49A /* JikokuView.swift */,
 			);
 			path = TimeTableView;
@@ -361,7 +362,7 @@
 				EBF334AE2A699D3C0099EE4E /* Extensions.swift in Sources */,
 				EFACF4052B28A7B20032C148 /* DrawTimes.swift in Sources */,
 				EF537E752B2A13BB00BE24B3 /* Line.swift in Sources */,
-				EB1D0CC52AFE7AA300994C3E /* RessyaInfoList.swift in Sources */,
+				EB1D0CC52AFE7AA300994C3E /* TrainInfosTimetableView.swift in Sources */,
 				EBA540482A278FEF004AC49A /* JikokuView.swift in Sources */,
 				EBA5403E2A278D73004AC49A /* OudData.swift in Sources */,
 				EF112AED2B2839DD00880995 /* DrawStations.swift in Sources */,

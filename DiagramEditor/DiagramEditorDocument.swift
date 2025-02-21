@@ -133,10 +133,18 @@ extension UTType {
 
 @Observable
 final class DiagramEditorDocument {
-    var diagram: OuDiaDiagram
+    private var diagram: OuDiaDiagram
+
+    var route: Route {
+        diagram.route
+    }
 
     init(oudiaDiagram diagram: OuDiaDiagram = .sample) {
         self.diagram = diagram
+    }
+
+    func trainType(at index: Int) -> TrainType {
+        route.trainTypes[index]
     }
 }
 
