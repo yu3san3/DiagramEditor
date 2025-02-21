@@ -56,7 +56,7 @@ extension OuDiaDiagram {
                         trains: [
                             .init(
                                 direction: .down,
-                                type: 1,
+                                typeIndex: 1,
                                 number: "307",
                                 schedule: [
                                     .init(arrivalStatus: .stop, arrival: "", departure: "1009"),
@@ -66,7 +66,7 @@ extension OuDiaDiagram {
                             ),
                             .init(
                                 direction: .down,
-                                type: 0,
+                                typeIndex: 0,
                                 number: "1093",
                                 schedule: [
                                     .init(arrivalStatus: .stop, arrival: "", departure: "1011"),
@@ -84,7 +84,7 @@ extension OuDiaDiagram {
                         trains: [
                             .init(
                                 direction: .down,
-                                type: 1,
+                                typeIndex: 1,
                                 number: "101",
                                 schedule: [
                                     .init(arrivalStatus: .stop, arrival: "", departure: "1004"),
@@ -98,7 +98,7 @@ extension OuDiaDiagram {
                         trains: [
                             .init(
                                 direction: .up,
-                                type: 0,
+                                typeIndex: 0,
                                 number: "100",
                                 schedule: [
                                     .init(arrivalStatus: .stop, arrival: "", departure: "1003"),
