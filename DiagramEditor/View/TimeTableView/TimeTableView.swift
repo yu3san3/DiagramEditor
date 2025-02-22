@@ -5,63 +5,64 @@
 //  Created by 丹羽雄一朗 on 2023/11/10.
 //
 
+import OuDiaKit
 import SwiftUI
 
 struct TimeTableView: View {
-    let houkou: Houkou
-    let diaNum: Int
-
-    let table = Table()
+    let trains: [Train]
+    let direction: TrainDirection
 
     var body: some View {
         SyncedScrollView {
-            JikokuView(houkou: houkou, diaNum: diaNum)
+            TrainSchedulesTimetableView(trains: trains)
         } vSyncedContent: {
-            EkiListView(houkou: houkou)
-                .frame(width: table.ekiWidth)
+            StationsTimetableView(direction: direction)
+                .frame(width: Const.Timetable.stationWidth)
         } hSyncedContent: {
-            RessyaInfoList(houkou: houkou, diaNum: diaNum)
-                .frame(height: table.jikokuHeight*2 + table.ressyameiHeight)
+            TrainInfosTimetableView(trains: trains)
+                .frame(
+                    height: Const.Timetable.timetableHeight * 2 + Const.Timetable.trainNameHeight
+                )
         } topLeftContent: {
-            topLeftCell
-                .frame(width: table.ekiWidth)
+            TopLeftCell()
+                .frame(width: Const.Timetable.stationWidth)
         }
     }
-}
 
-private extension TimeTableView {
-    var topLeftCell: some View {
-        VStack(spacing: 0) {
-            Text("列車番号")
+    private struct TopLeftCell: View {
+        var body: some View {
+            VStack(spacing: 0) {
+                Group {
+                    Group {
+                        Text("列車番号")
+
+                        Text("列車種別")
+                    }
+                    .frame(
+                        width: Const.Timetable.stationWidth,
+                        height: Const.Timetable.timetableHeight
+                    )
+
+                    VStack {
+                        VText("列車名")
+                            .padding(3)
+
+                        Spacer()
+                    }
+                    .frame(
+                        width: Const.Timetable.stationWidth,
+                        height: Const.Timetable.trainNameHeight
+                    )
+                }
                 .font(.caption)
-                .frame(
-                    width: table.ekiWidth,
-                    height: table.jikokuHeight
-                )
-                .border(table.topLeftCellColor)
-            Text("列車種別")
-                .font(.caption)
-                .frame(
-                    width: table.ekiWidth,
-                    height: table.jikokuHeight
-                )
-                .border(table.topLeftCellColor)
-            VStack {
-                VText("列車名")
-                    .font(.caption)
-                    .padding(3)
-                Spacer()
+                .border(Const.Timetable.topLeftCellColor)
             }
-            .frame(
-                width: table.ekiWidth,
-                height: table.ressyameiHeight
-            )
-            .border(table.topLeftCellColor)
         }
     }
 }
 
 #Preview {
-    TimeTableView(houkou: .kudari, diaNum: 0)
-        .environmentObject(DiagramEditorDocument())
+    let route = OuDiaDiagram.sample.route
+
+    TimeTableView(trains: route.timetables[0].down.trains, direction: .down)
 }
