@@ -86,12 +86,12 @@ extension Train {
 
     /// ダイヤグラムで点を打つべき座標を得る。
     ///
-    /// - Parameter travelTimes: 各駅間の最短走行時間の配列
+    /// - Parameter distances: 各駅間の最短走行距離の配列
     /// - Returns: ダイヤグラムで点を打つべき座標の配列
-    func diagramPoints(travelTimes: [Int]) -> [CGPoint] {
-        let distanceFromBaseStation = TravelTimeCalculator
-            .convertTravelTimesToDistanceFromBaseStation(
-                travelTimes: travelTimes,
+    func diagramPoints(distances: [Int]) -> [CGPoint] {
+        let distanceFromBaseStation = RouteDistancesCalculator
+            .convertToDistancesFromBaseStation(
+                distances: distances,
                 direction: .down
             )
 
