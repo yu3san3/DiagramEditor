@@ -86,16 +86,15 @@ extension Train {
 
     /// ダイヤグラムで点を打つべき座標を得る。
     ///
-    /// - Parameter distances: 各駅間の最短走行距離の配列
+    /// - Parameter distancesBetweenStations: 各駅間の最短走行距離の配列
     /// - Returns: ダイヤグラムで点を打つべき座標の配列
-    func diagramPoints(distances: [Int]) -> [CGPoint] {
-        let distanceFromBaseStation = RouteDistancesCalculator
-            .convertToDistancesFromBaseStation(
-                distances: distances,
-                direction: .down
-            )
+    func diagramPoints(distancesBetweenStations: [Int]) -> [CGPoint] {
+        let distanceFromBaseStation = RouteDistancesCalculator.convertToDistancesFromBaseStation(
+            distances: distancesBetweenStations
+        )
 
         return distanceFromBaseStation
+            .reversed(shouldReverse: direction == .up)
             .zipLongest(schedule)
             .compactMap { distance, scheduleEntry -> [CGPoint]? in
                 guard let distance else { fatalError("distanceは仕様上nilになってはならない。") }
@@ -110,8 +109,8 @@ extension Train {
                 let departureFromMidnight = scheduleEntry?.$departure.minutesFromMidnight
 
                 let points = [
-                    arrivalFromMidnight.map { CGPoint(x: distance, y: $0) },
-                    departureFromMidnight.map { CGPoint(x: distance, y: $0) },
+                    arrivalFromMidnight.map { CGPoint(x: $0, y: distance) },
+                    departureFromMidnight.map { CGPoint(x: $0, y: distance) },
                 ].compactMap { $0 }
 
                 return points.isEmpty ? nil : points
