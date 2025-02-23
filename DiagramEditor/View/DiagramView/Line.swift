@@ -5,56 +5,89 @@
 //  Created by 丹羽雄一朗 on 2023/12/14.
 //
 
+import OuDiaKit
 import SwiftUI
 
 struct Line: View {
-    let direction: Axis.Set
-    let lineWidth: CGFloat
-    var lineStyle: DiagramSenStyle = .jissen
-    @Binding var length: CGFloat
+    enum LineAxis {
+        case vertical
+        case horizontal
+    }
+
+    enum LineWidth: CGFloat {
+        case thick = 2.0
+        case normal = 1.5
+        case thin = 1.2
+        case extraThin = 0.5
+    }
+
+    let axis: LineAxis
+    let width: LineWidth
+    let length: CGFloat
+    let style: DiagramLineStyle
+    let color: Color
+
+    init(
+        _ axis: LineAxis,
+        width: LineWidth,
+        length: CGFloat,
+        style: DiagramLineStyle,
+        color: Color = .gray.opacity(0.5)
+    ) {
+        self.axis = axis
+        self.width = width
+        self.length = length
+        self.style = style
+        self.color = color
+    }
 
     var body: some View {
-        switch direction {
-        case .vertical: //縦線
-            VLine()
-                .stroke(Color.gray.opacity(0.5),
-                        style: StrokeStyle(lineWidth: lineWidth, dash: lineStyle.value))
-                .frame(width: lineWidth, height: length)
-        case .horizontal: //横線
-            HLine()
-                .stroke(Color.gray.opacity(0.5),
-                        style: StrokeStyle(lineWidth: lineWidth, dash: lineStyle.value))
-                .frame(width: length, height: lineWidth)
-        default:
-            EmptyView()
+        LineShape(axis: axis)
+            .stroke(
+                color,
+                style: StrokeStyle(
+                    lineWidth: width.rawValue,
+                    dash: style.dash
+                )
+            )
+            .frame(
+                width: axis == .horizontal ? length : width.rawValue,
+                height: axis == .vertical ? length : width.rawValue
+            )
+    }
+}
+
+private struct LineShape: Shape {
+    let axis: Line.LineAxis
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        switch axis {
+        case .vertical:
+            path.move(to: .init(x: rect.midX, y: rect.minY))
+            path.addLine(to: .init(x: rect.midX, y: rect.maxY))
+        case .horizontal:
+            path.move(to: .init(x: rect.minX, y: rect.midY))
+            path.addLine(to: .init(x: rect.maxX, y: rect.midY))
         }
-    }
-}
-
-struct VLine: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY))
-        return path
-    }
-}
-
-struct HLine: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: rect.minX, y: rect.midY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
         return path
     }
 }
 
 #Preview("vertical") {
-    Line(direction: .vertical, lineWidth: 1, lineStyle: .hasen, length: .constant(50))
-        .frame(width: 300, height: 200)
+    Line(
+        .vertical,
+        width: .normal,
+        length: 50,
+        style: .solid
+    ).frame(width: 300, height: 200)
 }
 
 #Preview("horizontal") {
-    Line(direction: .horizontal, lineWidth: 1, length: .constant(50) )
-        .frame(width: 300, height: 200)
+    Line(
+        .horizontal,
+        width: .normal,
+        length: 50,
+        style: .dashed
+    ).frame(width: 300, height: 200)
 }
