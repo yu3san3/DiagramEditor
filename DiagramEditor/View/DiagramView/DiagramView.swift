@@ -34,6 +34,32 @@ struct DiagramView: View {
     }
 }
 
+import OuDiaKit
+
+@Observable
+final class DiagramViewState {
+    private weak var document: DiagramEditorDocument?
+
+    var viewSize: CGSize = .zero
+
+    var distancesBetweenStations = [Int]()
+
+    func setup(document: DiagramEditorDocument) {
+        self.document = document
+    }
+
+    func updateDistanceBetweenStations() {
+        guard let document else { return }
+
+        Task {
+            distancesBetweenStations = await RouteDistancesCalculator
+                .calculateDistancesBetweenStations(
+                    for: document.route.timetables
+                )
+        }
+    }
+}
+
 #Preview {
     let viewSize = Binding.constant( CGSize(width: 3000, height: 500) )
     return DiagramView(diaNum: 0,
