@@ -5,6 +5,7 @@
 //  Created by 丹羽雄一朗 on 2023/12/03.
 //
 
+import OuDiaKit
 import SwiftUI
 
 struct SidebarView: View {
@@ -34,11 +35,13 @@ struct SidebarView: View {
                     Text("列車種別")
                 }
                 DisclosureGroup("ダイヤ", isExpanded: $isDiaExpanded) {
-                    ForEach( Array(document.oudData.rosen.dia.enumerated() ),
-                            id: \.1.id
-                    ) { index, dia in
-                        DisclosureGroup(dia.diaName,
-                                        isExpanded: $isDiaContentExpanded[index]
+                    ForEach(
+                        Array(OuDiaDiagram.sample.route.timetables.enumerated() ),
+                        id: \.1.id
+                    ) { index, _ in
+                        DisclosureGroup(
+                            "timetable.name",
+                            isExpanded: $isDiaContentExpanded[index]
                         ) {
                             NavigationLink(
                                 value: DetailViewStatus.kudariJikokuhyou(diaNum: index)

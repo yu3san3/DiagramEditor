@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import OuDiaKit
 
 struct ContentView: View {
     @EnvironmentObject var document: DiagramEditorDocument
 
+    var diagramViewState = DiagramViewState()
     @State private var detailViewStatus: DetailViewStatus = .none
     @State private var viewSize = CGSize(width: 1000, height: 500)
     @State private var isShowKudariDiagram = true
@@ -31,16 +33,19 @@ struct ContentView: View {
             case .ressyasyubetsu:
                 Text("列車種別ビュー")
             case .kudariJikokuhyou(let diaNum):
-                TimeTableView(houkou: .kudari, diaNum: diaNum)
-                    .padding(3)
+                TimeTableView(
+                    trains: OuDiaDiagram.sample.route.timetables[0].down.trains,
+                    direction: .down
+                )
+                .padding(3)
             case .noboriJikokuhyou(let diaNum):
-                TimeTableView(houkou: .nobori, diaNum: diaNum)
-                    .padding(3)
+                TimeTableView(
+                    trains: OuDiaDiagram.sample.route.timetables[0].up.trains,
+                    direction: .up
+                )
+                .padding(3)
             case .diagram(let diaNum):
-                DiagramView(diaNum: diaNum,
-                            viewSize: $viewSize,
-                            isShowKudariDiagram: $isShowKudariDiagram,
-                            isShowNoboriDiagram: $isShowNoboriDiagram)
+                DiagramView(diagramViewState: diagramViewState)
                     .padding(3)
             }
         }

@@ -8,26 +8,25 @@
 import SwiftUI
 
 struct DiagramView: View {
-    let diaNum: Int
-    @Binding var viewSize: CGSize
-    @Binding var isShowKudariDiagram: Bool
-    @Binding var isShowNoboriDiagram: Bool
+    let diagramViewState: DiagramViewState
 
     var body: some View {
         SyncedScrollView {
             ZStack {
-                Legend(viewSize: $viewSize)
-                if isShowKudariDiagram {
-                    DrawDiagram(houkou: .kudari, diaNum: diaNum, viewSize: $viewSize)
+                DiagramGridLineView(diagramViewState: diagramViewState)
+
+                if diagramViewState.isShowUp {
+                    DrawDiagram()
                 }
-                if isShowNoboriDiagram {
-                    DrawDiagram(houkou: .nobori, diaNum: diaNum, viewSize: $viewSize)
+
+                if diagramViewState.isShowDown {
+                    DrawDiagram()
                 }
             }
         } vSyncedContent: {
-            DrawStations(viewSize: $viewSize)
+            DiagramStationsView()
         } hSyncedContent: {
-            DrawTimes(viewSize: $viewSize)
+            DiagramTimesView(scale: diagramViewState.hScale)
         } topLeftContent: {
             EmptyView()
         }
@@ -42,6 +41,8 @@ final class DiagramViewState {
 
     var vScale = 10
     var hScale = 10
+    var isShowUp = false
+    var isShowDown = false
 
     var viewSize: CGSize {
         CGSize(
@@ -73,10 +74,5 @@ final class DiagramViewState {
 }
 
 #Preview {
-    let viewSize = Binding.constant( CGSize(width: 3000, height: 500) )
-    return DiagramView(diaNum: 0,
-                       viewSize: viewSize,
-                       isShowKudariDiagram: .constant(true),
-                       isShowNoboriDiagram: .constant(true))
-        .environmentObject(DiagramEditorDocument())
+    DiagramView(diagramViewState: .init())
 }
