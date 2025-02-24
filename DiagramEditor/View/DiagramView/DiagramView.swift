@@ -40,7 +40,19 @@ import OuDiaKit
 final class DiagramViewState {
     private weak var document: DiagramEditorDocument?
 
-    var viewSize: CGSize = .zero
+    var vScale = 10
+    var hScale = 10
+
+    var viewSize: CGSize {
+        CGSize(
+            width: CGFloat(Const.Diagram.oneDayMinutes * hScale),
+            height: CGFloat(totalDistance * vScale)
+        )
+    }
+
+    var totalDistance: Int {
+        distancesBetweenStations.reduce(0, +)
+    }
 
     var distancesBetweenStations = [Int]()
 

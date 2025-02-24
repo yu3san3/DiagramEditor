@@ -24,6 +24,7 @@ enum Const {
     }
 
     enum Diagram {
+        static let oneDayMinutes = 1440
         static let stationWidth: CGFloat = 70
         static let stationHeight: CGFloat = 20
         static let timeWidth: CGFloat = 20
