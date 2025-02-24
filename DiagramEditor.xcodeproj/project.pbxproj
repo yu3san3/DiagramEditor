@@ -7,14 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EB275C592AAAFE1B00D8994A /* Houkou.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB275C582AAAFE1B00D8994A /* Houkou.swift */; };
-		EB55FD352AECF70300FCCAF9 /* Ekijikokukeisiki.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD342AECF70300FCCAF9 /* Ekijikokukeisiki.swift */; };
-		EB55FD392AECF87200FCCAF9 /* DiagramSenStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD382AECF87200FCCAF9 /* DiagramSenStyle.swift */; };
-		EB55FD3B2AECF88C00FCCAF9 /* Ekikibo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB55FD3A2AECF88C00FCCAF9 /* Ekikibo.swift */; };
-		EB72D5F42AA479C800779186 /* OudDataStringifyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */; };
 		EB8E1E3B2AFE065B00707DC6 /* SyncedScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8E1E3A2AFE065B00707DC6 /* SyncedScrollView.swift */; };
-		EBA5403E2A278D73004AC49A /* OudData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403D2A278D73004AC49A /* OudData.swift */; };
-		EBA540402A278E4D004AC49A /* OudDataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA5403F2A278E4D004AC49A /* OudDataParser.swift */; };
 		EBA540442A278F56004AC49A /* VTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540432A278F56004AC49A /* VTextView.swift */; };
 		EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */; };
 		EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */; };
@@ -22,17 +15,13 @@
 		EBD863DC293B6E9B002D835D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBD863DB293B6E9B002D835D /* Assets.xcassets */; };
 		EBD863E1293B6E9B002D835D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBD863E0293B6E9B002D835D /* Preview Assets.xcassets */; };
 		EBF334A72A6913A20099EE4E /* DiagramEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */; };
-		EBF334AE2A699D3C0099EE4E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF334AD2A699D3C0099EE4E /* Extensions.swift */; };
 		EF102EA72B21985A00B8D94D /* DiagramGridLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF102EA62B21985A00B8D94D /* DiagramGridLineView.swift */; };
 		EF112AED2B2839DD00880995 /* DiagramStationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF112AEC2B2839DD00880995 /* DiagramStationsView.swift */; };
 		EF38A2A12D637130001A6C9B /* OuDiaKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF38A2A02D637130001A6C9B /* OuDiaKit */; };
 		EF487DED2B230C3D00BBCEC5 /* DiagramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF487DEC2B230C3D00BBCEC5 /* DiagramView.swift */; };
 		EF537E752B2A13BB00BE24B3 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF537E742B2A13BB00BE24B3 /* Line.swift */; };
 		EF8E87342B2DE5F300ECEF86 /* DrawDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8E87332B2DE5F300ECEF86 /* DrawDiagram.swift */; };
-		EF90487C2B3F1854000349DE /* RunTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF90487B2B3F1854000349DE /* RunTimeManager.swift */; };
 		EFACF4052B28A7B20032C148 /* DiagramTimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFACF4042B28A7B20032C148 /* DiagramTimesView.swift */; };
-		EFBF1FC22B3022DB0088BFC7 /* TimeCalculation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBF1FC12B3022DB0088BFC7 /* TimeCalculation.swift */; };
-		EFC7536A2B37309F005E12F1 /* OudColorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC753692B37309F005E12F1 /* OudColorCode.swift */; };
 		EFDE5D802B1C6322006CF9FB /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */; };
 		EFDE5D822B1CA2E4006CF9FB /* DetailViewStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE5D812B1CA2E4006CF9FB /* DetailViewStatus.swift */; };
 /* End PBXBuildFile section */
@@ -48,14 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EB275C582AAAFE1B00D8994A /* Houkou.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Houkou.swift; sourceTree = "<group>"; };
-		EB55FD342AECF70300FCCAF9 /* Ekijikokukeisiki.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ekijikokukeisiki.swift; sourceTree = "<group>"; };
-		EB55FD382AECF87200FCCAF9 /* DiagramSenStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramSenStyle.swift; sourceTree = "<group>"; };
-		EB55FD3A2AECF88C00FCCAF9 /* Ekikibo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ekikibo.swift; sourceTree = "<group>"; };
-		EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudDataStringifyer.swift; sourceTree = "<group>"; };
 		EB8E1E3A2AFE065B00707DC6 /* SyncedScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncedScrollView.swift; sourceTree = "<group>"; };
-		EBA5403D2A278D73004AC49A /* OudData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudData.swift; sourceTree = "<group>"; };
-		EBA5403F2A278E4D004AC49A /* OudDataParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudDataParser.swift; sourceTree = "<group>"; };
 		EBA540432A278F56004AC49A /* VTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VTextView.swift; sourceTree = "<group>"; };
 		EBD863D2293B6E97002D835D /* DiagramEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiagramEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorApp.swift; sourceTree = "<group>"; };
@@ -67,16 +49,12 @@
 		EBD863E0293B6E9B002D835D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EBF334A42A6913A10099EE4E /* DiagramEditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiagramEditorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorTests.swift; sourceTree = "<group>"; };
-		EBF334AD2A699D3C0099EE4E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		EF102EA62B21985A00B8D94D /* DiagramGridLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramGridLineView.swift; sourceTree = "<group>"; };
 		EF112AEC2B2839DD00880995 /* DiagramStationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramStationsView.swift; sourceTree = "<group>"; };
 		EF487DEC2B230C3D00BBCEC5 /* DiagramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramView.swift; sourceTree = "<group>"; };
 		EF537E742B2A13BB00BE24B3 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		EF8E87332B2DE5F300ECEF86 /* DrawDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawDiagram.swift; sourceTree = "<group>"; };
-		EF90487B2B3F1854000349DE /* RunTimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunTimeManager.swift; sourceTree = "<group>"; };
 		EFACF4042B28A7B20032C148 /* DiagramTimesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramTimesView.swift; sourceTree = "<group>"; };
-		EFBF1FC12B3022DB0088BFC7 /* TimeCalculation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCalculation.swift; sourceTree = "<group>"; };
-		EFC753692B37309F005E12F1 /* OudColorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OudColorCode.swift; sourceTree = "<group>"; };
 		EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		EFDE5D812B1CA2E4006CF9FB /* DetailViewStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,17 +84,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		EB275C572AAAFDF400D8994A /* Enum */ = {
-			isa = PBXGroup;
-			children = (
-				EB275C582AAAFE1B00D8994A /* Houkou.swift */,
-				EB55FD342AECF70300FCCAF9 /* Ekijikokukeisiki.swift */,
-				EB55FD3A2AECF88C00FCCAF9 /* Ekikibo.swift */,
-				EB55FD382AECF87200FCCAF9 /* DiagramSenStyle.swift */,
-			);
-			path = Enum;
-			sourceTree = "<group>";
-		};
 		EBD863C9293B6E97002D835D = {
 			isa = PBXGroup;
 			children = (
@@ -142,10 +109,8 @@
 				EF38A2BC2D63788D001A6C9B /* Utils */,
 				EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */,
 				EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */,
-				EF90487B2B3F1854000349DE /* RunTimeManager.swift */,
 				EBF334992A690A460099EE4E /* View */,
 				EBF334982A690A350099EE4E /* Model */,
-				EBF3349A2A690A8F0099EE4E /* Other */,
 				EBD863DB293B6E9B002D835D /* Assets.xcassets */,
 				EBD863DD293B6E9B002D835D /* Info.plist */,
 				EBD863DE293B6E9B002D835D /* DiagramEditor.entitlements */,
@@ -165,7 +130,6 @@
 		EBF334982A690A350099EE4E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EBA5403D2A278D73004AC49A /* OudData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -182,19 +146,6 @@
 				EBA540432A278F56004AC49A /* VTextView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		EBF3349A2A690A8F0099EE4E /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				EB275C572AAAFDF400D8994A /* Enum */,
-				EFBF1FC12B3022DB0088BFC7 /* TimeCalculation.swift */,
-				EFC753692B37309F005E12F1 /* OudColorCode.swift */,
-				EBA5403F2A278E4D004AC49A /* OudDataParser.swift */,
-				EB72D5F32AA479C800779186 /* OudDataStringifyer.swift */,
-				EBF334AD2A699D3C0099EE4E /* Extensions.swift */,
-			);
-			path = Other;
 			sourceTree = "<group>";
 		};
 		EBF334A52A6913A20099EE4E /* DiagramEditorTests */ = {
@@ -327,29 +278,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF102EA72B21985A00B8D94D /* DiagramGridLineView.swift in Sources */,
-				EB55FD392AECF87200FCCAF9 /* DiagramSenStyle.swift in Sources */,
-				EBA540402A278E4D004AC49A /* OudDataParser.swift in Sources */,
-				EFBF1FC22B3022DB0088BFC7 /* TimeCalculation.swift in Sources */,
 				EF8E87342B2DE5F300ECEF86 /* DrawDiagram.swift in Sources */,
 				EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */,
 				EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */,
 				EFDE5D822B1CA2E4006CF9FB /* DetailViewStatus.swift in Sources */,
 				EB8E1E3B2AFE065B00707DC6 /* SyncedScrollView.swift in Sources */,
-				EB55FD3B2AECF88C00FCCAF9 /* Ekikibo.swift in Sources */,
-				EFC7536A2B37309F005E12F1 /* OudColorCode.swift in Sources */,
-				EF90487C2B3F1854000349DE /* RunTimeManager.swift in Sources */,
-				EB72D5F42AA479C800779186 /* OudDataStringifyer.swift in Sources */,
-				EBF334AE2A699D3C0099EE4E /* Extensions.swift in Sources */,
 				EFACF4052B28A7B20032C148 /* DiagramTimesView.swift in Sources */,
 				EF537E752B2A13BB00BE24B3 /* Line.swift in Sources */,
-				EBA5403E2A278D73004AC49A /* OudData.swift in Sources */,
 				EF112AED2B2839DD00880995 /* DiagramStationsView.swift in Sources */,
 				EBD863DA293B6E97002D835D /* ContentView.swift in Sources */,
-				EB275C592AAAFE1B00D8994A /* Houkou.swift in Sources */,
 				EF487DED2B230C3D00BBCEC5 /* DiagramView.swift in Sources */,
 				EFDE5D802B1C6322006CF9FB /* SidebarView.swift in Sources */,
 				EBA540442A278F56004AC49A /* VTextView.swift in Sources */,
-				EB55FD352AECF70300FCCAF9 /* Ekijikokukeisiki.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
