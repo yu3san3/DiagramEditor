@@ -17,29 +17,7 @@ struct TrainSchedulesTimetableView: View {
         LazyHStack(spacing: 0) {
             ForEach(trains) { train in
                 TrainScheduleView(train: train, timeTypes: document.timeTypes)
-
-                RemarkCell(remark: train.remark ?? "")
             }
-        }
-
-    }
-
-    private struct RemarkCell: View {
-        let remark: String
-
-        var body: some View {
-            VStack {
-                VText(remark)
-                    .font(.caption)
-                    .padding(3)
-
-                Spacer()
-            }
-            .frame(
-                width: Const.Timetable.timetableWidth,
-                height: Const.Timetable.timetableHeight
-            )
-            .border(Const.Timetable.remarkColor)
         }
     }
 }
@@ -62,6 +40,27 @@ private struct TrainScheduleView: View {
                     )
                     .border(Const.Timetable.timetableColor)
             }
+
+            RemarkCell(remark: train.remark ?? "")
+        }
+    }
+
+    private struct RemarkCell: View {
+        let remark: String
+
+        var body: some View {
+            VStack {
+                VText(remark)
+                    .font(.caption)
+                    .padding(3)
+
+                Spacer()
+            }
+            .frame(
+                width: Const.Timetable.timetableWidth,
+                height: Const.Timetable.remarkHeight
+            )
+            .border(Const.Timetable.remarkColor)
         }
     }
 }
