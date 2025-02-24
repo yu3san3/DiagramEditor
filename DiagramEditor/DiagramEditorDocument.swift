@@ -90,7 +90,7 @@ extension Train {
     /// - Returns: ダイヤグラムで点を打つべき座標の配列
     func diagramPoints(distancesBetweenStations: [Int]) -> [CGPoint] {
         let distanceFromBaseStation = RouteDistancesCalculator.convertToDistancesFromBaseStation(
-            distances: distancesBetweenStations
+            from: distancesBetweenStations
         )
 
         return distanceFromBaseStation
