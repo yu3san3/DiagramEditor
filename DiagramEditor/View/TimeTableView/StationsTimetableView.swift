@@ -45,7 +45,15 @@ struct StationsTimetableView: View {
 
 private struct StationView: View {
     let station: Station
-    let direction: TrainDirection
+    let arrDepTexts: [LocalizedStringResource]
+
+    init(
+        station: Station,
+        direction: TrainDirection
+    ) {
+        self.station = station
+        self.arrDepTexts = station.arrDepTextsForTimetable(for: direction)
+    }
 
     var body: some View {
         HStack {
@@ -54,11 +62,8 @@ private struct StationView: View {
 
             Spacer()
 
-            ForEach(
-                station.arrDepTextForTimetable(for: direction),
-                id: \.key
-            ) { arrDepText in
-                VStack(spacing: 2) {
+            VStack(spacing: 2) {
+                ForEach(arrDepTexts, id: \.key) { arrDepText in
                     Text(String(localized: arrDepText))
                         .padding(2)
                 }
@@ -67,7 +72,9 @@ private struct StationView: View {
         .font(.caption)
         .frame(
             width: Const.Timetable.stationWidth,
-            height: Const.Timetable.timetableHeight
+            height: arrDepTexts.count == 1
+            ? Const.Timetable.timetableHeight
+            : Const.Timetable.timetableHeight * 2
         )
         .border(Const.Timetable.stationColor)
     }

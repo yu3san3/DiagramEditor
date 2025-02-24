@@ -121,7 +121,7 @@ extension Train {
 
 extension Station {
     /// 駅時刻形式`timeType`と方向`direction`に基づき、時刻表における "着" と "発" の文字列を得る。
-    func arrDepTextForTimetable(for direction: TrainDirection) -> [LocalizedStringResource] {
+    func arrDepTextsForTimetable(for direction: TrainDirection) -> [LocalizedStringResource] {
         switch timeType {
         case .departure:
             ["Dep"]
