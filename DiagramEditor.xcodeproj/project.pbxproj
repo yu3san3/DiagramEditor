@@ -97,7 +97,6 @@
 				EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */,
 				EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */,
 				EBF334992A690A460099EE4E /* View */,
-				EBF334982A690A350099EE4E /* Model */,
 				EBD863DB293B6E9B002D835D /* Assets.xcassets */,
 				EBD863DD293B6E9B002D835D /* Info.plist */,
 				EBD863DE293B6E9B002D835D /* DiagramEditor.entitlements */,
@@ -112,13 +111,6 @@
 				EBD863E0293B6E9B002D835D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		EBF334982A690A350099EE4E /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		EBF334992A690A460099EE4E /* View */ = {
