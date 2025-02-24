@@ -9,52 +9,49 @@ import OuDiaKit
 import SwiftUI
 
 struct SidebarView: View {
+    enum ViewState: Hashable {
+        case none
+        case station
+        case trainType
+        case downTimetable(trains: [Train])
+        case upTimetable(trains: [Train])
+        case diagram(timetable: Timetable)
+    }
+
     @EnvironmentObject var document: DiagramEditorDocument
 
-    @Binding var detailViewStatus: DetailViewStatus
-
-    @State private var isRosenExpanded = true
-    @State private var isDiaExpanded = true
-    //FIXME: - ⚠️Diaの要素数が10を超えるとindexがオーバーフローする
-    @State private var isDiaContentExpanded: [Bool] = Array(repeating: true, count: 10)
-
-//    init(detailViewStatus: Binding<DetailViewStatus>) {
-//        self._detailViewStatus = detailViewStatus
-//        self._isDiaContentExpanded = State(initialValue: Array(repeating: true,
-//                                                               count: 10)
-//        )
-//    }
+    @Binding var viewState: ViewState
 
     var body: some View {
-        List(selection: $detailViewStatus) {
-            DisclosureGroup("路線", isExpanded: $isRosenExpanded) {
-                NavigationLink(value: DetailViewStatus.eki) {
-                    Text("駅")
+        List(selection: $viewState) {
+            DisclosureGroup("Route") {
+                NavigationLink(value: ViewState.station) {
+                    Text("Station")
                 }
-                NavigationLink(value: DetailViewStatus.ressyasyubetsu) {
-                    Text("列車種別")
+
+                NavigationLink(value: ViewState.trainType) {
+                    Text("TrainType")
                 }
-                DisclosureGroup("ダイヤ", isExpanded: $isDiaExpanded) {
-                    ForEach(
-                        Array(OuDiaDiagram.sample.route.timetables.enumerated() ),
-                        id: \.1.id
-                    ) { index, _ in
-                        DisclosureGroup(
-                            "timetable.name",
-                            isExpanded: $isDiaContentExpanded[index]
-                        ) {
+
+                DisclosureGroup("Dia") {
+                    ForEach(document.route.timetables) { timetable in
+                        DisclosureGroup(timetable.title) {
                             NavigationLink(
-                                value: DetailViewStatus.kudariJikokuhyou(diaNum: index)
+                                value: ViewState.downTimetable(trains: timetable.down.trains)
                             ) {
-                                Text("下り時刻表")
+                                Text("DownTimetable")
                             }
+
                             NavigationLink(
-                                value: DetailViewStatus.noboriJikokuhyou(diaNum: index)
+                                value: ViewState.upTimetable(trains: timetable.up.trains)
                             ) {
-                                Text("上り時刻表")
+                                Text("UpTimetable")
                             }
-                            NavigationLink(value: DetailViewStatus.diagram(diaNum: index)) {
-                                Text("ダイヤグラム")
+
+                            NavigationLink(
+                                value: ViewState.diagram(timetable: timetable)
+                            ) {
+                                Text("Diagram")
                             }
                         }
                     }
@@ -66,6 +63,5 @@ struct SidebarView: View {
 }
 
 #Preview {
-    SidebarView(detailViewStatus: .constant(.eki))
-        .environmentObject(DiagramEditorDocument())
+    SidebarView(viewState: .constant(.none))
 }

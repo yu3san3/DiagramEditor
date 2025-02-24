@@ -11,7 +11,7 @@ import SwiftUI
 struct DiagramEditorApp: App {
     var body: some Scene {
         DocumentGroup(newDocument: { DiagramEditorDocument() }) { file in
-            ContentView()
+            TopView()
                 .environment(\.document, file.document)
         }
     }

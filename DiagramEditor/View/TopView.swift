@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  TopWindowView.swift
 //  DiagramEditor
 //
 //  Created by 丹羽雄一朗 on 2022/12/03.
@@ -8,88 +8,103 @@
 import SwiftUI
 import OuDiaKit
 
-struct ContentView: View {
-    @EnvironmentObject var document: DiagramEditorDocument
+struct TopView: View {
+    @Environment(DiagramEditorDocument.self) private var document
 
-    var diagramViewState = DiagramViewState()
-    @State private var detailViewStatus: DetailViewStatus = .none
-    @State private var viewSize = CGSize(width: 1000, height: 500)
-    @State private var isShowKudariDiagram = true
-    @State private var isShowNoboriDiagram = true
+    @State private var viewState: SidebarView.ViewState = .none
+
+    private var diagramViewState = DiagramViewState()
 
     var body: some View {
         NavigationSplitView {
-            SidebarView(detailViewStatus: $detailViewStatus)
+            SidebarView(viewState: $viewState)
         } detail: {
-            switch detailViewStatus {
+            switch viewState {
             case .none:
                 VStack {
                     Text("項目が選択されていません。")
                     Text("ツールバーから表示する項目を選択してください。")
                         .font(.caption)
                 }
-            case .eki:
+            case .station:
                 Text("駅ビュー")
-            case .ressyasyubetsu:
+            case .trainType:
                 Text("列車種別ビュー")
-            case .kudariJikokuhyou(let diaNum):
+            case let .downTimetable(trains):
                 TimeTableView(
-                    trains: OuDiaDiagram.sample.route.timetables[0].down.trains,
+                    trains: trains,
                     direction: .down
                 )
                 .padding(3)
-            case .noboriJikokuhyou(let diaNum):
+            case let .upTimetable(trains):
                 TimeTableView(
-                    trains: OuDiaDiagram.sample.route.timetables[0].up.trains,
+                    trains: trains,
                     direction: .up
                 )
                 .padding(3)
-            case .diagram(let diaNum):
+            case let .diagram(timetable):
                 DiagramView(diagramViewState: diagramViewState)
                     .padding(3)
             }
         }
         .toolbar {
-            if case .diagram(diaNum: _) = detailViewStatus {
+            if case .diagram = viewState {
                 ToolbarItemGroup {
-                    Toggle(isOn: $isShowNoboriDiagram) {
+                    @Bindable var diagramViewState = diagramViewState
+
+                    Toggle(isOn: $diagramViewState.isShowUp) {
                         Image(systemName: "arrow.up.right")
                     }
-                    Toggle(isOn: $isShowKudariDiagram) {
+
+                    Toggle(isOn: $diagramViewState.isShowDown) {
                         Image(systemName: "arrow.down.right")
                     }
                 }
                 ToolbarItemGroup {
                     let easeOutAnimation: Animation = .easeOut(duration: 0.3)
+
                     Button {
                         withAnimation(easeOutAnimation) {
-                            self.viewSize.width *= 1.5
+                            diagramViewState.hScale *= 2
                         }
                     } label: {
-                        Label("横幅増", systemImage: "arrow.left.and.line.vertical.and.arrow.right")
+                        Label(
+                            "横幅増",
+                            systemImage: "arrow.left.and.line.vertical.and.arrow.right"
+                        )
                     }
+
                     Button {
                         withAnimation(easeOutAnimation) {
-                            //0以下にならないように三項演算子で制限
-                            self.viewSize.width /= self.viewSize.width <= 0 ? 1 : 1.5
+                            diagramViewState.hScale = max(1, diagramViewState.hScale / 2)
                         }
                     } label: {
-                        Label("横幅減", systemImage: "arrow.right.and.line.vertical.and.arrow.left")
+                        Label(
+                            "横幅減",
+                            systemImage: "arrow.right.and.line.vertical.and.arrow.left"
+                        )
                     }
+
                     Button {
                         withAnimation(easeOutAnimation) {
-                            self.viewSize.height *= 1.5
+                            diagramViewState.vScale *= 2
                         }
                     } label: {
-                        Label("縦幅増", systemImage: "arrow.up.and.line.horizontal.and.arrow.down")
+                        Label(
+                            "縦幅増",
+                            systemImage: "arrow.up.and.line.horizontal.and.arrow.down"
+                        )
                     }
+
                     Button {
                         withAnimation(easeOutAnimation) {
-                            //0以下にならないように三項演算子で制限
-                            self.viewSize.height /= self.viewSize.height <= 0 ? 1 : 1.5
+                            diagramViewState.vScale = max(1, diagramViewState.vScale / 2)
                         }
                     } label: {
-                        Label("縦幅減", systemImage: "arrow.down.and.line.horizontal.and.arrow.up")
+                        Label(
+                            "縦幅減",
+                            systemImage: "arrow.down.and.line.horizontal.and.arrow.up"
+                        )
                     }
                 }
             }
@@ -98,6 +113,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
-        .environmentObject(DiagramEditorDocument())
+    TopView()
+        .environment(\.document, .init())
 }

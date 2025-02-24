@@ -11,13 +11,12 @@
 		EBA540442A278F56004AC49A /* VTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540432A278F56004AC49A /* VTextView.swift */; };
 		EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */; };
 		EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */; };
-		EBD863DA293B6E97002D835D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D9293B6E97002D835D /* ContentView.swift */; };
+		EBD863DA293B6E97002D835D /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D9293B6E97002D835D /* TopView.swift */; };
 		EBD863DC293B6E9B002D835D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBD863DB293B6E9B002D835D /* Assets.xcassets */; };
 		EBD863E1293B6E9B002D835D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBD863E0293B6E9B002D835D /* Preview Assets.xcassets */; };
 		EBF334A72A6913A20099EE4E /* DiagramEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */; };
 		EF38A2A12D637130001A6C9B /* OuDiaKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF38A2A02D637130001A6C9B /* OuDiaKit */; };
 		EFDE5D802B1C6322006CF9FB /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */; };
-		EFDE5D822B1CA2E4006CF9FB /* DetailViewStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE5D812B1CA2E4006CF9FB /* DetailViewStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +35,7 @@
 		EBD863D2293B6E97002D835D /* DiagramEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiagramEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorApp.swift; sourceTree = "<group>"; };
 		EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorDocument.swift; sourceTree = "<group>"; };
-		EBD863D9293B6E97002D835D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		EBD863D9293B6E97002D835D /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		EBD863DB293B6E9B002D835D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EBD863DD293B6E9B002D835D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EBD863DE293B6E9B002D835D /* DiagramEditor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiagramEditor.entitlements; sourceTree = "<group>"; };
@@ -44,7 +43,6 @@
 		EBF334A42A6913A10099EE4E /* DiagramEditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiagramEditorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorTests.swift; sourceTree = "<group>"; };
 		EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
-		EFDE5D812B1CA2E4006CF9FB /* DetailViewStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -126,8 +124,7 @@
 		EBF334992A690A460099EE4E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				EBD863D9293B6E97002D835D /* ContentView.swift */,
-				EFDE5D812B1CA2E4006CF9FB /* DetailViewStatus.swift */,
+				EBD863D9293B6E97002D835D /* TopView.swift */,
 				EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */,
 				EF668B292D68D49E00D093A8 /* TimeTableView */,
 				EFDAAF522D6C623E00DAC0A3 /* DiagramView */,
@@ -256,9 +253,8 @@
 			files = (
 				EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */,
 				EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */,
-				EFDE5D822B1CA2E4006CF9FB /* DetailViewStatus.swift in Sources */,
 				EB8E1E3B2AFE065B00707DC6 /* SyncedScrollView.swift in Sources */,
-				EBD863DA293B6E97002D835D /* ContentView.swift in Sources */,
+				EBD863DA293B6E97002D835D /* TopView.swift in Sources */,
 				EFDE5D802B1C6322006CF9FB /* SidebarView.swift in Sources */,
 				EBA540442A278F56004AC49A /* VTextView.swift in Sources */,
 			);
