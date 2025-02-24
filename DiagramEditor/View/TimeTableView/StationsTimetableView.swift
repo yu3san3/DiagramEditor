@@ -80,6 +80,22 @@ private struct StationView: View {
     }
 }
 
+private extension Station {
+    /// 駅時刻形式`timeType`と方向`direction`に基づき、時刻表における "着" と "発" の文字列を得る。
+    func arrDepTextsForTimetable(for direction: TrainDirection) -> [LocalizedStringResource] {
+        switch timeType {
+        case .departure:
+            ["Dep"]
+        case .arrivalDeparture:
+            ["Arr", "Dep"]
+        case .downArrival:
+            [direction == .down ? "Arr" : "Dep"]
+        case .upArrival:
+            [direction == .up ? "Arr" : "Dep"]
+        }
+    }
+}
+
 #Preview {
     ScrollView {
         StationsTimetableView(direction: .up)
