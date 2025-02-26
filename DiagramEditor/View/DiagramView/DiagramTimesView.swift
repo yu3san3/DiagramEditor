@@ -13,11 +13,15 @@ struct DiagramTimesView: View {
     var body: some View {
         VStack(spacing: 0) {
             LazyHStack(spacing: 0) {
-                ForEach(0..<24) { time in
-                    Text(time.description)
-                        .frame(
-                            width: .init(scale * 60)
-                        )
+                ForEach(0..<25) { time in
+                    HStack {
+                        Text(time.description)
+
+                        Spacer()
+                    }
+                    .frame(
+                        width: .init(scale * 60)
+                    )
                 }
             }
 
