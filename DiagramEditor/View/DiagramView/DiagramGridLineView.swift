@@ -25,12 +25,34 @@ struct DiagramGridLineView: View {
         }
     }
 
+    private struct HLines: View {
+        let scale: Int
+        let distancesBetweenStations: [Int]
+        let viewWidth: CGFloat
+
+        var body: some View {
+            VStack(spacing: 0) {
+                HLine(length: viewWidth)
+                    .frame(height: Line.LineWidth.thin.rawValue)
+
+                ForEach(distancesBetweenStations, id: \.self) { distance in
+                    VStack(spacing: 0) {
+                        Spacer()
+
+                        HLine(length: viewWidth)
+                    }
+                    .frame(height: .init(distance * scale))
+                }
+            }
+        }
+    }
+
     private struct VLines: View {
         let scale: Int
         let viewHeight: CGFloat
 
         let lineStyles: [VLine.Style] = {
-            (0..<Const.Diagram.oneDayMinutes).map {
+            (0...Const.Diagram.oneDayMinutes).map {
                 VLine.Style(minute: $0)
             }
         }()
@@ -49,70 +71,53 @@ struct DiagramGridLineView: View {
             }
         }
     }
+}
 
-    private struct VLine: View {
-        struct Style: Identifiable {
-            let id: Int
-            let width: Line.LineWidth?
-            let lineStyle: DiagramLineStyle
+struct HLine: View {
+    let length: CGFloat
 
-            init(minute: Int) {
-                id = minute
+    var body: some View {
+        Line(
+            .horizontal,
+            width: .thin,
+            length: length,
+            style: .solid
+        )
+    }
+}
 
-                width = if minute % 60 == 0 { .thick }
-                else if minute % 30 == 0 { .normal }
-                else if minute % 10 == 0 { .thin }
-                else if minute % 2 == 0 { .extraThin }
-                else { nil }
+private struct VLine: View {
+    struct Style: Identifiable {
+        let id: Int
+        let width: Line.LineWidth?
+        let lineStyle: DiagramLineStyle
 
-                lineStyle = switch width {
-                case .thick, .normal, .none: .solid
-                case .thin, .extraThin: .dashed
-                }
-            }
-        }
+        init(minute: Int) {
+            id = minute
 
-        let style: Style
-        let length: CGFloat
+            width = if minute % 60 == 0 { .thick }
+            else if minute % 30 == 0 { .normal }
+            else if minute % 10 == 0 { .thin }
+            else if minute % 2 == 0 { .extraThin }
+            else { nil }
 
-        var body: some View {
-            if let width = style.width {
-                Line(
-                    .vertical,
-                    width: width,
-                    length: length,
-                    style: style.lineStyle
-                )
+            lineStyle = switch width {
+            case .thick, .normal, .none: .solid
+            case .thin, .extraThin: .dashed
             }
         }
     }
 
-    private struct HLines: View {
-        let scale: Int
-        let distancesBetweenStations: [Int]
-        let viewWidth: CGFloat
+    let style: Style
+    let length: CGFloat
 
-        var body: some View {
-            LazyVStack(spacing: 0) {
-                ForEach(distancesBetweenStations, id: \.self) { distance in
-                    VStack(spacing: 0) {
-                        HLine(length: viewWidth)
-                    }
-                    .frame(height: .init(distance * scale))
-                }
-            }
-        }
-    }
-
-    private struct HLine: View {
-        let length: CGFloat
-
-        var body: some View {
+    var body: some View {
+        if let width = style.width {
             Line(
-                .horizontal,
-                width: .thin,
+                .vertical,
+                width: width,
                 length: length,
-                style: .solid
+                style: style.lineStyle
             )
         }
     }
