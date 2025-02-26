@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct DiagramView: View {
+    @Environment(DiagramEditorDocument.self) private var document
+
     let diagramViewState: DiagramViewState
 
     var body: some View {
@@ -24,11 +26,16 @@ struct DiagramView: View {
                 }
             }
         } vSyncedContent: {
-            DiagramStationsView()
+            DiagramStationsView(diagramViewState: diagramViewState)
+                .frame(width: Const.Diagram.stationWidth)
         } hSyncedContent: {
             DiagramTimesView(scale: diagramViewState.hScale)
+                .frame(height: Const.Diagram.timeHight)
         } topLeftContent: {
             EmptyView()
+        }
+        .onAppear {
+            diagramViewState.setup(document: document)
         }
     }
 }
@@ -37,7 +44,7 @@ import OuDiaKit
 
 @Observable
 final class DiagramViewState {
-    private weak var document: DiagramEditorDocument?
+    weak var document: DiagramEditorDocument?
 
     var vScale = 10
     var hScale = 10
@@ -59,6 +66,7 @@ final class DiagramViewState {
 
     func setup(document: DiagramEditorDocument) {
         self.document = document
+        updateDistanceBetweenStations()
     }
 
     func updateDistanceBetweenStations() {
