@@ -43,8 +43,11 @@ struct TopView: View {
                 )
                 .padding(3)
             case let .diagram(timetable):
-                DiagramView(diagramViewState: diagramViewState)
-                    .padding(3)
+                DiagramView(
+                    timetable: timetable,
+                    diagramViewState: diagramViewState
+                )
+                .padding(3)
             }
         }
         .toolbar {

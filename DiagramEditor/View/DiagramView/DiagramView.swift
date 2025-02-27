@@ -10,6 +10,7 @@ import SwiftUI
 struct DiagramView: View {
     @Environment(\.document) private var document
 
+    let timetable: Timetable
     let diagramViewState: DiagramViewState
 
     var body: some View {
@@ -17,12 +18,22 @@ struct DiagramView: View {
             ZStack {
                 DiagramGridLineView(diagramViewState: diagramViewState)
 
-                if diagramViewState.isShowUp {
-                    DrawDiagram()
+                if diagramViewState.isShowDown {
+                    DiagramLinesView(
+                        entries: diagramViewState.downDiagramEntries,
+                        vScale: diagramViewState.vScale,
+                        hScale: diagramViewState.hScale,
+                        viewWidth: diagramViewState.viewSize.width
+                    )
                 }
 
-                if diagramViewState.isShowDown {
-                    DrawDiagram()
+                if diagramViewState.isShowUp {
+                    DiagramLinesView(
+                        entries: diagramViewState.upDiagramEntries,
+                        vScale: diagramViewState.vScale,
+                        hScale: diagramViewState.hScale,
+                        viewWidth: diagramViewState.viewSize.width
+                    )
                 }
             }
         } vSyncedContent: {
@@ -35,7 +46,7 @@ struct DiagramView: View {
             EmptyView()
         }
         .onAppear {
-            diagramViewState.setup(document: document)
+            diagramViewState.setup(timetable: timetable, document: document)
         }
     }
 }
@@ -46,10 +57,35 @@ import OuDiaKit
 final class DiagramViewState {
     weak var document: DiagramEditorDocument?
 
+    var timetable: Timetable?
     var vScale = 10
     var hScale = 10
     var isShowUp = false
     var isShowDown = false
+
+    var downDiagramEntries: [DiagramEntry] {
+        guard let timetable else { return [] }
+
+        return timetable.down.trains.map {
+            .init(
+                id: $0.id,
+                points: $0.diagramPoints(distancesBetweenStations: distancesBetweenStations),
+                color: document?.route.trainTypes[$0.typeIndex].diagramLineColor ?? .black
+            )
+        }
+    }
+
+    var upDiagramEntries: [DiagramEntry] {
+        guard let timetable else { return [] }
+
+        return timetable.up.trains.map {
+            .init(
+                id: $0.id,
+                points: $0.diagramPoints(distancesBetweenStations: distancesBetweenStations),
+                color: document?.route.trainTypes[$0.typeIndex].diagramLineColor ?? .black
+            )
+        }
+    }
 
     var viewSize: CGSize {
         CGSize(
@@ -64,8 +100,13 @@ final class DiagramViewState {
 
     var distancesBetweenStations = [Int]()
 
-    func setup(document: DiagramEditorDocument) {
+    func setup(
+        timetable: Timetable,
+        document: DiagramEditorDocument
+    ) {
+        self.timetable = timetable
         self.document = document
+
         updateDistanceBetweenStations()
     }
 
@@ -81,6 +122,45 @@ final class DiagramViewState {
     }
 }
 
+private extension Train {
+    /// ダイヤグラムで点を打つべき座標を得る。
+    ///
+    /// - Parameter distancesBetweenStations: 各駅間の最短走行距離の配列
+    /// - Returns: ダイヤグラムで点を打つべき座標の配列
+    func diagramPoints(distancesBetweenStations: [Int]) -> [CGPoint] {
+        let distanceFromBaseStation = RouteDistancesCalculator.convertToDistancesFromBaseStation(
+            from: distancesBetweenStations
+        )
+
+        return distanceFromBaseStation
+            .reversed(shouldReverse: direction == .up)
+            .zipLongest(schedule)
+            .compactMap { distance, scheduleEntry -> [CGPoint]? in
+                guard let distance else { fatalError("distanceは仕様上nilになってはならない。") }
+
+                guard
+                    scheduleEntry?.arrivalStatus == .pass || scheduleEntry?.arrivalStatus == .stop
+                else {
+                    return nil
+                }
+
+                let arrivalFromMidnight = scheduleEntry?.$arrival.minutesFromMidnight
+                let departureFromMidnight = scheduleEntry?.$departure.minutesFromMidnight
+
+                let points = [
+                    arrivalFromMidnight.map { CGPoint(x: $0, y: distance) },
+                    departureFromMidnight.map { CGPoint(x: $0, y: distance) },
+                ].compactMap { $0 }
+
+                return points.isEmpty ? nil : points
+            }
+            .flatMap { $0 }
+    }
+}
+
 #Preview {
-    DiagramView(diagramViewState: .init())
+    DiagramView(
+        timetable: OuDiaDiagram.sample.route.timetables[0],
+        diagramViewState: .init()
+    )
 }
