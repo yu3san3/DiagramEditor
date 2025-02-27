@@ -13,14 +13,15 @@ struct DiagramGridLineView: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            VLines(
-                scale: diagramViewState.hScale,
-                viewHeight: diagramViewState.viewSize.height
-            )
             HLines(
                 scale: diagramViewState.vScale,
                 distancesBetweenStations: diagramViewState.distancesBetweenStations,
                 viewWidth: diagramViewState.viewSize.width
+            )
+
+            VLines(
+                scale: diagramViewState.hScale,
+                viewHeight: diagramViewState.viewSize.height
             )
         }
     }
@@ -60,11 +61,13 @@ struct DiagramGridLineView: View {
         var body: some View {
             LazyHStack(spacing: 0) {
                 ForEach(lineStyles) { style in
-                    VStack(alignment: .leading) {
+                    HStack {
                         VLine(
                             style: style,
                             length: viewHeight
                         )
+
+                        Spacer()
                     }
                     .frame(width: .init(scale))
                 }
