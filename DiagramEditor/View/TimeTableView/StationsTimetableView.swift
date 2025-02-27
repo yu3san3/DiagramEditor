@@ -29,7 +29,7 @@ struct StationsTimetableView: View {
     private struct RemarkCell: View {
         var body: some View {
             VStack {
-                VText("Remark")
+                VText(resource: "Remark")
                     .font(.caption)
                     .padding(3)
                 Spacer()

@@ -22,8 +22,9 @@ struct TopView: View {
             switch viewStatus {
             case .none:
                 VStack {
-                    Text("項目が選択されていません。")
-                    Text("ツールバーから表示する項目を選択してください。")
+                    Text("NoItemsSelected")
+
+                    Text("NoItemsSelectedSubMessage")
                         .font(.caption)
                 }
             case .station:
@@ -72,7 +73,7 @@ struct TopView: View {
                         }
                     } label: {
                         Label(
-                            "横幅増",
+                            "IncreaseWidth",
                             systemImage: "arrow.left.and.line.vertical.and.arrow.right"
                         )
                     }
@@ -83,7 +84,7 @@ struct TopView: View {
                         }
                     } label: {
                         Label(
-                            "横幅減",
+                            "DecreaseWidth",
                             systemImage: "arrow.right.and.line.vertical.and.arrow.left"
                         )
                     }
@@ -94,7 +95,7 @@ struct TopView: View {
                         }
                     } label: {
                         Label(
-                            "縦幅増",
+                            "IncreaseHeight",
                             systemImage: "arrow.up.and.line.horizontal.and.arrow.down"
                         )
                     }
@@ -105,7 +106,7 @@ struct TopView: View {
                         }
                     } label: {
                         Label(
-                            "縦幅減",
+                            "DecreaseHeight",
                             systemImage: "arrow.down.and.line.horizontal.and.arrow.up"
                         )
                     }

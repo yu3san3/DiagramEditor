@@ -34,9 +34,9 @@ struct TimeTableView: View {
             VStack(spacing: 0) {
                 Group {
                     Group {
-                        Text("列車番号")
+                        Text("TrainNumber")
 
-                        Text("列車種別")
+                        Text("TrainType")
                     }
                     .frame(
                         width: Const.Timetable.stationWidth,
@@ -44,7 +44,7 @@ struct TimeTableView: View {
                     )
 
                     VStack {
-                        VText("列車名")
+                        VText(resource: "TrainName")
                             .padding(3)
 
                         Spacer()
