@@ -9,7 +9,7 @@ import OuDiaKit
 import SwiftUI
 
 struct StationsTimetableView: View {
-    @Environment(DiagramEditorDocument.self) private var document
+    @Environment(\.document) private var document
 
     let direction: TrainDirection
 

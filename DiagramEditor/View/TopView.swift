@@ -13,7 +13,7 @@ struct TopView: View {
 
     @State private var viewState: SidebarView.ViewState = .none
 
-    private var diagramViewState = DiagramViewState()
+    private let diagramViewState = DiagramViewState()
 
     var body: some View {
         NavigationSplitView {
