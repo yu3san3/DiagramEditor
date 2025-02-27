@@ -11,15 +11,15 @@ import OuDiaKit
 struct TopView: View {
     @Environment(DiagramEditorDocument.self) private var document
 
-    @State private var viewState: SidebarView.ViewState = .none
+    @State private var viewStatus: SidebarView.ViewStatus = .none
 
     private let diagramViewState = DiagramViewState()
 
     var body: some View {
         NavigationSplitView {
-            SidebarView(viewState: $viewState)
+            SidebarView(viewStatus: $viewStatus)
         } detail: {
-            switch viewState {
+            switch viewStatus {
             case .none:
                 VStack {
                     Text("項目が選択されていません。")
@@ -48,7 +48,7 @@ struct TopView: View {
             }
         }
         .toolbar {
-            if case .diagram = viewState {
+            if case .diagram = viewStatus {
                 ToolbarItemGroup {
                     @Bindable var diagramViewState = diagramViewState
 

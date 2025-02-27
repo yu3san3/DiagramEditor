@@ -9,7 +9,7 @@ import OuDiaKit
 import SwiftUI
 
 struct SidebarView: View {
-    enum ViewState: Hashable {
+    enum ViewStatus: Hashable {
         case none
         case station
         case trainType
@@ -20,16 +20,16 @@ struct SidebarView: View {
 
     @EnvironmentObject var document: DiagramEditorDocument
 
-    @Binding var viewState: ViewState
+    @Binding var viewStatus: ViewStatus
 
     var body: some View {
-        List(selection: $viewState) {
+        List(selection: $viewStatus) {
             DisclosureGroup("Route") {
-                NavigationLink(value: ViewState.station) {
+                NavigationLink(value: ViewStatus.station) {
                     Text("Station")
                 }
 
-                NavigationLink(value: ViewState.trainType) {
+                NavigationLink(value: ViewStatus.trainType) {
                     Text("TrainType")
                 }
 
@@ -37,19 +37,19 @@ struct SidebarView: View {
                     ForEach(document.route.timetables) { timetable in
                         DisclosureGroup(timetable.title) {
                             NavigationLink(
-                                value: ViewState.downTimetable(trains: timetable.down.trains)
+                                value: ViewStatus.downTimetable(trains: timetable.down.trains)
                             ) {
                                 Text("DownTimetable")
                             }
 
                             NavigationLink(
-                                value: ViewState.upTimetable(trains: timetable.up.trains)
+                                value: ViewStatus.upTimetable(trains: timetable.up.trains)
                             ) {
                                 Text("UpTimetable")
                             }
 
                             NavigationLink(
-                                value: ViewState.diagram(timetable: timetable)
+                                value: ViewStatus.diagram(timetable: timetable)
                             ) {
                                 Text("Diagram")
                             }
@@ -63,5 +63,5 @@ struct SidebarView: View {
 }
 
 #Preview {
-    SidebarView(viewState: .constant(.none))
+    SidebarView(viewStatus: .constant(.none))
 }
