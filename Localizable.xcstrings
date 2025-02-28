@@ -177,6 +177,16 @@
         }
       }
     },
+    "R:%lld\nC:%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "R:%1$lld\nC:%2$lld"
+          }
+        }
+      }
+    },
     "Remark" : {
       "localizations" : {
         "en" : {
