@@ -1,0 +1,13 @@
+{
+  "indentation" : {
+    "spaces" : 4
+  },
+  "rules" : {
+    "OmitExplicitReturns" : true,
+    "OneCasePerLine" : false,
+    "UseEarlyExits" : true,
+    "ValidateDocumentationComments" : true
+  },
+  "tabWidth" : 4,
+  "version" : 1
+}
