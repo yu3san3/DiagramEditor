@@ -7,169 +7,226 @@
 
 import SwiftUI
 
-struct SyncedScrollView<Content: View, VSyncedContent: View, HSyncedContent: View, TopLeftContent: View>: View {
-
+struct SyncedScrollView<
+    Content: View,
+    VSyncedContent: View,
+    HSyncedContent: View,
+    TopLeftContent: View
+>: View {
     let content: Content
-    let verticallySyncedContent: VSyncedContent
-    let horizontallySyncedContent: HSyncedContent
+    let vSyncedContent: VSyncedContent
+    let hSyncedContent: HSyncedContent
     let topLeftContent: TopLeftContent
 
-    init(@ViewBuilder content: () -> Content,
-         @ViewBuilder vSyncedContent: () -> VSyncedContent,
-         @ViewBuilder hSyncedContent: () -> HSyncedContent,
-         @ViewBuilder topLeftContent: () -> TopLeftContent
+    init(
+        @ViewBuilder content: () -> Content,
+        @ViewBuilder vSyncedContent: () -> VSyncedContent,
+        @ViewBuilder hSyncedContent: () -> HSyncedContent,
+        @ViewBuilder topLeftContent: () -> TopLeftContent
     ) {
         self.content = content()
-        self.verticallySyncedContent = vSyncedContent()
-        self.horizontallySyncedContent = hSyncedContent()
+        self.vSyncedContent = vSyncedContent()
+        self.hSyncedContent = hSyncedContent()
         self.topLeftContent = topLeftContent()
     }
 
-    @State private var offset = CGPoint(x: 0, y: 0)
+    @State private var vSyncedContentSize: CGSize = .zero
+    @State private var hSyncedContentSize: CGSize = .zero
+    @State private var contentSize: CGSize = .zero
+    @State private var offset: CGPoint = .zero
 
     var viewSize: CGSize {
-        CGSize(
+        .init(
             width: vSyncedContentSize.width + contentSize.width,
             height: hSyncedContentSize.height + contentSize.height
         )
     }
-    @State private var contentSize: CGSize = .zero
-    @State private var vSyncedContentSize: CGSize = .zero
-    @State private var hSyncedContentSize: CGSize = .zero
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            contentView
-            observableScrollView
+            // 実際に表示されるコンテンツ
+            HStack(alignment: .top, spacing: 0){
+                LeftContent(
+                    topLeftContent: topLeftContent,
+                    vSyncedContent: vSyncedContent,
+                    yOffset: offset.y,
+                    vSyncedContentSize: $vSyncedContentSize
+                )
+
+                RightContent(
+                    hSyncedContent: hSyncedContent,
+                    content: content,
+                    offset: offset,
+                    hSyncedContentSize: $hSyncedContentSize,
+                    contentSize: $contentSize
+                )
+            }
+
+            // 実際には表示されないが、スクロール位置を監視するビュー
+            ObservableScrollView(
+                viewSize: viewSize,
+                offset: $offset
+            )
         }
     }
-}
 
-private extension SyncedScrollView {
-    var contentView: some View {
-        HStack(alignment: .top, spacing: 0){
+    private struct LeftContent: View {
+        let topLeftContent: TopLeftContent
+        let vSyncedContent: VSyncedContent
+        let yOffset: CGFloat
+        @Binding var vSyncedContentSize: CGSize
+
+        var body: some View {
             VStack(spacing: 0) {
                 topLeftContent
 
                 ScrollView {
-                    verticallySyncedContent
+                    vSyncedContent
+                        .offset(y: -yOffset)
                         .overlay(
                             GeometryReader { geometry in
-                                Color.clear.preference(key: VSyncedContentKey.self, value: geometry.size)
+                                Color.clear.preference(
+                                    key: VSyncedContentSizeKey.self,
+                                    value: geometry.size
+                                )
                             }
                         )
-                        .offset(y: -offset.y)
                 }
                 .disabled(true)
-                .onPreferenceChange(VSyncedContentKey.self) { value in
-                    self.vSyncedContentSize = value
+                .onPreferenceChange(VSyncedContentSizeKey.self) { size in
+                    vSyncedContentSize = size
                 }
             }
+        }
+    }
 
+    private struct RightContent: View {
+        let hSyncedContent: HSyncedContent
+        let content: Content
+        let offset: CGPoint
+        @Binding var hSyncedContentSize: CGSize
+        @Binding var contentSize: CGSize
+
+        var body: some View {
             VStack(alignment: .leading, spacing: 0) {
                 ScrollView(.horizontal) {
-                    horizontallySyncedContent
+                    hSyncedContent
+                        .offset(x: -offset.x)
                         .overlay(
                             GeometryReader { geometry in
-                                Color.clear.preference(key: HSyncedContentKey.self, value: geometry.size)
+                                Color.clear.preference(
+                                    key: HSyncedContentSizeKey.self,
+                                    value: geometry.size
+                                )
                             }
                         )
-                        .offset(x: -offset.x)
                 }
                 .disabled(true)
-                .onPreferenceChange(HSyncedContentKey.self) { value in
-                    self.hSyncedContentSize = value
+                .onPreferenceChange(HSyncedContentSizeKey.self) { size in
+                    self.hSyncedContentSize = size
                 }
 
                 ScrollView([.vertical, .horizontal]) {
                     content
+                        .offset(x: -offset.x, y: -offset.y)
                         .overlay(
                             GeometryReader { geometry in
-                                Color.clear.preference(key: ContentSizeKey.self, value: geometry.size)
+                                Color.clear.preference(
+                                    key: ContentSizeKey.self,
+                                    value: geometry.size
+                                )
                             }
                         )
-                        .offset(x: -offset.x, y: -offset.y)
                 }
-                .frame(maxWidth: contentSize.width, maxHeight: contentSize.height) //contentのサイズを制限する
+                .frame(maxWidth: contentSize.width, maxHeight: contentSize.height)
                 .disabled(true)
-                .onPreferenceChange(ContentSizeKey.self) { value in
-                    contentSize = value
+                .onPreferenceChange(ContentSizeKey.self) { size in
+                    contentSize = size
                 }
             }
         }
     }
 
-    var observableScrollView: some View {
-        ScrollView([.vertical, .horizontal]) {
-            Color.clear
-                .frame(width: viewSize.width, height: viewSize.height)
-                .background(GeometryReader { geometry in
-                    Color.clear
-                        .preference(key: ObservableViewOffsetKey.self,
-                                    value: CGPoint(x: -geometry.frame(in: .named("scroll")).origin.x, y: -geometry.frame(in: .named("scroll")).origin.y))
-                })
-                .onPreferenceChange(ObservableViewOffsetKey.self) { value in
-                    offset = value
-                }
+    private struct ObservableScrollView: View {
+        let viewSize: CGSize
+        @Binding var offset: CGPoint
+
+        private let spaceName = "scroll"
+
+        var body: some View {
+            ScrollView([.vertical, .horizontal]) {
+                Color.clear
+                    .frame(width: viewSize.width, height: viewSize.height)
+                    .background(
+                        GeometryReader { geometry in
+                            Color.clear
+                                .preference(
+                                    key: ObservableViewOffsetKey.self,
+                                    value: CGPoint(
+                                        x: -geometry.frame(in: .named(spaceName)).origin.x,
+                                        y: -geometry.frame(in: .named(spaceName)).origin.y
+                                    )
+                                )
+                        }
+                    )
+                    .onPreferenceChange(ObservableViewOffsetKey.self) { offset in
+                        self.offset = offset
+                    }
+            }
+            .frame(maxWidth: viewSize.width, maxHeight: viewSize.height)
+            .coordinateSpace(name: spaceName)
         }
-        .frame(maxWidth: viewSize.width, maxHeight: viewSize.height) //observableScrollViewのサイズを制限する
-        .coordinateSpace(name: "scroll")
     }
 }
 
-struct ObservableViewOffsetKey: PreferenceKey {
-    static var defaultValue = CGPoint.zero
+private struct VSyncedContentSizeKey: PreferenceKey {
+    static var defaultValue: CGSize = .zero
 
-    typealias Value = CGPoint
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
+    }
+}
+
+private struct HSyncedContentSizeKey: PreferenceKey {
+    static var defaultValue: CGSize = .zero
+
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
+    }
+}
+
+private struct ContentSizeKey: PreferenceKey {
+    static var defaultValue: CGSize = .zero
+
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
+    }
+}
+
+private struct ObservableViewOffsetKey: PreferenceKey {
+    static var defaultValue: CGPoint = .zero
+
     static func reduce(value: inout Value, nextValue: () -> Value) {
-        value.x += nextValue().x
-        value.y += nextValue().y
-    }
-}
-
-struct ContentSizeKey: PreferenceKey {
-    static var defaultValue: CGSize = .zero
-
-    typealias Value = CGSize
-    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
         value = nextValue()
     }
 }
 
-struct VSyncedContentKey: PreferenceKey {
-    static var defaultValue: CGSize = .zero
-
-    typealias Value = CGSize
-    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
-        value = nextValue()
-    }
-}
-
-struct HSyncedContentKey: PreferenceKey {
-    static var defaultValue: CGSize = .zero
-
-    typealias Value = CGSize
-    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
-        value = nextValue()
-    }
-}
-
-//CGSizeに+演算子を定義
+// CGSize に+演算子を定義
 private extension CGSize {
     static func + (lhs: Self, rhs: Self) -> Self {
-        CGSize(
+        .init(
             width: lhs.width + rhs.width,
             height: lhs.height + rhs.height
         )
     }
 }
 
-#Preview("with topLeftCell") {
+#Preview("With TopLeftCell") {
     let tableWidth: CGFloat = 20
     let tableHeight: CGFloat = 20
-    let cellCount: Int = 20
+    let cellCount = 20
 
-    return SyncedScrollView {
+    SyncedScrollView {
         LazyHStack(spacing: 0) {
             ForEach(1..<cellCount, id: \.self) { column in
                 LazyVStack(spacing: 0) {
@@ -206,12 +263,12 @@ private extension CGSize {
     }
 }
 
-#Preview("without topLeftCell") {
+#Preview("Without TopLeftCell") {
     let tableWidth: CGFloat = 20
     let tableHeight: CGFloat = 20
-    let cellCount: Int = 20
+    let cellCount = 20
 
-    return SyncedScrollView {
+    SyncedScrollView {
         LazyHStack(spacing: 0) {
             ForEach(1..<cellCount, id: \.self) { column in
                 LazyVStack(spacing: 0) {
@@ -225,7 +282,7 @@ private extension CGSize {
         }
     } vSyncedContent: {
         LazyVStack(spacing: 0) {
-            ForEach(1..<cellCount, id: \.self) { row in
+            ForEach(1...cellCount, id: \.self) { row in
                 Text("R:\(row)\nC:\(0)")
                     .frame(width: tableWidth, height: tableHeight)
             }
