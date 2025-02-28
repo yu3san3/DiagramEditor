@@ -80,7 +80,8 @@ private struct LineShape: Shape {
         width: .normal,
         length: 50,
         style: .solid
-    ).frame(width: 300, height: 200)
+    )
+    .frame(width: 300, height: 200)
 }
 
 #Preview("horizontal") {
@@ -89,5 +90,6 @@ private struct LineShape: Shape {
         width: .normal,
         length: 50,
         style: .dashed
-    ).frame(width: 300, height: 200)
+    )
+    .frame(width: 300, height: 200)
 }
