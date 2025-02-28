@@ -18,7 +18,7 @@ struct SidebarView: View {
         case diagram(timetable: Timetable)
     }
 
-    @EnvironmentObject var document: DiagramDocument
+    @Environment(\.document) private var document
 
     @Binding var viewStatus: ViewStatus
 
