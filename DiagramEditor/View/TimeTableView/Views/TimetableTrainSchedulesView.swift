@@ -1,5 +1,5 @@
 //
-//  TrainSchedulesTimetableView.swift
+//  TimetableTrainSchedulesView.swift
 //  DiagramEditor
 //
 //  Created by 丹羽雄一朗 on 2023/05/31.
@@ -8,7 +8,7 @@
 import OuDiaKit
 import SwiftUI
 
-struct TrainSchedulesTimetableView: View {
+struct TimetableTrainSchedulesView: View {
     @Environment(\.document) private var document
 
     let trains: [Train]
@@ -129,7 +129,7 @@ private extension ArrivalStatus {
     let route = OuDiaDiagram.sample.route
 
     ScrollView([.vertical, .horizontal]) {
-        TrainSchedulesTimetableView(trains: route.timetables[0].down.trains)
+        TimetableTrainSchedulesView(trains: route.timetables[0].down.trains)
     }
 }
 
@@ -137,6 +137,6 @@ private extension ArrivalStatus {
     let route = OuDiaDiagram.sample.route
 
     ScrollView([.vertical, .horizontal]) {
-        TrainSchedulesTimetableView(trains: route.timetables[0].up.trains)
+        TimetableTrainSchedulesView(trains: route.timetables[0].up.trains)
     }
 }

@@ -14,12 +14,12 @@ struct TimeTableView: View {
 
     var body: some View {
         SyncedScrollView {
-            TrainSchedulesTimetableView(trains: trains)
+            TimetableTrainSchedulesView(trains: trains)
         } vSyncedContent: {
-            StationsTimetableView(direction: direction)
+            TimetableStationsView(direction: direction)
                 .frame(width: Const.Timetable.stationWidth)
         } hSyncedContent: {
-            TrainInfosTimetableView(trains: trains)
+            TimetableTrainInfosView(trains: trains)
                 .frame(
                     height: Const.Timetable.timetableHeight * 2 + Const.Timetable.trainNameHeight
                 )

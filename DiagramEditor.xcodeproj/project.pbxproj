@@ -7,17 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EB8E1E3B2AFE065B00707DC6 /* SyncedScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8E1E3A2AFE065B00707DC6 /* SyncedScrollView.swift */; };
-		EBA540442A278F56004AC49A /* VTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA540432A278F56004AC49A /* VTextView.swift */; };
-		EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */; };
-		EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */; };
-		EBD863DA293B6E97002D835D /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD863D9293B6E97002D835D /* TopView.swift */; };
-		EBD863DC293B6E9B002D835D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBD863DB293B6E9B002D835D /* Assets.xcassets */; };
-		EBD863E1293B6E9B002D835D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EBD863E0293B6E9B002D835D /* Preview Assets.xcassets */; };
 		EBF334A72A6913A20099EE4E /* DiagramEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */; };
 		EF38A2A12D637130001A6C9B /* OuDiaKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF38A2A02D637130001A6C9B /* OuDiaKit */; };
 		EF749DA62D70AE6E0053FFE2 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EF749DA52D70AE6E0053FFE2 /* Localizable.xcstrings */; };
-		EFDE5D802B1C6322006CF9FB /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,27 +23,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EB8E1E3A2AFE065B00707DC6 /* SyncedScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncedScrollView.swift; sourceTree = "<group>"; };
-		EBA540432A278F56004AC49A /* VTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VTextView.swift; sourceTree = "<group>"; };
 		EBD863D2293B6E97002D835D /* DiagramEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiagramEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorApp.swift; sourceTree = "<group>"; };
-		EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorDocument.swift; sourceTree = "<group>"; };
-		EBD863D9293B6E97002D835D /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
-		EBD863DB293B6E9B002D835D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		EBD863DD293B6E9B002D835D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EBD863DE293B6E9B002D835D /* DiagramEditor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiagramEditor.entitlements; sourceTree = "<group>"; };
-		EBD863E0293B6E9B002D835D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		EBF334A42A6913A10099EE4E /* DiagramEditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiagramEditorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramEditorTests.swift; sourceTree = "<group>"; };
 		EF749DA52D70AE6E0053FFE2 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		EFA078492D7207EB00BF2420 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = EBD863D1293B6E97002D835D /* DiagramEditor */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		EF38A2BC2D63788D001A6C9B /* Utils */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utils; sourceTree = "<group>"; };
-		EF38A2BD2D6378BA001A6C9B /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
-		EF668B292D68D49E00D093A8 /* TimeTableView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TimeTableView; sourceTree = "<group>"; };
-		EFDAAF522D6C623E00DAC0A3 /* DiagramView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DiagramView; sourceTree = "<group>"; };
+		EFA078312D7207EB00BF2420 /* DiagramEditor */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EFA078492D7207EB00BF2420 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = DiagramEditor; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				EF749DA52D70AE6E0053FFE2 /* Localizable.xcstrings */,
-				EBD863D4293B6E97002D835D /* DiagramEditor */,
+				EFA078312D7207EB00BF2420 /* DiagramEditor */,
 				EBF334A52A6913A20099EE4E /* DiagramEditorTests */,
 				EBD863D3293B6E97002D835D /* Products */,
 			);
@@ -90,43 +79,6 @@
 				EBF334A42A6913A10099EE4E /* DiagramEditorTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		EBD863D4293B6E97002D835D /* DiagramEditor */ = {
-			isa = PBXGroup;
-			children = (
-				EF38A2BD2D6378BA001A6C9B /* Extensions */,
-				EF38A2BC2D63788D001A6C9B /* Utils */,
-				EBD863D5293B6E97002D835D /* DiagramEditorApp.swift */,
-				EBD863D7293B6E97002D835D /* DiagramEditorDocument.swift */,
-				EBF334992A690A460099EE4E /* View */,
-				EBD863DB293B6E9B002D835D /* Assets.xcassets */,
-				EBD863DD293B6E9B002D835D /* Info.plist */,
-				EBD863DE293B6E9B002D835D /* DiagramEditor.entitlements */,
-				EBD863DF293B6E9B002D835D /* Preview Content */,
-			);
-			path = DiagramEditor;
-			sourceTree = "<group>";
-		};
-		EBD863DF293B6E9B002D835D /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				EBD863E0293B6E9B002D835D /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		EBF334992A690A460099EE4E /* View */ = {
-			isa = PBXGroup;
-			children = (
-				EBD863D9293B6E97002D835D /* TopView.swift */,
-				EFDE5D7F2B1C6322006CF9FB /* SidebarView.swift */,
-				EF668B292D68D49E00D093A8 /* TimeTableView */,
-				EFDAAF522D6C623E00DAC0A3 /* DiagramView */,
-				EB8E1E3A2AFE065B00707DC6 /* SyncedScrollView.swift */,
-				EBA540432A278F56004AC49A /* VTextView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		EBF334A52A6913A20099EE4E /* DiagramEditorTests */ = {
@@ -153,10 +105,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				EF38A2BC2D63788D001A6C9B /* Utils */,
-				EF38A2BD2D6378BA001A6C9B /* Extensions */,
-				EF668B292D68D49E00D093A8 /* TimeTableView */,
-				EFDAAF522D6C623E00DAC0A3 /* DiagramView */,
+				EFA078312D7207EB00BF2420 /* DiagramEditor */,
 			);
 			name = DiagramEditor;
 			productName = DiagramEditor;
@@ -228,8 +177,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBD863E1293B6E9B002D835D /* Preview Assets.xcassets in Resources */,
-				EBD863DC293B6E9B002D835D /* Assets.xcassets in Resources */,
 				EF749DA62D70AE6E0053FFE2 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,12 +195,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EBD863D6293B6E97002D835D /* DiagramEditorApp.swift in Sources */,
-				EBD863D8293B6E97002D835D /* DiagramEditorDocument.swift in Sources */,
-				EB8E1E3B2AFE065B00707DC6 /* SyncedScrollView.swift in Sources */,
-				EBD863DA293B6E97002D835D /* TopView.swift in Sources */,
-				EFDE5D802B1C6322006CF9FB /* SidebarView.swift in Sources */,
-				EBA540442A278F56004AC49A /* VTextView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

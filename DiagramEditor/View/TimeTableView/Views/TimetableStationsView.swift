@@ -1,5 +1,5 @@
 //
-//  StationsTimetableView.swift
+//  TimetableStationsView.swift
 //  DiagramEditor
 //
 //  Created by 丹羽雄一朗 on 2023/05/31.
@@ -8,7 +8,7 @@
 import OuDiaKit
 import SwiftUI
 
-struct StationsTimetableView: View {
+struct TimetableStationsView: View {
     @Environment(\.document) private var document
 
     let direction: TrainDirection
@@ -98,6 +98,6 @@ private extension Station {
 
 #Preview {
     ScrollView {
-        StationsTimetableView(direction: .up)
+        TimetableStationsView(direction: .up)
     }
 }

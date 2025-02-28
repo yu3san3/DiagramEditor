@@ -8,7 +8,7 @@
 import OuDiaKit
 import SwiftUI
 
-struct TrainInfosTimetableView: View {
+struct TimetableTrainInfosView: View {
     @Environment(\.document) private var document
 
     let trains: [Train]
@@ -58,6 +58,6 @@ private struct TrainInfoView: View {
     let route = OuDiaDiagram.sample.route
 
     ScrollView(.horizontal) {
-        TrainInfosTimetableView(trains: route.timetables[0].down.trains)
+        TimetableTrainInfosView(trains: route.timetables[0].down.trains)
     }
 }
