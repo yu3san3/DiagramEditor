@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# 現在の作業ディレクトリを取得
+CURRENT_DIR=$(pwd)
+
+# .swift-format ファイルを検索
+CONFIG_FILE=$(find "$CURRENT_DIR" -type f -name ".swift-format" | head -1)
+
+# リンタを実行 ( -s オプションにより、致命的なエラー以外でも失敗で終了)
+swift format lint -s --configuration "$CONFIG_FILE" -r .
+
+# swift-format の終了コードを取得
+exit_code=$?
+
+# swift-format の結果を確認
+if [ $exit_code -ne 0 ]; then
+  # フォーマットの必要があるので実行
+  swift format -i -r .
+
+  echo "Error: swift-format による変更があります。変更箇所を確認して、コミットして下さい。"
+  echo "Hint：git diff で変更内容を確認できます。"
+  echo "Info: この検査は git commit --no-verify で飛ばすこともできます(非推奨)。"
+
+  exit 1
+fi
+
+exit 0
