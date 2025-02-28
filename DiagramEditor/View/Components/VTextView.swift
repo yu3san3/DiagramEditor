@@ -23,7 +23,7 @@ struct VText: View {
     var body: some View {
         if !text.isEmpty {
             VStack(spacing: 0) {
-                //FIXME: - idをselfにしていることで、重複する可能性がある
+                //FIXME: id が self のため重複する可能性がある。
                 ForEach(
                     Array(text),
                     id: \.self
@@ -31,6 +31,8 @@ struct VText: View {
                     Text(String(str))
                 }
             }
+        } else {
+            Color.clear
         }
     }
 }
