@@ -13,7 +13,7 @@ struct DiagramStationsView: View {
 
     var body: some View {
         if let document = diagramViewState.document,
-           !diagramViewState.distancesBetweenStations.isEmpty
+            !diagramViewState.distancesBetweenStations.isEmpty
         {
             LazyVStack(spacing: 0) {
                 VStack(spacing: 0) {
@@ -35,7 +35,8 @@ struct DiagramStationsView: View {
                     }
                     .frame(
                         height: .init(
-                            diagramViewState.distancesBetweenStations[index - 1] * diagramViewState.vScale
+                            diagramViewState.distancesBetweenStations[index - 1]
+                                * diagramViewState.vScale
                         )
                     )
                 }

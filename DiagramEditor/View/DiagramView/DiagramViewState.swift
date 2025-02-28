@@ -69,8 +69,8 @@ final class DiagramViewState {
         guard let document else { return }
 
         Task {
-            distancesBetweenStations = await RouteDistancesCalculator
-                .calculateDistancesBetweenStations(
+            distancesBetweenStations =
+                await RouteDistancesCalculator.calculateDistancesBetweenStations(
                     for: document.route.timetables
                 )
         }
@@ -87,7 +87,8 @@ private extension Train {
             from: distancesBetweenStations
         )
 
-        return distanceFromBaseStation
+        return
+            distanceFromBaseStation
             .reversed(shouldReverse: direction == .up)
             .zipLongest(schedule)
             .compactMap { distance, scheduleEntry -> [CGPoint]? in
@@ -105,7 +106,8 @@ private extension Train {
                 let points = [
                     arrivalFromMidnight.map { CGPoint(x: $0, y: distance) },
                     departureFromMidnight.map { CGPoint(x: $0, y: distance) },
-                ].compactMap { $0 }
+                ]
+                .compactMap { $0 }
 
                 return points.isEmpty ? nil : points
             }

@@ -28,7 +28,7 @@ extension OuDiaDiagram {
                     name: "名鉄名古屋",
                     timeType: .downArrival,
                     scale: .major
-                )
+                ),
             ],
             trainTypes: [
                 .init(
@@ -47,7 +47,7 @@ extension OuDiaDiagram {
                     diagramLineColor: Color(oudColorCode: "000000FF"),
                     diagramLineStyle: .solid,
                     stopMarkDrawType: "EStopMarkDrawType_DrawOnStop"
-                )
+                ),
             ],
             timetables: [
                 .init(
@@ -61,7 +61,7 @@ extension OuDiaDiagram {
                                 schedule: [
                                     .init(arrivalStatus: .stop, arrival: "", departure: "1009"),
                                     .init(arrivalStatus: .pass),
-                                    .init(arrivalStatus: .stop, arrival: "1014", departure: "")
+                                    .init(arrivalStatus: .stop, arrival: "1014", departure: ""),
                                 ]
                             ),
                             .init(
@@ -71,9 +71,9 @@ extension OuDiaDiagram {
                                 schedule: [
                                     .init(arrivalStatus: .stop, arrival: "", departure: "1011"),
                                     .init(arrivalStatus: .stop, arrival: "1013", departure: "1013"),
-                                    .init(arrivalStatus: .stop, arrival: "1016", departure: "")
+                                    .init(arrivalStatus: .stop, arrival: "1016", departure: ""),
                                 ]
-                            )
+                            ),
                         ]
                     ),
                     up: .init(trains: [])
@@ -89,7 +89,7 @@ extension OuDiaDiagram {
                                 schedule: [
                                     .init(arrivalStatus: .stop, arrival: "", departure: "1004"),
                                     .init(arrivalStatus: .pass),
-                                    .init(arrivalStatus: .stop, arrival: "1008", departure: "")
+                                    .init(arrivalStatus: .stop, arrival: "1008", departure: ""),
                                 ]
                             )
                         ]
@@ -103,12 +103,12 @@ extension OuDiaDiagram {
                                 schedule: [
                                     .init(arrivalStatus: .stop, arrival: "", departure: "1003"),
                                     .init(arrivalStatus: .pass),
-                                    .init(arrivalStatus: .stop, arrival: "1006", departure: "")
+                                    .init(arrivalStatus: .stop, arrival: "1006", departure: ""),
                                 ]
                             )
                         ]
                     )
-                )
+                ),
             ],
             diagramBaseTime: "400",
             diagramDefaultDistance: 60,

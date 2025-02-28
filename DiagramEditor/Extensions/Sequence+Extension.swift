@@ -10,7 +10,8 @@ struct ZipLongestSequence<Sequence1: Sequence, Sequence2: Sequence>: Sequence, I
     mutating func next() -> (Sequence1.Element?, Sequence2.Element?)? {
         let sequence1Value = sequence1Iterator.next()
         let sequence2Value = sequence2Iterator.next()
-        return (sequence1Value == nil && sequence2Value == nil) ? nil : (sequence1Value, sequence2Value)
+        return (sequence1Value == nil && sequence2Value == nil)
+            ? nil : (sequence1Value, sequence2Value)
     }
 }
 

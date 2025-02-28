@@ -73,8 +73,8 @@ private struct StationView: View {
         .frame(
             width: Const.Timetable.stationWidth,
             height: arrDepTexts.count == 1
-            ? Const.Timetable.timetableHeight
-            : Const.Timetable.timetableHeight * 2
+                ? Const.Timetable.timetableHeight
+                : Const.Timetable.timetableHeight * 2
         )
         .border(Const.Timetable.stationColor)
     }
