@@ -9,7 +9,7 @@ import SwiftUI
 import OuDiaKit
 
 struct TopView: View {
-    @Environment(DiagramEditorDocument.self) private var document
+    @Environment(\.document) private var document
 
     @State private var viewStatus: SidebarView.ViewStatus = .none
 

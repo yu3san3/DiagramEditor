@@ -55,7 +55,7 @@ import OuDiaKit
 
 @Observable
 final class DiagramViewState {
-    weak var document: DiagramEditorDocument?
+    weak var document: DiagramDocument?
 
     var timetable: Timetable?
     var vScale = 10
@@ -102,7 +102,7 @@ final class DiagramViewState {
 
     func setup(
         timetable: Timetable,
-        document: DiagramEditorDocument
+        document: DiagramDocument
     ) {
         self.timetable = timetable
         self.document = document

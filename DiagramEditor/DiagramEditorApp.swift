@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct DiagramEditorApp: App {
     var body: some Scene {
-        DocumentGroup(newDocument: { DiagramEditorDocument() }) { file in
+        DocumentGroup(newDocument: { DiagramDocument() }) { file in
             TopView()
                 .environment(\.document, file.document)
         }

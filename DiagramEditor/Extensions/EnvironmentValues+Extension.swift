@@ -1,11 +1,11 @@
 import SwiftUICore
 
 private struct DocumentKey: EnvironmentKey {
-    static var defaultValue = DiagramEditorDocument()
+    static var defaultValue = DiagramDocument()
 }
 
 extension EnvironmentValues {
-    var document: DiagramEditorDocument {
+    var document: DiagramDocument {
         get { self[DocumentKey.self] }
         set { self[DocumentKey.self] = newValue }
     }

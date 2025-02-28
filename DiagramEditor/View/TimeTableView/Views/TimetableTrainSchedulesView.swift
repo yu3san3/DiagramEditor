@@ -65,7 +65,7 @@ private struct TrainScheduleView: View {
     }
 }
 
-private extension DiagramEditorDocument {
+private extension DiagramDocument {
     var timeTypes: [StationTimeType] {
         stations.map { $0.timeType }
     }

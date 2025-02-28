@@ -1,5 +1,5 @@
 //
-//  DiagramEditorDocument.swift
+//  DiagramDocument.swift
 //  DiagramEditor
 //
 //  Created by 丹羽雄一朗 on 2022/12/03.
@@ -16,7 +16,7 @@ extension UTType {
 }
 
 @Observable
-final class DiagramEditorDocument {
+final class DiagramDocument {
     private var diagram: OuDiaDiagram
 
     var route: Route {
@@ -36,7 +36,7 @@ final class DiagramEditorDocument {
     }
 }
 
-extension DiagramEditorDocument: ReferenceFileDocument {
+extension DiagramDocument: ReferenceFileDocument {
     // 開くことができるドキュメントのタイプを設定
     static var readableContentTypes: [UTType] { [.oudiaDocument] }
 
