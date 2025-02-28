@@ -1,0 +1,15 @@
+{
+  "originHash" : "12eb1d16f4ca328cbd1bdbf85aa3320af209ac513251a9cf95ea24e253f8ea24",
+  "pins" : [
+    {
+      "identity" : "oudiakit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yu3san3/OuDiaKit.git",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "8e8f4f6587c6d414a815e44c9dc723d0f1afbd69"
+      }
+    }
+  ],
+  "version" : 3
+}

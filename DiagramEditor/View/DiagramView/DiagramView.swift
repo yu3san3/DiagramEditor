@@ -5,40 +5,56 @@
 //  Created by 丹羽雄一朗 on 2023/12/08.
 //
 
+import OuDiaKit
 import SwiftUI
 
 struct DiagramView: View {
-    let diaNum: Int
-    @Binding var viewSize: CGSize
-    @Binding var isShowKudariDiagram: Bool
-    @Binding var isShowNoboriDiagram: Bool
+    @Environment(\.document) private var document
+
+    let timetable: Timetable
+    let diagramViewState: DiagramViewState
 
     var body: some View {
         SyncedScrollView {
             ZStack {
-                Legend(viewSize: $viewSize)
-                if isShowKudariDiagram {
-                    DrawDiagram(houkou: .kudari, diaNum: diaNum, viewSize: $viewSize)
+                DiagramGridLineView(diagramViewState: diagramViewState)
+
+                if diagramViewState.isShowDown {
+                    DiagramLinesView(
+                        entries: diagramViewState.downDiagramEntries,
+                        vScale: diagramViewState.vScale,
+                        hScale: diagramViewState.hScale,
+                        viewWidth: diagramViewState.viewSize.width
+                    )
                 }
-                if isShowNoboriDiagram {
-                    DrawDiagram(houkou: .nobori, diaNum: diaNum, viewSize: $viewSize)
+
+                if diagramViewState.isShowUp {
+                    DiagramLinesView(
+                        entries: diagramViewState.upDiagramEntries,
+                        vScale: diagramViewState.vScale,
+                        hScale: diagramViewState.hScale,
+                        viewWidth: diagramViewState.viewSize.width
+                    )
                 }
             }
         } vSyncedContent: {
-            DrawStations(viewSize: $viewSize)
+            DiagramStationsView(diagramViewState: diagramViewState)
+                .frame(width: Const.Diagram.stationWidth)
         } hSyncedContent: {
-            DrawTimes(viewSize: $viewSize)
+            DiagramTimesView(scale: diagramViewState.hScale)
+                .frame(height: Const.Diagram.timeHight)
         } topLeftContent: {
             EmptyView()
+        }
+        .onAppear {
+            diagramViewState.setup(timetable: timetable, document: document)
         }
     }
 }
 
 #Preview {
-    let viewSize = Binding.constant( CGSize(width: 3000, height: 500) )
-    return DiagramView(diaNum: 0,
-                       viewSize: viewSize,
-                       isShowKudariDiagram: .constant(true),
-                       isShowNoboriDiagram: .constant(true))
-        .environmentObject(DiagramEditorDocument())
+    DiagramView(
+        timetable: OuDiaDiagram.sample.route.timetables[0],
+        diagramViewState: .init()
+    )
 }
