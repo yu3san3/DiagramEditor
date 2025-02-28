@@ -53,9 +53,10 @@ struct DiagramGridLineView: View {
         let viewHeight: CGFloat
 
         let lineStyles: [VLine.Style] = {
-            (0...Const.Diagram.oneDayMinutes).map {
-                VLine.Style(minute: $0)
-            }
+            (0...Const.Diagram.oneDayMinutes)
+                .map {
+                    .init(minute: $0)
+                }
         }()
 
         var body: some View {
@@ -98,16 +99,24 @@ private struct VLine: View {
         init(minute: Int) {
             id = minute
 
-            width = if minute % 60 == 0 { .thick }
-            else if minute % 30 == 0 { .normal }
-            else if minute % 10 == 0 { .thin }
-            else if minute % 2 == 0 { .extraThin }
-            else { nil }
+            width =
+                if minute % 60 == 0 {
+                    .thick
+                } else if minute % 30 == 0 {
+                    .normal
+                } else if minute % 10 == 0 {
+                    .thin
+                } else if minute % 2 == 0 {
+                    .extraThin
+                } else {
+                    nil
+                }
 
-            lineStyle = switch width {
-            case .thick, .normal, .none: .solid
-            case .thin, .extraThin: .dashed
-            }
+            lineStyle =
+                switch width {
+                case .thick, .normal, .none: .solid
+                case .thin, .extraThin: .dashed
+                }
         }
     }
 

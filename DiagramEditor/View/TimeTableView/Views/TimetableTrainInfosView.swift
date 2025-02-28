@@ -42,7 +42,6 @@ private struct TrainInfoView: View {
                 )
 
                 VText(train.name ?? "")
-                    .padding(3) //ここに数字入れないとなんか表示がおかしくなる
                     .frame(
                         width: Const.Timetable.timetableWidth,
                         height: Const.Timetable.trainNameHeight

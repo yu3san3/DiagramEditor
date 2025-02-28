@@ -86,15 +86,15 @@ private extension Train {
                 let arrival = (
                     scheduleEntry?.$arrival.id ?? UUID(),
                     scheduleEntry?.arrival
-                    ?? scheduleEntry?.arrivalStatus.timetableText
-                    ?? ArrivalStatus.notOperate.timetableText
+                        ?? scheduleEntry?.arrivalStatus.timetableText
+                        ?? ArrivalStatus.notOperate.timetableText
                 )
 
                 let departure = (
                     scheduleEntry?.$departure.id ?? UUID(),
                     scheduleEntry?.departure
-                    ?? scheduleEntry?.arrivalStatus.timetableText
-                    ?? ArrivalStatus.notOperate.timetableText
+                        ?? scheduleEntry?.arrivalStatus.timetableText
+                        ?? ArrivalStatus.notOperate.timetableText
                 )
 
                 switch timeType {
@@ -107,8 +107,11 @@ private extension Train {
                     let isTrainDownDirection = direction == .down
 
                     // 駅が下り着で下り列車、もしくは駅が上り着で上り列車の場合には、着時刻を使用
-                    let shouldUseArrival = (isDownArrival && isTrainDownDirection) || (!isDownArrival && !isTrainDownDirection)
-                    return [shouldUseArrival ? arrival : departure]
+                    let shouldUseArrival =
+                        (isDownArrival && isTrainDownDirection)
+                        || (!isDownArrival && !isTrainDownDirection)
+
+                    return shouldUseArrival ? [arrival] : [departure]
                 }
             }
     }

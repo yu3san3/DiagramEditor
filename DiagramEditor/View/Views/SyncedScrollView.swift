@@ -45,7 +45,7 @@ struct SyncedScrollView<
     var body: some View {
         ZStack(alignment: .topLeading) {
             // 実際に表示されるコンテンツ
-            HStack(alignment: .top, spacing: 0){
+            HStack(alignment: .top, spacing: 0) {
                 LeftContent(
                     topLeftContent: topLeftContent,
                     vSyncedContent: vSyncedContent,
