@@ -7,6 +7,7 @@
 
 import OuDiaKit
 import SwiftUI
+import SyncedScrollView
 
 struct TimeTableView: View {
     let trains: [Train]

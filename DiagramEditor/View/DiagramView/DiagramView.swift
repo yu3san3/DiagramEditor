@@ -7,6 +7,7 @@
 
 import OuDiaKit
 import SwiftUI
+import SyncedScrollView
 
 struct DiagramView: View {
     @Environment(\.document) private var document

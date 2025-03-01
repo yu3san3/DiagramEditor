@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EBF334A72A6913A20099EE4E /* DiagramEditorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF334A62A6913A20099EE4E /* DiagramEditorTests.swift */; };
+		EF2E1ADD2D72FEBF008825E0 /* SyncedScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = EF2E1ADC2D72FEBF008825E0 /* SyncedScrollView */; };
 		EF38A2A12D637130001A6C9B /* OuDiaKit in Frameworks */ = {isa = PBXBuildFile; productRef = EF38A2A02D637130001A6C9B /* OuDiaKit */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF2E1ADD2D72FEBF008825E0 /* SyncedScrollView in Frameworks */,
 				EF38A2A12D637130001A6C9B /* OuDiaKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,6 +160,7 @@
 			mainGroup = EBD863C9293B6E97002D835D;
 			packageReferences = (
 				EF38A29F2D637130001A6C9B /* XCRemoteSwiftPackageReference "OuDiaKit" */,
+				EF2E1ADB2D72FEBF008825E0 /* XCRemoteSwiftPackageReference "SyncedScrollView" */,
 			);
 			productRefGroup = EBD863D3293B6E97002D835D /* Products */;
 			projectDirPath = "";
@@ -493,6 +496,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		EF2E1ADB2D72FEBF008825E0 /* XCRemoteSwiftPackageReference "SyncedScrollView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yu3san3/SyncedScrollView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		EF38A29F2D637130001A6C9B /* XCRemoteSwiftPackageReference "OuDiaKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yu3san3/OuDiaKit.git";
@@ -504,6 +515,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		EF2E1ADC2D72FEBF008825E0 /* SyncedScrollView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EF2E1ADB2D72FEBF008825E0 /* XCRemoteSwiftPackageReference "SyncedScrollView" */;
+			productName = SyncedScrollView;
+		};
 		EF38A2A02D637130001A6C9B /* OuDiaKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = EF38A29F2D637130001A6C9B /* XCRemoteSwiftPackageReference "OuDiaKit" */;

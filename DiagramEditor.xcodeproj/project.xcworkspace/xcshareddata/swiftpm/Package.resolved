@@ -1,5 +1,5 @@
 {
-  "originHash" : "12eb1d16f4ca328cbd1bdbf85aa3320af209ac513251a9cf95ea24e253f8ea24",
+  "originHash" : "5f6c98000d8e07305b900a7c1043a2a408ebc920f5bd7f5ded378448728e2344",
   "pins" : [
     {
       "identity" : "oudiakit",
@@ -8,6 +8,15 @@
       "state" : {
         "branch" : "develop",
         "revision" : "8e8f4f6587c6d414a815e44c9dc723d0f1afbd69"
+      }
+    },
+    {
+      "identity" : "syncedscrollview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yu3san3/SyncedScrollView.git",
+      "state" : {
+        "revision" : "baa199f116882645b048802dce63922608f7768c",
+        "version" : "1.0.0"
       }
     }
   ],
