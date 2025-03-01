@@ -6,8 +6,8 @@
 //
 
 import OuDiaKit
-import UniformTypeIdentifiers
 import SwiftUI
+import UniformTypeIdentifiers
 
 extension UTType {
     static var oudiaDocument: UTType {
