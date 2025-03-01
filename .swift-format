@@ -6,8 +6,9 @@
     "OmitExplicitReturns" : true,
     "OneCasePerLine" : false,
     "UseEarlyExits" : true,
-    "ValidateDocumentationComments" : true
+    "ValidateDocumentationComments" : true,
+    "OrderedImports" : true,
   },
   "tabWidth" : 4,
-  "version" : 1
+  "version" : 1,
 }
