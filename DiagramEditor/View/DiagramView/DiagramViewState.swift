@@ -6,7 +6,7 @@
 //
 
 import OuDiaKit
-import SwiftUICore
+import SwiftUI
 
 @Observable
 final class DiagramViewState {
