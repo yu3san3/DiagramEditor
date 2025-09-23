@@ -6,7 +6,7 @@
 //
 
 import OuDiaKit
-import SwiftUICore
+import SwiftUI
 
 extension OuDiaDiagram {
     static let sample = OuDiaDiagram(

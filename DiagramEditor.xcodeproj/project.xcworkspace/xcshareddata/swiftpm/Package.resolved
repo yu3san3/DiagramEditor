@@ -7,7 +7,7 @@
       "location" : "https://github.com/yu3san3/OuDiaKit.git",
       "state" : {
         "branch" : "develop",
-        "revision" : "8e8f4f6587c6d414a815e44c9dc723d0f1afbd69"
+        "revision" : "a7ab25831f4270bce4af5c0d417e0b7c156583fb"
       }
     },
     {
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/yu3san3/SyncedScrollView.git",
       "state" : {
-        "revision" : "baa199f116882645b048802dce63922608f7768c",
-        "version" : "1.0.0"
+        "revision" : "313ef63ce5313983605d9154e8b244c8309cf922",
+        "version" : "1.0.1"
       }
     }
   ],

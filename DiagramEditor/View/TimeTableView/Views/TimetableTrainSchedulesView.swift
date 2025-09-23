@@ -29,6 +29,7 @@ private struct TrainScheduleView: View {
     var body: some View {
         LazyVStack(spacing: 0) {
             ForEach(
+                // TODO: 計算コストが高そうなのでキャッシュする。
                 train.timeTableText(timeTypes: timeTypes),
                 id: \.id
             ) { _, text in

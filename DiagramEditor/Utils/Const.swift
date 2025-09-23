@@ -5,7 +5,7 @@
 //  Created by 丹羽雄一朗 on 2023/05/31.
 //
 
-import SwiftUICore
+import SwiftUI
 
 enum Const {
     enum Timetable {
